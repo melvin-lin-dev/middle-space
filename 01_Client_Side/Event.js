@@ -128,15 +128,12 @@ let controlTouch = $('#gameControlTouch')
 //  Touch Function
 
 $(document).on('touchstart', function (e) {
-  // let touch = e.touches[0]
-  // console.log('start', touch)
+  e.preventDefault()
   move(e)
 })
 
 $(document).on('touchmove', function (e) {
   e.preventDefault()
-  // let touch = e.touches[0]
-  // console.log('move', touch)
   move(e)
 })
 
@@ -144,11 +141,12 @@ $(document).on('touchmove', function (e) {
 $(document).on('touchend', function (e) {
   game.player.speedX = 0
   game.player.speedY = 0
+  event.shoot(0)
 })
 
 
 function move(e) {
-  if ($(e.target).hasClass('game-control')) {
+  if ($(e.target).data('control') === 'move') {
     let gameControl = {
       left: control.offset().left,
       top: control.offset().top,
@@ -180,6 +178,8 @@ function move(e) {
 
     game.player.speedX = moveX / 7
     game.player.speedY = moveY / 7
+  } else if ($(e.target).data('control') === 'shoot') {
+    event.shoot(1)
   }
 }
 

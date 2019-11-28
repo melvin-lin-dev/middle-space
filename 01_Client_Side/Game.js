@@ -12,9 +12,6 @@ class Game {
 
   start() {
     //  Declaring Objects
-    const video= document.querySelector('.container');
-    const rfs = video.requestFullscreen || video.webkitRequestFullScreen || video.mozRequestFullScreen || video.msRequestFullscreen;
-
     this.backgroundPosition = 0;
 
     this.animateCanvas = null;
@@ -115,7 +112,6 @@ class Game {
       //  Clearing Canvas
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 
       //  Rendering Planets
 
