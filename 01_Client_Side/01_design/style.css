@@ -1,0 +1,254 @@
+/*  Body */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
+  font-weight: bold;
+}
+
+/* Layout */
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #2a1d50;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.opacity-5 {
+  opacity: .35;
+}
+
+.absolute {
+  position: absolute;
+  z-index: 1;
+}
+
+.full-width {
+  width: 960px;
+}
+
+.full-height {
+  height: 600px;
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+  flex: auto;
+  padding: 10px;
+}
+
+/* Text */
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Logo */
+
+.logo {
+  height: 80px;
+}
+
+/* Button */
+
+.btn {
+  background-color: #db3f3d;
+  background-position: center;
+  padding: 5px 12px;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: bold;
+  color: inherit;
+  outline: none;
+  border: none;
+  transition: all 1s;
+}
+
+.btn:hover {
+  background: #f19e0d radial-gradient(circle, transparent 1%, #f19e0d 1%) center/15000%;
+}
+
+.btn:active {
+  background-color: #fff;
+  background-size: 100%;
+  transition: backround 0s;
+}
+
+/* Table */
+
+.table-overlay {
+  max-height: 300px;
+  overflow: auto;
+  margin: 10px 0;
+}
+
+.table-overlay::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-overlay::-webkit-scrollbar-thumb {
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+.table-overlay::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+.table-overlay th,
+.table-overlay td {
+  text-align: center;
+  font-weight: bold;
+  width: 80px;
+  padding: 5px 0;
+}
+
+/* Instructions */
+
+#instructions {
+  max-width: 960px;
+  padding: 0 20px;
+}
+
+#instructions .title,
+#instructions p {
+  margin: .5rem 0;
+  font-weight: bold;
+}
+
+#instructions .btn {
+  margin-top: .5rem;
+}
+
+#instructions * {
+  opacity: 0;
+}
+
+#instructions .animate {
+  opacity: 1;
+  animation-name: animateInstructions;
+  animation-duration: .75s;
+}
+
+@keyframes animateInstructions {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Game Menu */
+
+#gameBoard img {
+  height: 50px;
+  opacity: .85;
+  vertical-align: top;
+}
+
+#gameBoard img:hover {
+  opacity: 1;
+}
+
+#gameMenu {
+  top: 0;
+  width: 100%;
+}
+
+.stat-overlay {
+  background-color: rgba(255, 255, 255, .3);
+  margin-top: 10px;
+  border-radius: 50px;
+}
+
+.stat-overlay span {
+  font-size: 36px;
+  line-height: 50px;
+  margin: 0 10px;
+}
+
+#gameControl .arrow {
+  position: absolute;
+}
+
+.arrow-top {
+  left: 100px;
+  bottom: 120px;
+  transform: rotate(-45deg);
+}
+
+.arrow-left {
+  left: 60px;
+  bottom: 80px;
+  transform: rotate(-135deg);
+}
+
+.arrow-right {
+  left: 140px;
+  bottom: 80px;
+  transform: rotate(45deg);
+}
+
+.arrow-bottom {
+  left: 100px;
+  bottom: 40px;
+  transform: rotate(135deg);
+}
+
+#fuelCounter {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #fff;
+  opacity: 0.7;
+  width: 450px;
+  height: 32px;
+  border-radius: 100px;
+}
+
+#fuelCounter #fuel {
+  background-color: #f19e0d;
+  width: 50%;
+  height: 100%;
+  border-radius: 100px;
+  line-height: 32px;
+  padding-right: 15px;
+  font-size: 18px;
+}
+
+.fuel-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1!important;
+}
+
+/* Canvas */
+
+#canvas {
+  background-image: url("./01_source/background.png");
+  border: 1px solid #fff;
+  background-size: 128px;
+}
+
