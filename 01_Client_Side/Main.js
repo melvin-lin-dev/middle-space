@@ -1,6 +1,8 @@
 //  Declaring Canvas
 
 let canvas = document.getElementById('canvas');
+canvas.width = document.body.clientWidth; //document.width is obsolete
+canvas.height = document.body.clientHeight;
 let ctx = canvas.getContext('2d');
 
 //  Starting Game

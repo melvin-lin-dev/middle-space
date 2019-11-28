@@ -33,11 +33,11 @@ html, body {
 }
 
 .full-width {
-  width: 960px;
+  width: 100%;
 }
 
 .full-height {
-  height: 600px;
+  min-height: 100vh;
 }
 
 .row {
@@ -270,6 +270,8 @@ html, body {
   background-image: url("./assets/background.png");
   border: 1px solid #fff;
   background-size: 128px;
+  width: 100vw;
+  height: 100vh;
 }
 
 .animate-canvas {

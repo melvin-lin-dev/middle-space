@@ -178,54 +178,55 @@ $('[name="name"]').keyup(function () {
 $('#scoreForm').submit(function (e) {
   e.preventDefault();
 
-  let data = new FormData;
-  data.append('name', $('[name="name"]').val());
-  data.append('score', game.stats.score);
-  data.append('time', game.stats.time);
+  let data = JSON.parse(localStorage.getItem('star-battle')) || []
 
-  fetch('http://localhost/register.php', {
-    method: 'POST',
-    body: data
-  }).then(function (res) {
-    res.json().then(function (data) {
-      $('[name="name"]').val('');
-      $('.continue-btn').prop('disabled', true);
+  data.push({
+    name: $('[name="name"]').val(),
+    score: game.stats.score,
+    time: game.stats.time,
+  })
 
-      data.sort(function (a, b) {
-        return b.time - a.time;
-      });
-      data.sort(function (a, b) {
-        return b.score - a.score;
-      });
+  localStorage.setItem('star-battle', JSON.stringify(data))
 
-      $('.table-rank tbody').html('');
 
-      let samePos = 0;
+  $('[name="name"]').val('');
+  $('.continue-btn').prop('disabled', true);
 
-      for (let key in data) {
-        let item = data[key];
-
-        if (parseInt(key) < data.length - 1) {
-          let nextItem = data[parseInt(key) + 1];
-          if (nextItem.score === item.score && nextItem.time === item.time) {
-            samePos++;
-          } else {
-            samePos = 0;
-          }
-        }
-
-        $('.table-rank tbody').append('\n' +
-          '        <tr>\n' +
-          '          <td>' + (parseInt(key) + 1 - samePos) + '</td>\n' +
-          '          <td>' + item.name + '</td>\n' +
-          '          <td>' + item.score + '</td>\n' +
-          '          <td>' + item.time + '</td>\n' +
-          '        </tr>');
-
-      }
-
-      event.hideExcept('#ranking');
-    });
+  data.sort(function (a, b) {
+    return b.time - a.time;
   });
+  data.sort(function (a, b) {
+    return b.score - a.score;
+  });
+
+  $('.table-rank tbody').html('');
+
+  let samePos = 0;
+
+  for (let key in data) {
+    let item = data[key];
+
+    if (parseInt(key) < data.length - 1) {
+      let nextItem = data[parseInt(key) + 1];
+      if (nextItem.score === item.score && nextItem.time === item.time) {
+        samePos++;
+      } else {
+        samePos = 0;
+      }
+    }
+
+    $('.table-rank tbody').append('\n' +
+      '        <tr>\n' +
+      '          <td>' + (parseInt(key) + 1 - samePos) + '</td>\n' +
+      '          <td>' + item.name + '</td>\n' +
+      '          <td>' + item.score + '</td>\n' +
+      '          <td>' + item.time + '</td>\n' +
+      '        </tr>');
+
+  }
+
+  event.hideExcept('#ranking');
+
+  console.log(123)
 
 });
