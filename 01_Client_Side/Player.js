@@ -87,27 +87,27 @@ class Player {
 
     let exhaust = this.exhaust;
 
-    if (!game.TO_LEFT && !game.TO_RIGHT) {
-      if (exhaust.isScaling) {
-        exhaust.scale += exhaust.rangeScale;
-      } else {
-        exhaust.scale -= exhaust.rangeScale;
-      }
-    } else {
-      if (game.TO_RIGHT && exhaust.scale <= exhaust.maxScale) {
-        exhaust.scale += exhaust.rangeScale;
-      } else if (game.TO_LEFT && exhaust.scale >= exhaust.minScale) {
-        exhaust.scale -= exhaust.rangeScale;
-      }
-    }
-
-    if (exhaust.scale <= exhaust.minScale) {
-      exhaust.isScaling = 1;
-    }
-
-    if (exhaust.scale >= exhaust.maxScale) {
-      exhaust.isScaling = 0;
-    }
+    // if (!game.TO_LEFT && !game.TO_RIGHT) {
+    //   if (exhaust.isScaling) {
+    //     exhaust.scale += exhaust.rangeScale;
+    //   } else {
+    //     exhaust.scale -= exhaust.rangeScale;
+    //   }
+    // } else {
+    //   if (game.TO_RIGHT && exhaust.scale <= exhaust.maxScale) {
+    //     exhaust.scale += exhaust.rangeScale;
+    //   } else if (game.TO_LEFT && exhaust.scale >= exhaust.minScale) {
+    //     exhaust.scale -= exhaust.rangeScale;
+    //   }
+    // }
+    //
+    // if (exhaust.scale <= exhaust.minScale) {
+    //   exhaust.isScaling = 1;
+    // }
+    //
+    // if (exhaust.scale >= exhaust.maxScale) {
+    //   exhaust.isScaling = 0;
+    // }
   }
 
   movement() {

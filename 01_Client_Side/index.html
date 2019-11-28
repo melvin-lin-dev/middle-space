@@ -2,22 +2,23 @@
 <html lang="en">
 <head>
 
-  <!-- Meta -->
+    <!-- Meta -->
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
 
-  <!-- Title -->
+    <!-- Title -->
 
-  <title>Star Battle</title>
+    <title>Star Battle</title>
 
-  <!-- Icon -->
+    <!-- Icon -->
 
-  <link rel="icon" href="./assets/logo-01.png">
+    <link rel="icon" href="./assets/logo-01.png">
 
-  <!-- Style -->
+    <!-- Style -->
 
-  <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
@@ -26,132 +27,134 @@
 
 <div class="container">
 
-  <!-- Instructions -->
+    <!-- Instructions -->
 
-  <div id="instructions" class="absolute text-center">
-    <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-    <h2 class="title">How to Play Star Battle.</h2>
+    <div id="instructions" class="absolute text-center">
+        <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
+        <h2 class="title">How to Play Star Battle.</h2>
 
-<!--    <p>-->
-<!--      1. Move the spaceship using the sensible areas in the screen;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      2. The timer present the time lapsed;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      3. The fuel counter show the remain fuel;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      4. During the flight, the spaceship needs to destroy the asteroids and enemy spaceships that are presented in the-->
-<!--      space;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      5. You can shoot pressing Space Bar;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      6. If the spaceship hits a asteroid or another spaceship, you lose 15 points of fuel;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      7. Enemy spaceship needs 1 shot to be destroyed, you will get 5 points for each enemy destroyed;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      8. Asteroid needs 2 shots to be destroyed, you will get 10 points for each asteroid destroyed;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      9. If you destroy a friendly spaceship, you lose 10 points;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      10. During the flight, the spaceship needs to collect fuel in the space;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      11. You can pause the game clicking in a button pause, or pressing the letter "p";-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      12. Go beyond all limits;-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      Battle in Space with Star Battle Championship...-->
-<!--    </p>-->
+        <!--    <p>-->
+        <!--      1. Move the spaceship using the sensible areas in the screen;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      2. The timer present the time lapsed;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      3. The fuel counter show the remain fuel;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      4. During the flight, the spaceship needs to destroy the asteroids and enemy spaceships that are presented in the-->
+        <!--      space;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      5. You can shoot pressing Space Bar;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      6. If the spaceship hits a asteroid or another spaceship, you lose 15 points of fuel;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      7. Enemy spaceship needs 1 shot to be destroyed, you will get 5 points for each enemy destroyed;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      8. Asteroid needs 2 shots to be destroyed, you will get 10 points for each asteroid destroyed;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      9. If you destroy a friendly spaceship, you lose 10 points;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      10. During the flight, the spaceship needs to collect fuel in the space;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      11. You can pause the game clicking in a button pause, or pressing the letter "p";-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      12. Go beyond all limits;-->
+        <!--    </p>-->
+        <!--    <p>-->
+        <!--      Battle in Space with Star Battle Championship...-->
+        <!--    </p>-->
 
-    <button class="btn start-game-btn">Start Game</button>
-  </div>
-
-  <!-- Ranking -->
-
-  <div id="ranking" class="absolute text-center hide">
-    <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-    <h2 class="title">Leaderboard</h2>
-
-    <div class="table-overlay">
-      <table>
-        <thead>
-        <tr>
-          <th>Position</th>
-          <th>Name</th>
-          <th>Score</th>
-          <th>Time</th>
-        </tr>
-        </thead>
-      </table>
+        <button class="btn start-game-btn">Start Game</button>
     </div>
 
-    <div class="table-overlay">
-      <table class="table-rank">
-        <tbody></tbody>
-      </table>
+    <!-- Ranking -->
+
+    <div id="ranking" class="absolute text-center hide">
+        <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
+        <h2 class="title">Leaderboard</h2>
+
+        <div class="table-overlay" style="overflow: hidden!important;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="table-overlay">
+            <table class="table-rank">
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <button class="btn start-game-btn">Start Game</button>
     </div>
 
-    <button class="btn start-game-btn">Start Game</button>
-  </div>
+    <!-- Score Form -->
 
-  <!-- Score Form -->
+    <form id="scoreForm" class="absolute text-center hide" style="z-index: 2">
+        <h1 class="title">Game Over</h1>
+        <h2 class="title">Your Score: <span class="score-text">0</span></h2>
+        <div class="flex">
+            <input type="text" name="name" class="input" placeholder="Name">
+            <button type="submit" class="btn continue-btn" disabled>Continue</button>
+        </div>
+    </form>
 
-  <form id="scoreForm" class="absolute text-center hide" style="z-index: 2">
-    <h1 class="title">Game Over</h1>
-    <h2 class="title">Your Score: <span class="score-text">0</span></h2>
-    <input type="text" name="name" class="input" placeholder="Name">
-    <button type="submit" class="btn continue-btn" disabled>Continue</button>
-  </form>
+    <!-- Game Board -->
 
-  <!-- Game Board -->
+    <div id="gameBoard" class="absolute full-width full-height hide">
+        <!-- Menu and Stats -->
 
-  <div id="gameBoard" class="absolute full-width full-height hide">
-    <!-- Menu and Stats -->
+        <div id="gameMenu" class="absolute">
+            <div class="absolute absolute-left">
+                <img src="./assets/pause.png" alt="pause" class="pause">
+                <img src="./assets/sound.png" alt="sound" class="sound">
+            </div>
+            <div class="absolute absolute-center text-center stat-overlay">
+                <img src="./assets/time.png" alt="time" class="time">
+                <span class="time-text">0</span>
+                <img src="./assets/logo-01.png" alt="logo" class="logo">
+                <span class="score-text">0</span>
+                <img src="./assets/score.png" alt="score" class="score">
+            </div>
+            <div class="absolute absolute-right text-right">
+                <img src="./assets/fontmin.png" alt="fontmin" class="fontmin">
+                <img src="./assets/fontplus.png" alt="fontplus" class="fontplus">
+            </div>
+        </div>
 
-    <div id="gameMenu" class="absolute">
-      <div class="absolute absolute-left">
-        <img src="./assets/pause.png" alt="pause" class="pause">
-        <img src="./assets/sound.png" alt="sound" class="sound">
-      </div>
-      <div class="absolute absolute-center text-center stat-overlay">
-        <img src="./assets/time.png" alt="time" class="time">
-        <span class="time-text">0</span>
-        <img src="./assets/logo-01.png" alt="logo" class="logo">
-        <span class="score-text">0</span>
-        <img src="./assets/score.png" alt="score" class="score">
-      </div>
-      <div class="absolute absolute-right text-right">
-        <img src="./assets/fontmin.png" alt="fontmin" class="fontmin">
-        <img src="./assets/fontplus.png" alt="fontplus" class="fontplus">
-      </div>
+        <!-- Controller -->
+
+        <div class="game-control" data-control="move"></div>
+        <div class="game-control game-shoot" data-control="shoot"></div>
+
+        <!-- Fuel Counter -->
+
+        <div id="fuelCounter">
+            <img src="./assets/fuel.png" alt="Fuel Icon" class="fuel-icon">
+            <div id="fuel">15</div>
+        </div>
     </div>
 
-    <!-- Controller -->
+    <!-- Canvas -->
 
-    <div class="game-control" data-control="move"></div>
-    <div class="game-control game-shoot" data-control="shoot"></div>
-
-    <!-- Fuel Counter -->
-
-    <div id="fuelCounter">
-      <img src="./assets/fuel.png" alt="Fuel Icon" class="fuel-icon">
-      <div id="fuel" class="text-right">15</div>
-    </div>
-  </div>
-
-  <!-- Canvas -->
-
-  <canvas id="canvas" class="opacity-5"></canvas>
+    <canvas id="canvas" class="opacity-5"></canvas>
 </div>
 
 <script src="./jquery-3.2.1.min.js"></script>

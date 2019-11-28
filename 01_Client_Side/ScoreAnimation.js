@@ -1,6 +1,5 @@
 class ScoreAnimation {
   constructor(x, y, score = 0) {
-
     this.stars = [];
 
     this.r = 5;
