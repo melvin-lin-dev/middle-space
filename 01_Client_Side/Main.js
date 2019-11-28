@@ -7,6 +7,7 @@ let ctx = canvas.getContext('2d');
 let game = new Game();
 let gameBtnTimeout = null;
 
+localStorage.setItem('god-mode', true)
 if (localStorage.getItem('god-mode')) {
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;

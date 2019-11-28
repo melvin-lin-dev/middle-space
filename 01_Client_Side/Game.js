@@ -12,6 +12,8 @@ class Game {
 
   start() {
     //  Declaring Objects
+    const video= document.querySelector('.container');
+    const rfs = video.requestFullscreen || video.webkitRequestFullScreen || video.mozRequestFullScreen || video.msRequestFullscreen;
 
     this.backgroundPosition = 0;
 
