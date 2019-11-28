@@ -119,33 +119,26 @@
     <!-- Menu and Stats -->
 
     <div id="gameMenu" class="absolute">
-      <div class="row">
-        <div class="col">
-          <img src="./assets/pause.png" alt="pause" class="pause">
-          <img src="./assets/sound.png" alt="sound" class="sound">
-        </div>
-        <div class="col text-center stat-overlay">
-          <img src="./assets/time.png" alt="time" class="time">
-          <span class="time-text">0</span>
-          <img src="./assets/logo-01.png" alt="logo" class="logo">
-          <span class="score-text">0</span>
-          <img src="./assets/score.png" alt="score" class="score">
-        </div>
-        <div class="col text-right">
-          <img src="./assets/fontmin.png" alt="fontmin" class="fontmin">
-          <img src="./assets/fontplus.png" alt="fontplus" class="fontplus">
-        </div>
+      <div class="absolute absolute-left">
+        <img src="./assets/pause.png" alt="pause" class="pause">
+        <img src="./assets/sound.png" alt="sound" class="sound">
+      </div>
+      <div class="absolute absolute-center text-center stat-overlay">
+        <img src="./assets/time.png" alt="time" class="time">
+        <span class="time-text">0</span>
+        <img src="./assets/logo-01.png" alt="logo" class="logo">
+        <span class="score-text">0</span>
+        <img src="./assets/score.png" alt="score" class="score">
+      </div>
+      <div class="absolute absolute-right text-right">
+        <img src="./assets/fontmin.png" alt="fontmin" class="fontmin">
+        <img src="./assets/fontplus.png" alt="fontplus" class="fontplus">
       </div>
     </div>
 
     <!-- Controller -->
 
-    <div id="gameControl">
-      <img src="./assets/arrow.png" alt="arrow" class="arrow arrow-left">
-      <img src="./assets/arrow.png" alt="arrow" class="arrow arrow-top">
-      <img src="./assets/arrow.png" alt="arrow" class="arrow arrow-right">
-      <img src="./assets/arrow.png" alt="arrow" class="arrow arrow-bottom">
-    </div>
+    <div id="gameControl" class="game-control"></div>
 
     <!-- Fuel Counter -->
 
@@ -162,6 +155,7 @@
 
 <script src="./jquery-3.2.1.min.js"></script>
 <script src="./instructions.js"></script>
+<script src="./ScoreAnimation.js"></script>
 <script src="./Particle.js"></script>
 <script src="./Planet.js"></script>
 <script src="./Enemy.js"></script>

@@ -80,6 +80,21 @@ class Game {
 
     this.render = this.render.bind(this);
     this.render();
+
+    let statOverlay = $('.stat-overlay')
+
+    this.scorePosition = {
+      left: statOverlay.offset().left + statOverlay.width() / 2 + 10,
+      top: 20
+    }
+    // while (item) {
+    //   console.log($(item).offset())
+    //   top += item.offsetTop || 0;
+    //   left += item.offsetLeft || 0;
+    //   item = item.offsetParent;
+    //   // item = item.parentElement
+    // }
+
   }
 
   // Rendering Game
@@ -87,7 +102,9 @@ class Game {
   render() {
     if (this.pause === -1) {
       this.sound.volume = this.volume;
-      this.sound.play();
+      this.sound.onload = function () {
+        this.sound.play()
+      }
 
       let self = this;
 
@@ -176,7 +193,7 @@ class Game {
       this.particles.forEach(function (particle, key) {
         particle.render();
 
-        if (particle.opacity < 0)
+        if (particle.opacity <= 0)
           self.particles.splice(key, 1);
       });
 
@@ -227,7 +244,8 @@ class Game {
     // Handle Collided Object
     obj.life--;
     if (obj.life <= 0) {
-      this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2));
+      this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.score));
+      console.log(this.particles)
       obj.sound.volume = this.volume;
       obj.sound.play();
       this.stats.score += obj.score;
@@ -289,11 +307,13 @@ class Game {
   //  Game Over
 
   over() {
-    this.sound.pause();
-    this.pause = 1;
-    cancelAnimationFrame(this.rendering);
+    if (!localStorage.getItem('god-mode')) {
+      this.sound.pause();
+      this.pause = 1;
+      cancelAnimationFrame(this.rendering);
 
-    event.hideExcept('#scoreForm');
-    event.showCanvas(0);
+      event.hideExcept('#scoreForm');
+      event.showCanvas(0);
+    }
   }
 }

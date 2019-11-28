@@ -8,10 +8,17 @@ class Player {
     this.width = 93;
     this.height = 72;
 
+    this.collision = {
+      x: 10,
+      width: 75,
+      height: 65
+    }
+
     this.x = 100;
     this.y = (canvas.height - this.height) / 2;
 
-    this.speed = 10;
+    this.speedX = 0;
+    this.speedY = 0;
 
     this.sound = new Audio();
     this.sound.src = './sound/destroyed.mp3';
@@ -63,6 +70,16 @@ class Player {
     //  Rendering Plane
 
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+
+    //  Collision for later
+    // this.collision.x = this.x + 5
+    // this.collision.y = this.y + (this.height - this.collision.height) / 2
+    //
+    // ctx.beginPath()
+    // ctx.rect(this.collision.x, this.collision.y, this.collision.width, this.collision.height)
+    // ctx.fillStyle = "#f00"
+    // ctx.fill()
+    // ctx.closePath()
   }
 
   animate() {
@@ -98,12 +115,9 @@ class Player {
 
     let exhaust = this.exhaust;
 
-    if (game.TO_LEFT) {
-      this.x -= this.speed;
-    }
-    if (game.TO_RIGHT) {
-      this.x += this.speed;
-    }
+    this.x += this.speedX;
+    this.y += this.speedY;
+
     if (game.TO_TOP) {
       if (exhaust.angle > exhaust.minAngle) {
         exhaust.angle -= exhaust.rangeAngle;

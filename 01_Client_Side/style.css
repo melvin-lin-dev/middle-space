@@ -8,9 +8,12 @@ html, body {
   padding: 0;
   margin: 0;
   color: #fff;
-  font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
+  font-family: "Century Gothic", "Segoe UI", Arial, Serif, sans-serif;
   font-weight: bold;
   background-color: #2a1d50;
+  overflow: hidden;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
 /* Layout */
@@ -30,6 +33,19 @@ html, body {
 .absolute {
   position: absolute;
   z-index: 1;
+}
+
+.absolute-center {
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.absolute-left {
+  left: 0;
+}
+
+.absolute-right {
+  right: 0;
 }
 
 .full-width {
@@ -178,7 +194,7 @@ html, body {
 /* Game Menu */
 
 #gameBoard img {
-  height: 50px;
+  height: 30px;
   opacity: .85;
   vertical-align: top;
 }
@@ -192,16 +208,34 @@ html, body {
   width: 100%;
 }
 
-.stat-overlay {
+#gameMenu > div {
+  padding: 20px;
+}
+
+#gameMenu > div.stat-overlay {
   background-color: rgba(255, 255, 255, .3);
   margin-top: 10px;
+  padding: 10px 20px;
   border-radius: 50px;
+  line-height: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .stat-overlay span {
-  font-size: 1.8em;
-  line-height: 50px;
+  font-size: 1.2rem;
   margin: 0 10px;
+}
+
+#gameControl {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(0,0,0,.4);
+  border-radius: 100%;
 }
 
 #gameControl .arrow {
@@ -268,7 +302,6 @@ html, body {
 
 #canvas {
   background-image: url("./assets/background.png");
-  border: 1px solid #fff;
   background-size: 128px;
   width: 100vw;
   height: 100vh;

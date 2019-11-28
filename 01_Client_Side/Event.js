@@ -122,31 +122,66 @@ window.addEventListener('keyup', function (e) {
   }
 });
 
-//  Arrow Hover Function
+let control = $('.game-control')
+let controlTouch = $('#gameControlTouch')
 
-$('.arrow-left').hover(function () {
-  event.goLeft(1);
-}, function () {
-  event.goLeft(0);
-});
+//  Touch Function
 
-$('.arrow-right').hover(function () {
-  event.goRight(1);
-}, function () {
-  event.goRight(0);
-});
+$(document).on('touchstart', function (e) {
+  // let touch = e.touches[0]
+  // console.log('start', touch)
+  move(e)
+})
 
-$('.arrow-top').hover(function () {
-  event.goTop(1);
-}, function () {
-  event.goTop(0);
-});
+$(document).on('touchmove', function (e) {
+  e.preventDefault()
+  // let touch = e.touches[0]
+  // console.log('move', touch)
+  move(e)
+})
 
-$('.arrow-bottom').hover(function () {
-  event.goBottom(1);
-}, function () {
-  event.goBottom(0);
-});
+
+$(document).on('touchend', function (e) {
+  game.player.speedX = 0
+  game.player.speedY = 0
+})
+
+
+function move(e) {
+  if ($(e.target).hasClass('game-control')) {
+    let gameControl = {
+      left: control.offset().left,
+      top: control.offset().top,
+      width: control.width(),
+      height: control.height(),
+    }
+
+    let touch = e.touches[0]
+
+    let x = touch.clientX - gameControl.left
+    let y = touch.clientY - gameControl.top
+
+    if (x < 0) {
+      x = 0
+    }
+    if (y < 0) {
+      y = 0
+    }
+    if (x > 100) {
+      x = 100
+    }
+    if (y > 100) {
+      y = 100
+    }
+
+
+    let moveX = x - gameControl.width / 2
+    let moveY = y - gameControl.height / 2
+
+    game.player.speedX = moveX / 7
+    game.player.speedY = moveY / 7
+  }
+}
 
 //  Button Trigger
 
@@ -226,7 +261,4 @@ $('#scoreForm').submit(function (e) {
   }
 
   event.hideExcept('#ranking');
-
-  console.log(123)
-
 });
