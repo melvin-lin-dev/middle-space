@@ -267,8 +267,7 @@ class Game {
             obj.life -= bullet.power;
         }
         if (obj.life <= 0) {
-            this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.score));
-            if (obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins));
+            if (obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
             obj.sound.volume = this.volume;
             obj.sound.play();
             this.stats.score += obj.score;

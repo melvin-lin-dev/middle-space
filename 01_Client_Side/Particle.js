@@ -1,6 +1,7 @@
 class Particle {
-    constructor(x, y, type = -1) {
+    constructor(x, y, type = -1, score) {
         let total = type === -1 ? 8 : type;
+        console.log(type);
 
         this.particles = [];
 
@@ -12,7 +13,7 @@ class Particle {
             x: x,
             y: y,
             score: (score > 0 ? '+' : '') + score,
-        }
+        };
 
         for (let i = 0; i < total; i++) {
             this.particles.push({

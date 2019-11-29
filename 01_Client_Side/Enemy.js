@@ -12,6 +12,7 @@ class Enemy {
                 this.height = 50;
                 this.speed = 3.2;
                 this.score = 5;
+                this.coins = 2;
                 this.maxLife = 10;
                 break;
             case 2:
@@ -20,6 +21,7 @@ class Enemy {
                 this.height = 60;
                 this.speed = 3.6;
                 this.score = 10;
+                this.coins = 4;
                 this.maxLife = 20;
                 break;
         }
