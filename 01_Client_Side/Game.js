@@ -289,11 +289,11 @@ class Game {
   //  Game Over
 
   over() {
-    this.sound.pause();
-    this.pause = 1;
-    cancelAnimationFrame(this.rendering);
-
-    event.hideExcept('#scoreForm');
-    event.showCanvas(0);
+    // this.sound.pause();
+    // this.pause = 1;
+    // cancelAnimationFrame(this.rendering);
+    //
+    // event.hideExcept('#scoreForm');
+    // event.showCanvas(0);
   }
 }

@@ -11,6 +11,7 @@ html, body {
   font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
   font-weight: bold;
   background-color: #2a1d50;
+  overflow: hidden;
 }
 
 /* Layout */
@@ -33,11 +34,13 @@ html, body {
 }
 
 .full-width {
-  width: 960px;
+  /*width: 960px;*/
+  width: 100%;
 }
 
 .full-height {
-  height: 600px;
+  /*height: 600px;*/
+  height: 100%;
 }
 
 .row {
@@ -270,6 +273,8 @@ html, body {
   background-image: url("./assets/background.png");
   border: 1px solid #fff;
   background-size: 128px;
+  -webkit-background-size: contain;
+  background-size: contain;
 }
 
 .animate-canvas {

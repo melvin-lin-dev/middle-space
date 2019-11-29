@@ -2,6 +2,8 @@
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
+canvas.width = canvas.scrollWidth;
+canvas.height = canvas.scrollHeight;
 
 //  Starting Game
 let game = new Game();
