@@ -189,7 +189,7 @@ p {
 }
 
 #instructions * {
-    opacity: 0;
+    opacity: 1;
 }
 
 #instructions .animate {
@@ -198,17 +198,17 @@ p {
     animation-duration: .75s;
 }
 
-@keyframes animateInstructions {
-    0% {
-        opacity: 0;
-        transform: scale(0);
-    }
+/*@keyframes animateInstructions {*/
+/*    0% {*/
+/*        opacity: 0;*/
+/*        transform: scale(0);*/
+/*    }*/
 
-    70% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-}
+/*    70% {*/
+/*        opacity: 1;*/
+/*        transform: scale(1.2);*/
+/*    }*/
+/*}*/
 
 /* Game Menu */
 
@@ -360,6 +360,7 @@ p {
 .flex {
     display: flex;
 }
+
 /* joystick */
 
 #zone_joystick {
@@ -406,6 +407,7 @@ p {
 .loader-text {
     margin-top: 1rem;
 }
+
 /* Modal */
 .modal {
     position: fixed;
@@ -422,6 +424,7 @@ p {
     max-width: 90vw;
     padding-top: 10vh;
     margin: 0 auto;
+}
 
 .modal-content {
     background-color: #232832;
@@ -584,21 +587,21 @@ p {
     background-color: #db3532;
 }
 
-.shop button{
+.shop button {
     cursor: pointer;
 }
 
-.shop .close-shop-btn{
+.shop .close-shop-btn {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.enter-zone{
+.enter-zone {
     height: 40px;
     width: 40px;
-    background-color: rgba(219,63,61,.4);
-    border: 3px solid rgba(219,63,61,.8);
+    background-color: rgba(219, 63, 61, .4);
+    border: 3px solid rgba(219, 63, 61, .8);
     position: absolute;
     top: 110px;
     left: 150px;
@@ -607,24 +610,24 @@ p {
     transition: .4s transform;
 }
 
-.enter-zone.active{
+.enter-zone.active {
     transform: scale(1);
     animation: 1s enterZoneAnimation infinite .4s;
 }
 
-.enter-zone i{
+.enter-zone i {
     font-size: 14px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-@keyframes enterZoneAnimation{
-    0%,100%{
+@keyframes enterZoneAnimation {
+    0%, 100% {
         transform: scale(1);
     }
-    50%{
+    50% {
         transform: scale(1.2);
     }
 }

@@ -44,76 +44,8 @@
 
     <div id="instructions" class="absolute text-center">
         <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-        <!--        <h2 class="title">How to Play Star Battle.</h2>-->
-
-        <!--    <p>-->
-        <!--      1. Move the spaceship using the sensible areas in the screen;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      2. The timer present the time lapsed;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      3. The fuel counter show the remain fuel;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      4. During the flight, the spaceship needs to destroy the asteroids and enemy spaceships that are presented in the-->
-        <!--      space;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      5. You can shoot pressing Space Bar;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      6. If the spaceship hits a asteroid or another spaceship, you lose 15 points of fuel;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      7. Enemy spaceship needs 1 shot to be destroyed, you will get 5 points for each enemy destroyed;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      8. Asteroid needs 2 shots to be destroyed, you will get 10 points for each asteroid destroyed;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      9. If you destroy a friendly spaceship, you lose 10 points;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      10. During the flight, the spaceship needs to collect fuel in the space;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      11. You can pause the game clicking in a button pause, or pressing the letter "p";-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      12. Go beyond all limits;-->
-        <!--    </p>-->
-        <!--    <p>-->
-        <!--      Battle in Space with Star Battle Championship...-->
-        <!--    </p>-->
-
         <button class="btn start-game-btn" data-god="true">God Mode</button>
         <button class="btn start-game-btn">Start Game</button>
-    </div>
-
-    <div id="shop" class="absolute text-center shop">
-        <div>
-            <button class="btn close-shop-btn">&times;</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ship</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                </tbody>
-            </table>
-            <!--<button class="btn start-game-btn">Start Game</button>-->
-        </div>
-    </div>
-
-    <!-- Enter Zone -->
-
-    <div class="enter-zone">
-        <i>>></i>
     </div>
 
     <!-- Ranking -->
@@ -158,6 +90,33 @@
     <!-- Game Board -->
 
     <div id="gameBoard" class="absolute full-width full-height hide">
+
+        <div id="shop" class="absolute text-center shop">
+            <div>
+                <button class="btn close-shop-btn">&times;</button>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Ship</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+                <!--<button class="btn start-game-btn">Start Game</button>-->
+            </div>
+        </div>
+
+        <!-- Enter Zone -->
+
+        <div class="enter-zone">
+            <i>>></i>
+        </div>
+
+
         <!-- Menu and Stats -->
 
         <div id="gameMenu" class="absolute">
@@ -180,7 +139,6 @@
                 <img src="./assets/coins.png" alt="coin" class="coin">
             </div>
         </div>
-    </div>
 
         <!-- Controller -->
 
@@ -193,15 +151,18 @@
             <div id="fuel">15</div>
         </div>
 
-    <!--&lt;!&ndash; Shop Ship &ndash;&gt;-->
 
-    <!-- Canvas -->
-    <!--<img src="./assets/shopShip.png" alt="Shop Ship" class="shop-ship">-->
+        <!--&lt;!&ndash; Shop Ship &ndash;&gt;-->
 
-  <!-- Canvas -->
+        <!-- Canvas -->
+        <!--<img src="./assets/shopShip.png" alt="Shop Ship" class="shop-ship">-->
 
-    <div class="collide-animation"></div>
-    <canvas id="canvas" class="opacity-5"></canvas>
+        <!-- Canvas -->
+
+        <div class="collide-animation"></div>
+        <canvas id="canvas" class="opacity-5"></canvas>
+    </div>
+
 </div>
 
 <div class="modal setting hide">

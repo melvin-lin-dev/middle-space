@@ -19,12 +19,12 @@ class Player {
 
         this.speedX = 0;
         this.speedY = 0;
-    // Declare Entering Zone
-    this.defaultScale = 1;
-    this.scale = this.defaultScale;
-    this.rangeScale = .01;
-    this.entering = false;
-    this.shopMode = '';
+        // Declare Entering Zone
+        this.defaultScale = 1;
+        this.scale = this.defaultScale;
+        this.rangeScale = .01;
+        this.entering = false;
+        this.shopMode = '';
 
 
         this.sound = new Audio();
@@ -58,12 +58,12 @@ class Player {
 
         //  Declaring Bullet
 
-    this.bullets = [];
+        this.bullets = [];
 
-    // Entering Position
-      let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
-      this.enterX = enterZoneRect.left - enterZoneRect.width / 2 - this.width / 2;
-      this.enterY = enterZoneRect.top - enterZoneRect.height / 2 - this.height / 2;
+        // Entering Position
+        let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
+        this.enterX = enterZoneRect.left - enterZoneRect.width / 2 - this.width / 2;
+        this.enterY = enterZoneRect.top - enterZoneRect.height / 2 - this.height / 2;
 
         this.shooting = false
         this.do_shoot = null
@@ -94,16 +94,16 @@ class Player {
 
         //  Rendering Plane
 
-      let playerWidth = this.width * this.scale;
-      let playerHeight = this.height * this.scale;
-      let playerX = this.x - 22 * (this.defaultScale - this.scale) + this.width - playerWidth;
-      let playerY = this.y + (this.height - playerHeight) / 2;
+        let playerWidth = this.width * this.scale;
+        let playerHeight = this.height * this.scale;
+        let playerX = this.x - 22 * (this.defaultScale - this.scale) + this.width - playerWidth;
+        let playerY = this.y + (this.height - playerHeight) / 2;
 
-    ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
+        ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
 
-    if((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)){
-        this[this.shopMode+'Shop']();
-    }
+        if ((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)) {
+            this[this.shopMode + 'Shop']();
+        }
         //  Collision for later
         // this.collision.x = this.x + 5
         // this.collision.y = this.y + (this.height - this.collision.height) / 2
@@ -152,12 +152,10 @@ class Player {
         //  Plane Movement
         let exhaust = this.exhaust;
 
-      if(this.shopMode) {
-        this.x += this.scale * (this.shopMode === 'leaving' ? -1 : 1);
-        return false;
-      }
-
-    let exhaust = this.exhaust;
+        if (this.shopMode) {
+            this.x += this.scale * (this.shopMode === 'leaving' ? -1 : 1);
+            return false;
+        }
 
         this.x += this.speedX;
         this.y += this.speedY;
@@ -215,29 +213,29 @@ class Player {
 
     }
 
-  setEnteringShop() {
-      this.x = this.enterX;
-      this.y = this.enterY;
+    setEnteringShop() {
+        this.x = this.enterX;
+        this.y = this.enterY;
 
-      this.entering = true;
-      this.shopMode = 'entering';
-  }
-
-  enteringShop(){
-    this.scale -= this.rangeScale;
-
-    if(this.scale <= 0){
-       game.shopShip.shopping();
+        this.entering = true;
+        this.shopMode = 'entering';
     }
-  }
 
-  leavingShop(){
-      this.scale += this.rangeScale;
+    enteringShop() {
+        this.scale -= this.rangeScale;
 
-      if(this.scale >= this.defaultScale){
-          this.entering = false;
-          this.shopMode = '';
-          game.shopShip.leave();
-      }
-  }
+        if (this.scale <= 0) {
+            game.shopShip.shopping();
+        }
+    }
+
+    leavingShop() {
+        this.scale += this.rangeScale;
+
+        if (this.scale >= this.defaultScale) {
+            this.entering = false;
+            this.shopMode = '';
+            game.shopShip.leave();
+        }
+    }
 }
