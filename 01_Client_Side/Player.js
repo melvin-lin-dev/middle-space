@@ -11,7 +11,7 @@ class Player {
             x: 10,
             width: 75,
             height: 65
-        }
+        };
 
         this.x = 100;
         this.y = (canvas.height - this.height) / 2;
@@ -60,14 +60,16 @@ class Player {
         this.bullets = [];
 
         // Entering Position
-        let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
-        this.enterX = enterZoneRect.left - enterZoneRect.width / 2 - this.width / 2;
-        this.enterY = enterZoneRect.top - enterZoneRect.height / 2 - this.height / 2;
+        setTimeout(() => {
+            let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
+            this.enterX = enterZoneRect.left - enterZoneRect.width / 2 - this.width / 2;
+            this.enterY = enterZoneRect.top - enterZoneRect.height / 2 - this.height / 2;
+        });
 
-        this.shooting = false
-        this.do_shoot = null
-        this.shoot_timer = null
-        this.last_shoot = null
+        this.shooting = false;
+        this.do_shoot = null;
+        this.shoot_timer = null;
+        this.last_shoot = null;
     }
 
     render() {
@@ -80,9 +82,9 @@ class Player {
 
         let exhaust = this.exhaust;
 
-        let exhaustWidth = exhaust.width * exhaust.scale;
-        let exhaustHeight = exhaust.height * exhaust.scale;
-        let exhaustX = this.x - exhaustWidth / 2 + exhaust.width - exhaustWidth;
+        let exhaustWidth = exhaust.width * exhaust.scale * this.scale;
+        let exhaustHeight = exhaust.height * exhaust.scale * this.scale;
+        let exhaustX = this.x - exhaustWidth / 2 * this.scale + exhaust.width - exhaustWidth;
         let exhaustY = this.y + (this.height - exhaustHeight) / 2;
 
         ctx.save();

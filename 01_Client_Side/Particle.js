@@ -1,7 +1,6 @@
 class Particle {
     constructor(x, y, type = -1, score) {
         let total = type === -1 ? 8 : type;
-        console.log(type);
 
         this.particles = [];
 

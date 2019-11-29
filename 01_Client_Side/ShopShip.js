@@ -1,7 +1,7 @@
 class ShopShip {
     constructor() {
-        this.width = 250;
-        this.height = 130;
+        this.width = 120;
+        this.height = 75;
 
         this.x = 0;
         this.y = 50;
@@ -13,14 +13,14 @@ class ShopShip {
 
         this.resetXLocation();
 
-        this.arrivedLocationX = 200;
+        this.arrivedLocationX = 120;
 
         this.arrived = false;
         this.mode = 'arriving';
 
-        this.shopTimeDefault = 20;
+        this.shopTimeDefault = 0;
 
-        this.waitingTime = 5000;
+        this.waitingTime = 50000;
 
         this.shopTimeout = null;
     }

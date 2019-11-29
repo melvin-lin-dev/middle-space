@@ -60,7 +60,10 @@ class Event {
         if(!shop.hasClass('active')){
             setTimeout(() => {
                 game.player.shopMode = 'leaving';
+                $('#zone_joystick').toggleClass('d-none');
             }, 700);
+        }else{
+            $('#zone_joystick').toggleClass('d-none');
         }
     }
 
@@ -157,6 +160,10 @@ $('.pause').on('click', function () {
 
 $('.sound').on('click', function () {
     event.sound();
+});
+
+$('.close-shop-btn').on('click', function () {
+    event.toggleShop();
 });
 
 //  Score Form Submit

@@ -352,7 +352,7 @@ class Game {
 
             if (this.IS_CHANGING_LEVEL && this.field_is_empty) {
                 if (!this.level_timeout) {
-                    console.log('changing-level-2')
+                    // console.log('changing-level-2')
                     this.level_timeout = setTimeout(() => {
                         this.stats.level += 1;
 
