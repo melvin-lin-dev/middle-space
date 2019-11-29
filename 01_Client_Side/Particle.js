@@ -1,10 +1,10 @@
 class Particle {
     constructor(x, y, score = 0) {
-        let total = 8;
+        let total = 6;
 
         this.particles = [];
 
-        this.r = 5;
+        this.r = 4;
 
         this.opacity = 1;
 
@@ -18,7 +18,7 @@ class Particle {
             this.particles.push({
                 x: x - this.r / 2,
                 y: y - this.r / 2,
-                speed: Math.floor(Math.random() * 8) + 2,
+                speed: Math.floor(Math.random() * 6) + 1,
                 angle: Math.floor(Math.random() * 360)
             });
         }
@@ -44,6 +44,18 @@ class Particle {
             particle.x += mx;
             particle.y += my;
         }
-        this.opacity -= .06;
+
+        ctx.save()
+        ctx.beginPath()
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.score.score > 0 ? "#0f0" : "#f00"
+        ctx.font = "bold 20px Rockwell"
+        ctx.fillText(this.score.score, this.score.x, this.score.y)
+        ctx.closePath()
+        ctx.restore()
+
+        this.score.y -= 2
+
+        this.opacity -= .02;
     }
 }

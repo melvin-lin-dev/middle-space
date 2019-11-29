@@ -2,11 +2,10 @@ class Event {
     shoot(s) {
         if (game.pause === -1) {
             game.SHOOT = s;
-            if (game.SHOOT && !game.player.IS_SHOOTING) {
-                game.player.IS_SHOOTING = 1;
-                game.player.shoot();
+            if (game.SHOOT && !game.player.shooting) {
+                game.player.shoot()
             }
-            game.player.IS_SHOOTING = s;
+            game.player.shooting = s
         }
     }
 
@@ -40,6 +39,7 @@ class Event {
         $('#ranking').addClass('hide');
 
         $(id).removeClass('hide');
+
     }
 
     showCanvas(s) {
@@ -79,62 +79,49 @@ window.addEventListener('keyup', function (e) {
     }
 });
 
-let control = $('.game-control')
-let controlTouch = $('#gameControlTouch')
-
 //  Touch Function
 
 $(document).on('touchstart', function (e) {
-    move(e)
+    if ($(e.target).hasClass('game-shoot')) {
+        event.shoot(1)
+    }
 })
-
-$(document).on('touchmove', function (e) {
-    move(e)
-})
+//     .on('mousedown', function (e) {
+//     if ($(e.target).hasClass('game-shoot')) {
+//         event.shoot(1)
+//     }
+// })
 
 
 $(document).on('touchend', function (e) {
-    game.player.speedX = 0
-    game.player.speedY = 0
-    event.shoot(0)
+    if (game.player) {
+        game.player.speedX = 0
+        game.player.speedY = 0
+        event.shoot(0)
+    }
 })
 
+function moveJoystick(data) {
+    let zoneJoystick = document.getElementById('zone_joystick')
 
-function move(e) {
-    if ($(e.target).data('control') === 'move') {
+    if (data && data.position) {
         let gameControl = {
-            left: control.offset().left,
-            top: control.offset().top,
-            width: control.width(),
-            height: control.height(),
+            left: $(zoneJoystick).offset().left,
+            top: $(zoneJoystick).offset().top,
+            width: $(zoneJoystick).width(),
+            height: $(zoneJoystick).height(),
         }
 
-        let touch = e.touches[0]
+        let touch = data.position
 
-        let x = touch.clientX - gameControl.left
-        let y = touch.clientY - gameControl.top
-
-        if (x < 0) {
-            x = 0
-        }
-        if (y < 0) {
-            y = 0
-        }
-        if (x > 100) {
-            x = 100
-        }
-        if (y > 100) {
-            y = 100
-        }
-
+        let x = touch.x - gameControl.left
+        let y = touch.y - gameControl.top
 
         let moveX = x - gameControl.width / 2
         let moveY = y - gameControl.height / 2
 
-        game.player.speedX = moveX / 7
-        game.player.speedY = moveY / 7
-    } else if ($(e.target).data('control') === 'shoot') {
-        event.shoot(1)
+        game.player.speedX = moveX / 6
+        game.player.speedY = moveY / 6
     }
 }
 
@@ -146,14 +133,6 @@ $('.pause').on('click', function () {
 
 $('.sound').on('click', function () {
     event.sound();
-});
-
-$('.fontplus').on('click', function () {
-    event.fontPlus();
-});
-
-$('.fontmin').on('click', function () {
-    event.fontMin();
 });
 
 //  Score Form Submit

@@ -1,17 +1,15 @@
 class Game {
     constructor() {
-        this.assetUrl = './assets/';
         this.volume = 1;
-
-        this.sound = new Audio();
-        this.sound.src = './sound/background.mp3';
-        this.sound.loop = true;
-        this.sound.volume = this.volume
     }
 
     //  Starting Game
 
     start() {
+        this.sound = audioAssets['background.mp3'];
+        this.sound.loop = true;
+        this.sound.volume = this.volume
+
         //  Declaring Objects
         this.backgroundPosition = 0;
 
@@ -65,7 +63,7 @@ class Game {
             time: 0,
             countTime: 0,
             score: 0,
-            fuel: 15,
+            fuel: 20,
         };
 
         //  Clear Previous Game
@@ -75,19 +73,34 @@ class Game {
         this.rendering = null;
 
         event.hideExcept('#gameBoard');
+        $('#zone_joystick').removeClass('hide');
         event.showCanvas(1);
+
+        let zoneJoystick = document.getElementById('zone_joystick')
+
+        var joystick = nipplejs.create({
+            zone: zoneJoystick,
+            mode: 'static',
+            position: {left: '50%', top: '50%'},
+            color: 'black',
+            size: 100,
+        });
+
+        joystick.on('start end', function (evt, data) {
+            moveJoystick(data)
+        }).on('move', function (evt, data) {
+            moveJoystick(data)
+        }).on('dir:up plain:up dir:left plain:left dir:down ' +
+            'plain:down dir:right plain:right',
+            function (evt, data) {
+                moveJoystick(data)
+            }
+        ).on('pressure', function (evt, data) {
+            moveJoystick(data)
+        });
 
         this.render = this.render.bind(this);
         this.render();
-
-        let statOverlay = $('.stat-overlay')
-
-        this.scorePosition = {
-            left: statOverlay.offset().left + statOverlay.width() / 2 + 10,
-            top: 20
-        }
-
-        window.scrollTo(0, 1);
     }
 
     // Rendering Game
@@ -211,24 +224,17 @@ class Game {
         // Handle Plane Collided
         if (obj) {
             obj.life = 0;
-
-            this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2));
-
-            obj.sound.volume = this.volume;
-            obj.sound.play();
-            obj.generateLocation();
-            this.stats.score += obj.score;
+            this.collided(obj)
         }
 
         this.player.sound.volume = this.volume;
         this.player.sound.play();
-        $('#canvas').addClass('animate-canvas');
+        $('.collide-animation').addClass('animate-canvas');
 
-        if (this.animateCanvas)
-            clearTimeout(this.animateCanvas);
+        if (this.animateCanvas) clearTimeout(this.animateCanvas);
 
         this.animateCanvas = setTimeout(function () {
-            $('#canvas').removeClass('animate-canvas');
+            $('.collide-animation').removeClass('animate-canvas');
         }, 1000);
 
         this.stats.fuel -= 15;
@@ -246,6 +252,9 @@ class Game {
         }
     }
 
+    addParticles(obj) {
+    }
+
     checkCollision(a, b) {
         // Checking Collision
         if (a.x <= b.x + b.width &&
@@ -261,14 +270,14 @@ class Game {
     renderText() {
         //  Rendering Stats
 
-        if (this.stats.fuel > 30)
-            this.stats.fuel = 30;
+        if (this.stats.fuel > 50)
+            this.stats.fuel = 50;
         if (this.stats.fuel < 0)
             this.stats.fuel = 0;
 
         $('.score-text').html(this.stats.score);
         $('.time-text').html(this.stats.time);
-        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 30 * 100) + '%');
+        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 50 * 100) + '%');
     }
 
     countTime() {
@@ -287,7 +296,7 @@ class Game {
     animateBackground() {
         //  Animating Background
 
-        $('canvas').css('background-position', this.backgroundPosition + 'px');
+        $('.container').css('background-position', this.backgroundPosition + 'px');
 
         this.backgroundPosition--;
     }
@@ -300,13 +309,12 @@ class Game {
     //  Game Over
 
     over() {
-        if (localStorage.getItem('god-mode') != false) {
-            this.sound.pause();
-            this.pause = 1;
-            cancelAnimationFrame(this.rendering);
+        this.sound.pause();
+        this.pause = 1;
+        $('#zone_joystick').html('')
+        cancelAnimationFrame(this.rendering);
 
-            event.hideExcept('#scoreForm');
-            event.showCanvas(0);
-        }
+        event.hideExcept('#scoreForm');
+        event.showCanvas(0);
     }
 }

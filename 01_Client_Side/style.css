@@ -15,7 +15,6 @@ html, body {
     overflow: hidden;
     width: 100vw;
     height: 100vh;
-    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -28,16 +27,15 @@ html, body {
     height: 100vh;
     justify-content: center;
     align-items: center;
-    display: flex;
 }
 
 .opacity-5 {
-    opacity: 0;
+    opacity: .3;
 }
 
 .absolute {
     position: absolute;
-    z-index: 1;
+    z-index: 999;
 }
 
 .absolute-center {
@@ -175,14 +173,14 @@ html, body {
 }
 
 .title {
-  margin-top: 0;
-  margin-bottom: .6rem;
+    margin-top: 0;
+    margin-bottom: .6rem;
     font-weight: bold;
 }
 
 p {
-  margin-top: 0;
-  margin-bottom: .4rem;
+    margin-top: 0;
+    margin-bottom: .4rem;
 }
 
 #instructions .btn {
@@ -243,6 +241,19 @@ p {
     align-items: center;
 }
 
+.btn-menu {
+    height: 30px;
+    width: 30px;
+    fill: #fff;
+    opacity: .82;
+}
+
+.btn-menu-background {
+    padding: 5px;
+    background-color: #db3f3d;
+    border-radius: 4px;
+}
+
 .stat-overlay span {
     font-size: 1.2rem;
     margin: 0 10px;
@@ -256,6 +267,17 @@ p {
     height: 100px;
     background-color: rgba(0, 0, 0, .4);
     border-radius: 100%;
+}
+
+.game-control-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
 }
 
 .game-shoot {
@@ -305,11 +327,18 @@ p {
 /* Canvas */
 
 #canvas {
-    background-image: url("./assets/background.png");
-    background-size: 128px;
-    background-color: #2a1d50;
     width: 100vw;
     position: relative;
+}
+
+.collide-animation {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: .4;
 }
 
 .animate-canvas {
@@ -330,3 +359,103 @@ p {
 .flex {
     display: flex;
 }
+
+/* joystick */
+
+#zone_joystick {
+    position: absolute;
+    z-index: 99999999999999;
+    bottom: 100px;
+    left: 100px;
+    transform: translate(50%, 50%);
+}
+
+/* loader */
+
+.loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #2a1d50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999999999999999999;
+}
+
+.loader-overlay {
+    height: 20px;
+    width: 200px;
+    max-width: 100%;
+    background-color: #ccc;
+    position: relative;
+}
+
+.loader-item {
+    position: absolute;
+    height: 100%;
+    width: 0;
+    background-color: #db3f3d;
+}
+
+.loader-text {
+    margin-top: 1rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999999999999;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.modal-dialog {
+    width: 600px;
+    max-width: 90vw;
+    padding-top: 10vh;
+    margin: 0 auto;
+}
+
+.modal-content {
+    background-color: #232832;
+    border-radius: 10px;
+}
+
+.modal-body,
+.modal-header,
+.modal-footer {
+    padding: 20px 30px;
+}
+
+.modal-header {
+    padding-bottom: 0;
+}
+
+.modal-footer {
+    padding-top: 0;
+    text-align: right;
+}
+
+.modal-title {
+    margin: 0;
+}
+
+/* form */
+.input-row {
+    width: 100%;
+    display: flex;
+}
+
+.input-row .input-checkbox {
+    margin-left: auto;
+}
+

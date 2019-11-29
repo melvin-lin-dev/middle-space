@@ -3,8 +3,6 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
-window.blockMenuHeaderScroll = false;
-
 //  Starting Game
 let game = new Game();
 let gameBtnTimeout = null;
@@ -22,9 +20,19 @@ $(function () {
             clearTimeout(gameBtnTimeout);
         gameBtnTimeout = setTimeout(async function () {
             const body = document.querySelector('body')
-            await body.requestFullscreen()
-            game.start();
+            if (body.requestFullscreen) {
+                await body.requestFullscreen()
+            } else if (body.webkitRequestFullscreen) {
+                await body.webkitRequestFullscreen()
+            } else if (body.mozRequestFullscreen) {
+                await body.mozRequestFullscreen()
+            } else if (body.msRequestFullscreen) {
+                await body.msRequestFullscreen()
+            }
 
+            setTimeout(function () {
+                game.start();
+            }, 1000)
         }, 1000);
     });
 });
@@ -34,10 +42,11 @@ document.onfullscreenchange = function (e) {
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
 
-        screen.orientation.lock("landscape")
+        try {
+          screen.orientation.lock("landscape")
+        } catch (e) {
 
-        setTimeout(function () {
-        }, 1000)
+        }
     } else {
         game.sound.pause()
         cancelAnimationFrame(game.rendering);
@@ -51,7 +60,7 @@ function resetHeight() {
     // reset the body height to that of the inner browser
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
-    document.body.style.height = window.innerHeight + "px";
+    // document.body.style.height = window.innerHeight + "px";
     $('.full-height').css('height', window.innerHeight + 'px')
 }
 
