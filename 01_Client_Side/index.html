@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <!-- Meta -->
+  <!-- Meta -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
 
     <!-- Style -->
 
-    <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
@@ -48,35 +48,35 @@
         <button class="btn start-game-btn">Start Game</button>
     </div>
 
-    <!-- Ranking -->
+  <!-- Ranking -->
 
-    <div id="ranking" class="absolute text-center hide">
-        <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-        <h2 class="title">Leaderboard</h2>
+  <div id="ranking" class="absolute text-center hide">
+    <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
+    <h2 class="title">Leaderboard</h2>
 
-        <div class="table-overlay" style="overflow: hidden!important;">
-            <table>
-                <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                    <th>Time</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-
-        <div class="table-overlay">
-            <table class="table-rank">
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <button class="btn start-game-btn">Start Game</button>
+    <div class="table-overlay">
+      <table>
+        <thead>
+        <tr>
+          <th>Position</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Time</th>
+        </tr>
+        </thead>
+      </table>
     </div>
 
-    <!-- Score Form -->
+    <div class="table-overlay">
+      <table class="table-rank">
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <button class="btn start-game-btn">Start Game</button>
+  </div>
+
+  <!-- Score Form -->
 
     <form id="scoreForm" class="absolute text-center hide" style="z-index: 2">
         <h1 class="title">Game Over</h1>
@@ -87,7 +87,7 @@
         </div>
     </form>
 
-    <!-- Game Board -->
+  <!-- Game Board -->
 
     <div id="gameBoard" class="absolute full-width full-height hide">
 
@@ -139,12 +139,14 @@
                 <img src="./assets/coins.png" alt="coin" class="coin">
             </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Controller -->
+    <!-- Controller -->
 
         <div class="game-control game-shoot"></div>
 
-        <!-- Fuel Counter -->
+    <!-- Fuel Counter -->
 
         <div id="fuelCounter">
             <img src="./assets/fuel.png" alt="Fuel Icon" class="fuel-icon">
@@ -157,7 +159,7 @@
         <!-- Canvas -->
         <!--<img src="./assets/shopShip.png" alt="Shop Ship" class="shop-ship">-->
 
-        <!-- Canvas -->
+  <!-- Canvas -->
 
         <div class="collide-animation"></div>
         <canvas id="canvas" class="opacity-5"></canvas>
