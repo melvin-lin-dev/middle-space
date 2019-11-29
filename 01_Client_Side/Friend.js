@@ -13,6 +13,7 @@ class Friend {
     this.speed = 4;
 
     this.score = -10;
+    this.coins = 0;
 
     this.sound = new Audio();
     this.sound.src = './sound/destroyed.mp3';

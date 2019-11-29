@@ -3,7 +3,7 @@ $(function () {
 
   for (let i = 0; i < items.length; i++) {
     setTimeout( function () {
-      $(items[i]).addClass('animate');
+      // $(items[i]).addClass('animate');
     }, i * 25)
   }
 });

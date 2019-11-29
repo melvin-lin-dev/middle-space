@@ -67,6 +67,26 @@ class Event {
     else
       $('canvas').addClass('opacity-5');
   }
+
+  toggleShop(){
+      game.pause = game.pause === -1 ? 1 : -1;
+      let shop = $('#shop');
+
+      shop.toggleClass('active');
+      shop.css('transition-delay', shop.hasClass('active') ? 'initial' : '.4s');
+      $('#shop > div').css('transition-delay', shop.hasClass('active') ? '.4s' : 'initial');
+
+      if(!shop.hasClass('active')){
+        setTimeout(() => {
+          game.player.shopMode = 'leaving';
+        }, 700);
+      }
+  }
+
+    toggleEnterZone() {
+        $('.enter-zone').toggleClass('active');
+    }
+
 }
 
 let event = new Event();
@@ -164,6 +184,10 @@ $('.fontplus').on('click', function () {
 
 $('.fontmin').on('click', function () {
   event.fontMin();
+});
+
+$('.close-shop-btn').on('click', function(){
+  event.toggleShop();
 });
 
 //  Score Form Submit

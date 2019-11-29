@@ -1,306 +1,477 @@
 /*  Body */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html, body {
-  padding: 0;
-  margin: 0;
-  color: #fff;
-  font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
-  font-weight: bold;
-  background-color: #2a1d50;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
+    font-weight: bold;
+    background-color: #2a1d50;
 }
 
 /* Layout */
 
 .container {
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .opacity-5 {
-  opacity: .35;
+    opacity: .35;
 }
 
 .absolute {
-  position: absolute;
-  z-index: 1;
+    position: absolute;
+    z-index: 1;
 }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .full-height {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .row {
-  display: flex;
+    display: flex;
 }
 
 .col {
-  flex: auto;
-  padding: 10px;
+    flex: auto;
+    padding: 10px;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 /* Text */
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .text-right {
-  text-align: right;
+    text-align: right;
 }
 
 /* Logo */
 
 .logo {
-  height: 80px;
+    height: 80px;
 }
 
 /* Input */
 
 .input {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: bold;
-  height: 29px;
-  outline: none;
-  border: none;
-  text-align: center;
-  color: #555;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    height: 29px;
+    outline: none;
+    border: none;
+    text-align: center;
+    color: #555;
 }
 
 /* Button */
 
 .btn {
-  background-color: #db3f3d;
-  background-position: center;
-  padding: 5px 12px;
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: bold;
-  color: inherit;
-  outline: none;
-  border: none;
-  transition: all 1s;
+    background-color: #db3f3d;
+    background-position: center;
+    padding: 5px 12px;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    outline: none;
+    border: none;
+    transition: all 1s;
 }
 
 .btn:hover {
-  background: #f19e0d radial-gradient(circle, transparent 1%, #f19e0d 1%) center/15000%;
+    background: #f19e0d radial-gradient(circle, transparent 1%, #f19e0d 1%) center/15000%;
 }
 
 .btn:active {
-  background-color: #fff;
-  background-size: 100%;
-  transition: backround 0s;
+    background-color: #fff;
+    background-size: 100%;
+    transition: backround 0s;
 }
 
 /* Table */
 
 .table-overlay {
-  max-height: 300px;
-  overflow: auto;
-  margin: 10px 0;
+    max-height: 300px;
+    overflow: auto;
+    margin: 10px 0;
 }
 
 .table-overlay::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 .table-overlay::-webkit-scrollbar-thumb {
-  background-color: #eee;
-  border-radius: 10px;
+    background-color: #eee;
+    border-radius: 10px;
 }
 
 .table-overlay::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
+    background-color: #aaa;
 }
 
 .table-overlay th,
 .table-overlay td {
-  text-align: center;
-  font-weight: bold;
-  width: 80px;
-  padding: 5px 0;
+    text-align: center;
+    font-weight: bold;
+    width: 80px;
+    padding: 5px 0;
 }
 
 /* Instructions */
 
 #instructions {
-  max-width: 960px;
-  padding: 0 20px;
+    max-width: 960px;
+    padding: 0 20px;
 }
 
 #instructions .title,
 #instructions p {
-  margin: .5rem 0;
-  font-weight: bold;
+    margin: .5rem 0;
+    font-weight: bold;
 }
 
 #instructions .btn {
-  margin-top: .5rem;
+    margin-top: .5rem;
 }
 
 #instructions * {
-  opacity: 0;
+    opacity: 0;
 }
 
 #instructions .animate {
-  opacity: 1;
-  animation-name: animateInstructions;
-  animation-duration: .75s;
+    opacity: 1;
+    animation-name: animateInstructions;
+    animation-duration: .75s;
 }
 
 @keyframes animateInstructions {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
 
-  70% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
+    70% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
 /* Game Menu */
 
 #gameBoard img {
-  height: 50px;
-  opacity: .85;
-  vertical-align: top;
+    height: 50px;
+    opacity: .85;
+    vertical-align: top;
 }
 
 #gameBoard img:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 #gameMenu {
-  top: 0;
-  width: 100%;
+    top: 0;
+    width: 100%;
 }
 
 .stat-overlay {
-  background-color: rgba(255, 255, 255, .3);
-  margin-top: 10px;
-  border-radius: 50px;
+    background-color: rgba(255, 255, 255, .3);
+    margin-top: 10px;
+    border-radius: 50px;
 }
 
 .stat-overlay span {
-  font-size: 1.8em;
-  line-height: 50px;
-  margin: 0 10px;
+    font-size: 1.8em;
+    line-height: 50px;
+    margin: 0 10px;
 }
 
 #gameControl .arrow {
-  position: absolute;
+    position: absolute;
 }
 
 .arrow-top {
-  left: 100px;
-  bottom: 120px;
-  transform: rotate(-45deg);
+    left: 100px;
+    bottom: 120px;
+    transform: rotate(-45deg);
 }
 
 .arrow-left {
-  left: 60px;
-  bottom: 80px;
-  transform: rotate(-135deg);
+    left: 60px;
+    bottom: 80px;
+    transform: rotate(-135deg);
 }
 
 .arrow-right {
-  left: 140px;
-  bottom: 80px;
-  transform: rotate(45deg);
+    left: 140px;
+    bottom: 80px;
+    transform: rotate(45deg);
 }
 
 .arrow-bottom {
-  left: 100px;
-  bottom: 40px;
-  transform: rotate(135deg);
+    left: 100px;
+    bottom: 40px;
+    transform: rotate(135deg);
 }
 
 #fuelCounter {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  background-color: #fff;
-  opacity: 0.7;
-  width: 450px;
-  height: 32px;
-  border-radius: 100px;
-  padding-left: 30px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: #fff;
+    opacity: 0.7;
+    width: 450px;
+    height: 32px;
+    border-radius: 100px;
+    padding-left: 30px;
 }
 
 #fuelCounter #fuel {
-  background-color: #f19e0d;
-  width: 50%;
-  height: 100%;
-  border-radius: 100px;
-  line-height: 32px;
-  padding-right: 15px;
-  font-size: 18px;
-  transition: all 1s;
+    background-color: #f19e0d;
+    width: 50%;
+    height: 100%;
+    border-radius: 100px;
+    line-height: 32px;
+    padding-right: 15px;
+    font-size: 18px;
+    transition: all 1s;
 }
 
 .fuel-icon {
-  position: absolute;
-  left: 0;
-  top: 70%;
-  transform: translateY(-70%);
-  opacity: 1 !important;
-  height: 65px !important;
+    position: absolute;
+    left: 0;
+    top: 70%;
+    transform: translateY(-70%);
+    opacity: 1 !important;
+    height: 65px !important;
 }
 
 /* Canvas */
 
 #canvas {
-  background-image: url("./assets/background.png");
-  border: 1px solid #fff;
-  background-size: 128px;
-  width: 100vw;
-  height: 100vh;
+    background-image: url("./assets/background.png");
+    border: 1px solid #fff;
+    background-size: 128px;
+    width: 100vw;
+    height: 100vh;
 }
 
 .animate-canvas {
-  animation-name: animateCanvas;
-  animation-duration: .25s;
-  animation-iteration-count: infinite;
+    animation-name: animateCanvas;
+    animation-duration: .25s;
+    animation-iteration-count: infinite;
 }
 
 @keyframes animateCanvas {
-  0% {
-    background-color: transparent;
-  }
+    0% {
+        background-color: transparent;
+    }
 
-  25% {
-    background-color: #db3f3d;
-    transform: translateX(-10px);
-  }
+    25% {
+        background-color: #db3f3d;
+        transform: translateX(-10px);
+    }
 
-  50% {
-    background-color: transparent;
-  }
+    50% {
+        background-color: transparent;
+    }
 
-  75% {
-    background-color: #db3f3d;
-    transform: translateX(10px);
-  }
+    75% {
+        background-color: #db3f3d;
+        transform: translateX(10px);
+    }
 
-  100% {
-    background-color: transparent;
-  }
+    100% {
+        background-color: transparent;
+    }
 }
 
+.shop-ship {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 130px;
+    margin: 50px 200px;
+    opacity: .8;
+}
+
+.shop {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('./assets/background-shop.png');
+    height: 100vh;
+    width: 100vw;
+    transition: .4s all;
+    transform: scale(0);
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 4;
+}
+
+.shop > div {
+    width: calc(100vw - 500px);
+    height: calc(100vh - 200px);
+    background-color: white;
+    border-radius: 5px;
+    transition: .4s all .5s;
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.shop.active {
+    transform: scale(1);
+}
+
+.shop.active > div {
+    max-height: calc(100vh + 100px);
+}
+
+.shop img {
+    width: 100%;
+}
+
+.shop p {
+    color: black;
+    font-weight: normal;
+}
+
+.shop table {
+    width: 100%;
+    color: black;
+    border-collapse: collapse;
+    height: 100%;
+}
+
+.shop th {
+    border-bottom: 2px solid #ccc;
+    padding: 9px 15px;
+}
+
+.shop td {
+    padding: 10px 20px;
+    border: none;
+}
+
+.shop tr > *:nth-child(1) {
+    width: 240px;
+}
+
+.shop tr > *:nth-child(2) {
+    width: 60%;
+}
+
+.shop tr > *:nth-child(3) {
+    width: 140px;
+}
+
+.shop .btn {
+    color: white;
+}
+
+.shop tbody tr:nth-child(even) td {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.shop tbody {
+    width: 100%;
+    height: calc(100% - 38px - 10px);;
+    display: block;
+    overflow-y: scroll;
+}
+
+.shop tbody tr, .shop thead {
+    table-layout: fixed;
+    display: table;
+}
+
+.shop tr {
+    width: 100%;
+}
+
+.shop thead {
+    width: calc(100% - 1em);
+}
+
+.shop tbody::-webkit-scrollbar {
+    width: 5px;
+}
+
+.shop tbody::-webkit-scrollbar-track {
+    background-color: #ccc;
+}
+
+.shop tbody::-webkit-scrollbar-thumb {
+    background-color: #db3f3d;
+}
+
+.shop tbody::-webkit-scrollbar-thumb:hover {
+    background-color: #db3532;
+}
+
+.shop button{
+    cursor: pointer;
+}
+
+.shop .close-shop-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.enter-zone{
+    height: 40px;
+    width: 40px;
+    background-color: rgba(219,63,61,.4);
+    border: 3px solid rgba(219,63,61,.8);
+    position: absolute;
+    top: 110px;
+    left: 150px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: .4s transform;
+}
+
+.enter-zone.active{
+    transform: scale(1);
+    animation: 1s enterZoneAnimation infinite .4s;
+}
+
+.enter-zone i{
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+@keyframes enterZoneAnimation{
+    0%,100%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+}
