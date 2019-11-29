@@ -21,7 +21,7 @@ html, body {
 
 .container {
     background-image: url("./assets/background.png");
-    background-size: 128px;
+    background-size: contain;
     width: 100vw;
     height: 100vh;
     justify-content: center;
@@ -187,7 +187,7 @@ p {
 }
 
 #instructions * {
-  opacity: 0;
+  /*opacity: 0;*/
 }
 
 #instructions .animate {

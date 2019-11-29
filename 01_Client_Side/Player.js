@@ -1,7 +1,6 @@
 class Player {
     constructor() {
         //  Declaring Plane Items
-
         this.img = imageAssets['plane.png'];
 
         this.width = 65;

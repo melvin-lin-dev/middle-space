@@ -315,7 +315,7 @@ class Game {
         if (stats.countTime % 60 === 0) {
             stats.time++;
             stats.fuel--;
-            if(stats.shopTime) stats.shopTime--;
+            if (stats.shopTime) stats.shopTime--;
         }
     }
 
@@ -348,8 +348,6 @@ class Game {
 
     // random number generators
     rng() {
-        console.log(this.stats.distance)
-        console.log('changing-level', this.field_is_empty, this.level_timeout)
         if (this.stats.distance % 2000 === 0) {
             this.IS_CHANGING_LEVEL = true;
 
