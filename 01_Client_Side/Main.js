@@ -10,8 +10,8 @@ let game = new Game();
 let gameBtnTimeout = null;
 
 $(function () {
-    // game.start();//temp
-    // game.volume = 0; //temp
+    game.start();//temp
+    game.volume = 0; //temp
   $('.start-game-btn').on('click', function () {
     if (gameBtnTimeout)
       clearTimeout(gameBtnTimeout);

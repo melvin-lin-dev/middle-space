@@ -316,7 +316,7 @@ class Game {
   //  Game Over
 
   over() {
-    // return 0;
+    return 0;
     this.sound.pause();
     this.pause = 1;
     cancelAnimationFrame(this.rendering);
