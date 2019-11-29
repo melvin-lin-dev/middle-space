@@ -44,11 +44,11 @@ html, body {
 }
 
 .absolute-left {
-    left: 0;
+    left: 10px;
 }
 
 .absolute-right {
-    right: 0;
+    right: 10px
 }
 
 .full-width {

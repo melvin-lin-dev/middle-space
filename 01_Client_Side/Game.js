@@ -5,10 +5,12 @@ class Game {
 
     //  Starting Game
 
-    start() {
+    start(GOD_MODE = false) {
+        this.GOD_MODE = GOD_MODE;
+
         this.sound = audioAssets['background.mp3'];
         this.sound.loop = true;
-        this.sound.volume = this.volume
+        this.sound.volume = this.volume;
 
         //  Declaring Objects
         this.backgroundPosition = 0;
@@ -31,21 +33,13 @@ class Game {
 
         this.friends = [];
 
-        for (let i = 0; i < 2; i++) {
-            this.friends.push(new Friend);
-        }
+        // for (let i = 0; i < 2; i++) {
+        //     this.friends.push(new Friend);
+        // }
 
         //  Enemies
 
         this.enemies = [];
-
-        for (let i = 0; i < 3; i++) {
-            this.enemies.push(new Enemy(1));
-        }
-
-        for (let i = 0; i < 2; i++) {
-            this.enemies.push(new Enemy(2));
-        }
 
         //  Player
 
@@ -63,8 +57,14 @@ class Game {
             time: 0,
             countTime: 0,
             score: 0,
-            fuel: 20,
+            fuel: 30,
+            distance: 0,
+            level: 0,
         };
+
+        this.rng();
+
+        this.IS_CHANGING_LEVEL = false;
 
         //  Clear Previous Game
 
@@ -124,21 +124,23 @@ class Game {
 
             //  Rendering Friend
 
+            this.field_is_empty = true;
 
             for (let i = 0; i < this.friends.length; i++) {
                 let friend = this.friends[i]
-                friend.render()
+                friend.render();
                 if (this.checkCollision(friend, this.player)) {
                     this.planeCollided(friend);
                 }
+                if (friend.x + friend.width > 0) this.field_is_empty = false;
             }
 
             //  Rendering Enemy
 
             for (let i = 0; i < this.enemies.length; i++) {
-                let enemy = this.enemies[i]
+                let enemy = this.enemies[i];
                 for (let j = 0; j < enemy.bullets.length; j++) {
-                    let bullet = enemy.bullets[j]
+                    let bullet = enemy.bullets[j];
                     bullet.render();
 
                     if (this.checkCollision(bullet, this.player)) {
@@ -152,6 +154,8 @@ class Game {
                 if (this.checkCollision(enemy, this.player)) {
                     this.planeCollided(enemy);
                 }
+
+                if (enemy.x + enemy.width > 0) this.field_is_empty = false;
             }
 
             //  Rendering Fuel
@@ -175,17 +179,17 @@ class Game {
                     this.player.bullets.splice(i, 1);
                 } else if (bullet.x < canvas.width) {
                     for (let j = 0; j < this.enemies.length; j++) {
-                        let enemy = this.enemies[j]
+                        let enemy = this.enemies[j];
                         if (this.checkCollision(bullet, enemy)) {
                             this.player.bullets.splice(i, 1);
-                            this.collided(enemy);
+                            this.collided(enemy, bullet);
                         }
                     }
                     for (let j = 0; j < this.friends.length; j++) {
-                        let friend = this.friends[j]
+                        let friend = this.friends[j];
                         if (this.checkCollision(bullet, friend)) {
                             this.player.bullets.splice(i, 1);
-                            this.collided(friend);
+                            this.collided(friend, bullet);
                         }
                     }
                 }
@@ -208,6 +212,8 @@ class Game {
 
             this.countTime();
             this.renderText();
+
+            this.rng();
 
             if (this.stats.fuel <= 0) {
                 this.over();
@@ -240,9 +246,11 @@ class Game {
         this.stats.fuel -= 15;
     }
 
-    collided(obj) {
+    collided(obj, bullet = null) {
         // Handle Collided Object
-        obj.life--;
+        if (bullet) {
+            obj.life -= bullet.power;
+        }
         if (obj.life <= 0) {
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.score));
             obj.sound.volume = this.volume;
@@ -250,9 +258,6 @@ class Game {
             this.stats.score += obj.score;
             obj.generateLocation();
         }
-    }
-
-    addParticles(obj) {
     }
 
     checkCollision(a, b) {
@@ -309,12 +314,52 @@ class Game {
     //  Game Over
 
     over() {
-        this.sound.pause();
-        this.pause = 1;
-        $('#zone_joystick').html('')
-        cancelAnimationFrame(this.rendering);
+        if (!this.GOD_MODE) {
+            this.sound.pause();
+            this.pause = 1;
+            $('#zone_joystick').html('')
+            cancelAnimationFrame(this.rendering);
 
-        event.hideExcept('#scoreForm');
-        event.showCanvas(0);
+            event.hideExcept('#scoreForm');
+            event.showCanvas(0);
+        }
+    }
+
+    // random number generators
+    rng() {
+        console.log(this.stats.distance)
+        console.log('changing-level', this.field_is_empty, this.level_timeout)
+        if (this.stats.distance % 2000 === 0) {
+            this.IS_CHANGING_LEVEL = true;
+
+            if (this.IS_CHANGING_LEVEL && this.field_is_empty) {
+                if (!this.level_timeout) {
+                    console.log('changing-level-2')
+                    this.level_timeout = setTimeout(() => {
+                        this.stats.level += 1;
+
+                        let level = new Level(this.stats.level);
+
+                        for (let i = 0; i < level.maxEnemy; i++) {
+                            this.enemies.push(new Enemy(1, this.stats.level));
+                        }
+
+                        for (let i = 0; i < level.maxAsteroid; i++) {
+                            this.enemies.push(new Enemy(2, this.stats.level));
+                        }
+
+                        this.stats.distance += 1;
+                        this.IS_CHANGING_LEVEL = false;
+                        this.level_timeout = null
+                    }, 1000);
+                }
+
+                this.enemies = [];
+            }
+        }
+
+        if (!this.IS_CHANGING_LEVEL) {
+            this.stats.distance++;
+        }
     }
 }

@@ -1,24 +1,35 @@
 class Enemy {
-    constructor(type) {
+    constructor(type, level) {
         this.img = new Image();
 
         this.type = type;
+        this.level = level;
 
         switch (type) {
             case 1:
                 this.img = imageAssets['ship_3.png'];
-                this.width = 75;
-                this.height = 75;
+                this.width = 50;
+                this.height = 50;
                 this.speed = 3.2;
                 this.score = 5;
+                this.maxLife = 10;
                 break;
             case 2:
                 this.img = imageAssets['asteroid.png'];
-                this.width = 95;
-                this.height = 95;
+                this.width = 60;
+                this.height = 60;
                 this.speed = 3.6;
                 this.score = 10;
+                this.maxLife = 20;
                 break;
+        }
+
+        if (canvas.offsetHeight > 600) {
+            this.width *= 5 / 3;
+            this.height *= 5 / 3;
+        }
+        if (canvas.offsetWidth > 1000) {
+            this.speed *= 5 / 3;
         }
 
         this.sound = audioAssets['destroyed.mp3'];
@@ -47,10 +58,10 @@ class Enemy {
             ctx.save();
             ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
             ctx.rotate(this.angle * Math.PI / 180);
-            if (this.life === 2)
-                this.frame = 0;
-            else
-                this.frame = 1;
+            // if (this.life === 2)
+            //     this.frame = 0;
+            // else
+            //     this.frame = 1;
 
             ctx.drawImage(this.img, this.frame * 512, 0, 512, 512, -this.width / 2, -this.height / 2, this.width, this.height);
             ctx.restore();
@@ -58,7 +69,19 @@ class Enemy {
             this.angle += 2;
         }
 
-        if (this.x < -500)
+        ctx.beginPath();
+        ctx.rect(this.x, this.y + this.height + 4, this.width, 5);
+        ctx.fillStyle = "#ccc";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(this.x, this.y + this.height + 4, this.width * this.life / this.maxLife, 5);
+        ctx.fillStyle = "#0f0";
+        ctx.fill();
+        ctx.closePath();
+
+        if (this.x < -500 && !game.IS_CHANGING_LEVEL)
             this.generateLocation();
 
         this.x -= this.speed;
@@ -66,18 +89,21 @@ class Enemy {
 
     generateLocation() {
         // Generate Friend Location
-        this.x = Math.floor(Math.random() * canvas.width) + canvas.width;
-        this.y = Math.floor(Math.random() * (canvas.height - this.height));
+        if (game.IS_CHANGING_LEVEL) {
+            this.x = -this.width - 50;
+        } else {
+            this.x = Math.floor(Math.random() * (canvas.width * 2)) + canvas.width;
+            this.y = Math.floor(Math.random() * (canvas.height - this.height));
 
-        this.frame = 0;
+            this.frame = 0;
 
-        if (this.type === 1) {
-            this.life = 1;
-            this.IS_SHOOT = 1;
-        } else if (this.type === 2) {
-            this.angle = 0;
-            this.life = 2;
+            if (this.type === 1) {
+                this.IS_SHOOT = 1;
+            } else if (this.type === 2) {
+                this.angle = 0;
+            }
+
+            this.life = this.maxLife;
         }
     }
-
 }

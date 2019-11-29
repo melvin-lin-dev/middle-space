@@ -4,8 +4,13 @@ class Bullet {
 
         this.IS_LEFT = IS_LEFT;
 
-        this.width = 40;
-        this.height = 8;
+        this.width = 30;
+        this.height = 6;
+
+        if (canvas.offsetHeight > 600) {
+            this.width *= 5 / 3;
+            this.height *= 5 / 3;
+        }
 
         this.x = x;
         this.y = y - this.height / 2;
@@ -13,6 +18,10 @@ class Bullet {
         this.img = imageAssets['bullet.png'];
 
         this.speed = 16;
+
+        if (canvas.offsetWidth > 1000) {
+            this.speed*= 5/3;
+        }
 
         this.sound = audioAssets['shoot.mp3'];
         this.sound.volume = game.volume;

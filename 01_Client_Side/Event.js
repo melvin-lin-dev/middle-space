@@ -120,8 +120,13 @@ function moveJoystick(data) {
         let moveX = x - gameControl.width / 2
         let moveY = y - gameControl.height / 2
 
-        game.player.speedX = moveX / 6
-        game.player.speedY = moveY / 6
+        if (canvas.offsetWidth > 1000) {
+            moveX *= 5 / 3;
+            moveY *= 5 / 3;
+        }
+
+        game.player.speedX = moveX / 6;
+        game.player.speedY = moveY / 6;
     }
 }
 
@@ -190,7 +195,6 @@ $('#scoreForm').submit(function (e) {
             '          <td>' + item.score + '</td>\n' +
             '          <td>' + item.time + '</td>\n' +
             '        </tr>');
-
     }
 
     event.hideExcept('#ranking');

@@ -5,14 +5,12 @@ function loadAssets(items, onComplete) {
     let loaded = 0
 
     function onLoad() {
-        loaded++
+        loaded++;
 
-        console.log(loaded, items.length)
-
-        $('.loader-item').css('width', (loaded / items.length) * 100 + '%')
+        $('.loader-item').css('width', (loaded / items.length) * 100 + '%');
 
         if (loaded == items.length) {
-            onComplete()
+            onComplete();
         }
     }
 
@@ -28,7 +26,6 @@ function loadAssets(items, onComplete) {
             audio.oncanplaythrough = onLoad
             audio.src = './sound/' + item.value
             audioAssets[item.value] = audio
-            console.log(audio)
         }
     }
 }

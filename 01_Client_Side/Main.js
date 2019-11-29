@@ -7,18 +7,11 @@ let ctx = canvas.getContext('2d');
 let game = new Game();
 let gameBtnTimeout = null;
 
-localStorage.setItem('god-mode', false)
-if (localStorage.getItem('god-mode') == true) {
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
-    game.start();
-}
-
 $(function () {
     $('.start-game-btn').on('click', function () {
         if (gameBtnTimeout)
             clearTimeout(gameBtnTimeout);
-        gameBtnTimeout = setTimeout(async function () {
+        gameBtnTimeout = setTimeout(async () => {
             const body = document.querySelector('body')
             if (body.requestFullscreen) {
                 await body.requestFullscreen()
@@ -30,8 +23,8 @@ $(function () {
                 await body.msRequestFullscreen()
             }
 
-            setTimeout(function () {
-                game.start();
+            setTimeout(() => {
+                game.start($(this).data('god'));
             }, 1000)
         }, 1000);
     });
@@ -43,7 +36,7 @@ document.onfullscreenchange = function (e) {
         canvas.height = document.body.clientHeight;
 
         try {
-          screen.orientation.lock("landscape")
+            screen.orientation.lock("landscape")
         } catch (e) {
 
         }

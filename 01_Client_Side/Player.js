@@ -4,8 +4,9 @@ class Player {
 
         this.img = imageAssets['plane.png'];
 
-        this.width = 93;
-        this.height = 72;
+        this.width = 65;
+        this.height = 50;
+
 
         this.collision = {
             x: 10,
@@ -26,8 +27,8 @@ class Player {
 
         this.exhaust = {
             img: imageAssets['exhaust.png'],
-            width: 70,
-            height: 30,
+            width: 47,
+            height: 20,
             scale: 1,
             minScale: .8,
             maxScale: 1.1,
@@ -38,6 +39,15 @@ class Player {
             minAngle: -15,
             rangeAngle: 3
         };
+
+
+        if (canvas.offsetHeight > 600) {
+            this.width *= 5 / 3;
+            this.height *= 5 / 3;
+            this.exhaust.width *= 5 / 3;
+            this.exhaust.height *= 5 / 3;
+        }
+
 
         //  Declaring Bullet
 
@@ -61,7 +71,7 @@ class Player {
 
         let exhaustWidth = exhaust.width * exhaust.scale;
         let exhaustHeight = exhaust.height * exhaust.scale;
-        let exhaustX = this.x - 50 + exhaust.width - exhaustWidth;
+        let exhaustX = this.x - exhaustWidth / 2 + exhaust.width - exhaustWidth;
         let exhaustY = this.y + (this.height - exhaustHeight) / 2;
 
         ctx.save();
@@ -95,7 +105,7 @@ class Player {
 
         let exhaust = this.exhaust;
 
-        if (!this.speedX === 0) {
+        if (this.speedX == 0) {
             if (exhaust.isScaling) {
                 exhaust.scale += exhaust.rangeScale;
             } else {

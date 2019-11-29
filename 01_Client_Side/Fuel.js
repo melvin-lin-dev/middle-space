@@ -30,7 +30,7 @@ class Fuel {
             ctx.drawImage(this.img, -width / 2, -height / 2, width, height);
             ctx.restore();
 
-            if (this.x < -100 && this.y > canvas.height + 100) {
+            if (this.x < -100 && this.y > canvas.height + 100 && !game.IS_CHANGING_LEVEL) {
                 this.generateLocation();
             }
         }

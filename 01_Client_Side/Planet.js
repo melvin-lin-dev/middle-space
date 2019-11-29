@@ -39,6 +39,15 @@ class Planet {
         break;
     }
 
+    if (canvas.offsetHeight > 600) {
+      this.width *= 5 / 3;
+      this.height *= 5 / 3;
+    }
+    if (canvas.offsetWidth > 1000) {
+      this.speed *= 5 / 3;
+    }
+
+
     this.generateLocation();
   }
 
@@ -56,7 +65,7 @@ class Planet {
     ctx.beginPath()
     ctx.rect(0,0,canvas.offsetWidth, canvas.offsetHeight)
     ctx.fillStyle = "#2a1d50"
-    ctx.globalAlpha = .2
+    ctx.globalAlpha = .25
     ctx.fill()
     ctx.closePath()
     ctx.restore()
