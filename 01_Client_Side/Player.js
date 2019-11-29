@@ -11,6 +11,13 @@ class Player {
     this.x = 100;
     this.y = (canvas.height - this.height) / 2;
 
+    // Declare Entering Zone
+    this.defaultScale = 1;
+    this.scale = this.defaultScale;
+    this.rangeScale = .01;
+    this.entering = false;
+    this.shopMode = '';
+
     this.speed = 10;
 
     this.sound = new Audio();
@@ -37,6 +44,11 @@ class Player {
     //  Declaring Bullet
 
     this.bullets = [];
+
+    // Entering Position
+      let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
+      this.enterX = enterZoneRect.left - enterZoneRect.width / 2 - this.width / 2;
+      this.enterY = enterZoneRect.top - enterZoneRect.height / 2 - this.height / 2;
   }
 
   render() {
@@ -49,9 +61,9 @@ class Player {
 
     let exhaust = this.exhaust;
 
-    let exhaustWidth = exhaust.width * exhaust.scale;
-    let exhaustHeight = exhaust.height * exhaust.scale;
-    let exhaustX = this.x - 50 + exhaust.width - exhaustWidth;
+    let exhaustWidth = exhaust.width * exhaust.scale * this.scale;
+    let exhaustHeight = exhaust.height * exhaust.scale * this.scale;
+    let exhaustX = this.x - 50 * this.scale + exhaust.width - exhaustWidth;
     let exhaustY = this.y + (this.height - exhaustHeight) / 2;
 
     ctx.save();
@@ -62,7 +74,16 @@ class Player {
 
     //  Rendering Plane
 
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      let playerWidth = this.width * this.scale;
+      let playerHeight = this.height * this.scale;
+      let playerX = this.x - 22 * (this.defaultScale - this.scale) + this.width - playerWidth;
+      let playerY = this.y + (this.height - playerHeight) / 2;
+
+    ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
+
+    if((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)){
+        this[this.shopMode+'Shop']();
+    }
   }
 
   animate() {
@@ -95,6 +116,11 @@ class Player {
 
   movement() {
     //  Plane Movement
+
+      if(this.shopMode) {
+        this.x += this.scale * (this.shopMode === 'leaving' ? -1 : 1);
+        return false;
+      }
 
     let exhaust = this.exhaust;
 
@@ -136,5 +162,31 @@ class Player {
 
   shoot() {
     this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2));
+  }
+
+  setEnteringShop() {
+      this.x = this.enterX;
+      this.y = this.enterY;
+
+      this.entering = true;
+      this.shopMode = 'entering';
+  }
+
+  enteringShop(){
+    this.scale -= this.rangeScale;
+
+    if(this.scale <= 0){
+       game.shopShip.shopping();
+    }
+  }
+
+  leavingShop(){
+      this.scale += this.rangeScale;
+
+      if(this.scale >= this.defaultScale){
+          this.entering = false;
+          this.shopMode = '';
+          game.shopShip.leave();
+      }
   }
 }

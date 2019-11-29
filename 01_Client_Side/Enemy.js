@@ -11,6 +11,7 @@ class Enemy {
         this.height = 75;
         this.speed = 3.2;
         this.score = 5;
+        this.coins = 2;
         break;
       case 2:
         this.img.src = game.getAsset('asteroid.png');
@@ -18,6 +19,7 @@ class Enemy {
         this.height = 95;
         this.speed = 3.6;
         this.score = 10;
+        this.coins = 4;
         break;
     }
 
