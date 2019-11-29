@@ -53,6 +53,15 @@ class Game {
 
     this.player = new Player();
 
+    // Shop ship
+
+      this.shopShip = new ShopShip();
+
+      // Shop
+
+      this.shop = new Shop();
+      this.shop.displayData();
+
     //  Fuel
 
     this.fuel = new Fuel();
@@ -66,6 +75,8 @@ class Game {
       countTime: 0,
       score: 0,
       fuel: 15,
+        shopTime: this.shopShip.shopTimeDefault,
+        coins: 0
     };
 
     //  Clear Previous Game
@@ -180,6 +191,10 @@ class Game {
           self.particles.splice(key, 1);
       });
 
+      // Rendering Shop Ship
+
+        this.shopShip.render();
+
       //  Count Time
 
       this.countTime();
@@ -201,12 +216,14 @@ class Game {
     if (obj) {
       obj.life = 0;
 
-      this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2));
+        this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2));
+        if(obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins));
 
       obj.sound.volume = this.volume;
       obj.sound.play();
       obj.generateLocation();
       this.stats.score += obj.score;
+      this.stats.coins += obj.coins;
     }
 
     this.player.sound.volume = this.volume;
@@ -228,9 +245,11 @@ class Game {
     obj.life--;
     if (obj.life <= 0) {
       this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2));
+      if(obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins));
       obj.sound.volume = this.volume;
       obj.sound.play();
       this.stats.score += obj.score;
+      this.stats.coins += obj.coins;
       obj.generateLocation();
     }
   }
@@ -255,8 +274,11 @@ class Game {
     if (this.stats.fuel < 0)
       this.stats.fuel = 0;
 
-    $('.score-text').html(this.stats.score);
-    $('.time-text').html(this.stats.time);
+      $('.score-text').html(this.stats.score);
+      $('.coins-text').html(this.stats.coins);
+      $('.time-text').html(this.stats.time);
+      $('.shopTime-text').html(this.stats.shopTime);
+
     $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 30 * 100) + '%');
   }
 
@@ -270,6 +292,11 @@ class Game {
     if (stats.countTime % 60 === 0) {
       stats.time++;
       stats.fuel--;
+      if(stats.shopTime) stats.shopTime--;
+
+      // if(!stats.shopTime){
+      //     this.ongGoing
+      // }
     }
   }
 
@@ -289,6 +316,7 @@ class Game {
   //  Game Over
 
   over() {
+    return 0;
     this.sound.pause();
     this.pause = 1;
     cancelAnimationFrame(this.rendering);
