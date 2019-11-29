@@ -1,0 +1,101 @@
+class ShopShip {
+    constructor() {
+        this.width = 250;
+        this.height = 130;
+
+        this.x = 0;
+        this.y = 50;
+
+        this.speed = 10;
+
+        this.img = new Image();
+        this.img.src = './assets/shopShip.png';
+
+        this.resetXLocation();
+
+        this.arrivedLocationX = 200;
+
+        this.arrived = false;
+        this.mode = 'arriving';
+
+        this.shopTimeDefault = 20;
+
+        this.waitingTime = 5000;
+
+        this.shopTimeout = null;
+    }
+
+    resetXLocation() {
+        this.x = -50 - this.width;
+    }
+
+    render() {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+
+        if (!game.stats.shopTime && this.mode !== 'shopping') {
+            this[this.mode]();
+        }
+    }
+
+    arriving() {
+        if (this.x < this.arrivedLocationX) {
+            this.x += this.x + this.speed > this.arrivedLocationX ? this.arrivedLocationX - this.x : this.speed;
+        } else {
+            this.enterZoneChecking();
+            if (!this.arrived) {
+                this.arrived = true;
+                event.toggleEnterZone();
+
+                this.shopTimeout = setTimeout(() => {
+                    this.leave();
+                }, this.waitingTime);
+            }
+        }
+    }
+
+    leave(){
+        this.arrived = false;
+        event.toggleEnterZone();
+        this.mode = 'leaving';
+    }
+
+    leaving() {
+        if (this.arrived) {
+            this.leave();
+        }
+
+        if (this.x < canvas.width) {
+            this.x += this.speed;
+        } else {
+            this.arrived = false;
+            this.resetXLocation();
+            this.resetShopTime();
+
+            this.mode = 'arriving';
+        }
+    }
+
+    resetShopTime() {
+        game.stats.shopTime = this.shopTimeDefault;
+    }
+
+    shopping() {
+        if (this.arrived) {
+            clearInterval(this.shopTimeout);
+
+            event.toggleShop();
+        }
+    }
+
+    enterZoneChecking(){
+        let x = game.player.x + game.player.width / 2;
+        let y = game.player.y + game.player.height / 2;
+
+        let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
+
+        if(x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping'){
+            game.player.setEnteringShop();
+            this.mode = 'shopping';
+        }
+    }
+}

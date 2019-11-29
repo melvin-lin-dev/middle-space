@@ -31,6 +31,7 @@ html, body {
 
 .opacity-5 {
     opacity: .3;
+    opacity: .35;
 }
 
 .absolute {
@@ -359,7 +360,6 @@ p {
 .flex {
     display: flex;
 }
-
 /* joystick */
 
 #zone_joystick {
@@ -406,7 +406,6 @@ p {
 .loader-text {
     margin-top: 1rem;
 }
-
 /* Modal */
 .modal {
     position: fixed;
@@ -423,7 +422,6 @@ p {
     max-width: 90vw;
     padding-top: 10vh;
     margin: 0 auto;
-}
 
 .modal-content {
     background-color: #232832;
@@ -459,3 +457,174 @@ p {
     margin-left: auto;
 }
 
+.shop-ship {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 130px;
+    margin: 50px 200px;
+    opacity: .8;
+}
+
+.shop {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('./assets/background-shop.png');
+    height: 100vh;
+    width: 100vw;
+    transition: .4s all;
+    transform: scale(0);
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 4;
+}
+
+.shop > div {
+    width: calc(100vw - 500px);
+    height: calc(100vh - 200px);
+    background-color: white;
+    border-radius: 5px;
+    transition: .4s all .5s;
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.shop.active {
+    transform: scale(1);
+}
+
+.shop.active > div {
+    max-height: calc(100vh + 100px);
+}
+
+.shop img {
+    width: 100%;
+}
+
+.shop p {
+    color: black;
+    font-weight: normal;
+}
+
+.shop table {
+    width: 100%;
+    color: black;
+    border-collapse: collapse;
+    height: 100%;
+}
+
+.shop th {
+    border-bottom: 2px solid #ccc;
+    padding: 9px 15px;
+}
+
+.shop td {
+    padding: 10px 20px;
+    border: none;
+}
+
+.shop tr > *:nth-child(1) {
+    width: 240px;
+}
+
+.shop tr > *:nth-child(2) {
+    width: 60%;
+}
+
+.shop tr > *:nth-child(3) {
+    width: 140px;
+}
+
+.shop .btn {
+    color: white;
+}
+
+.shop tbody tr:nth-child(even) td {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.shop tbody {
+    width: 100%;
+    height: calc(100% - 38px - 10px);;
+    display: block;
+    overflow-y: scroll;
+}
+
+.shop tbody tr, .shop thead {
+    table-layout: fixed;
+    display: table;
+}
+
+.shop tr {
+    width: 100%;
+}
+
+.shop thead {
+    width: calc(100% - 1em);
+}
+
+.shop tbody::-webkit-scrollbar {
+    width: 5px;
+}
+
+.shop tbody::-webkit-scrollbar-track {
+    background-color: #ccc;
+}
+
+.shop tbody::-webkit-scrollbar-thumb {
+    background-color: #db3f3d;
+}
+
+.shop tbody::-webkit-scrollbar-thumb:hover {
+    background-color: #db3532;
+}
+
+.shop button{
+    cursor: pointer;
+}
+
+.shop .close-shop-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.enter-zone{
+    height: 40px;
+    width: 40px;
+    background-color: rgba(219,63,61,.4);
+    border: 3px solid rgba(219,63,61,.8);
+    position: absolute;
+    top: 110px;
+    left: 150px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: .4s transform;
+}
+
+.enter-zone.active{
+    transform: scale(1);
+    animation: 1s enterZoneAnimation infinite .4s;
+}
+
+.enter-zone i{
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+@keyframes enterZoneAnimation{
+    0%,100%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+}

@@ -21,6 +21,7 @@ class Friend {
 
         this.score = -10;
         this.maxLife = 10;
+    this.coins = 0;
 
         this.sound = audioAssets['destroyed.mp3'];
     }

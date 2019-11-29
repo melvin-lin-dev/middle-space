@@ -1,6 +1,6 @@
 class Particle {
-    constructor(x, y, score = 0) {
-        let total = 6;
+    constructor(x, y, type = -1) {
+        let total = type === -1 ? 8 : type;
 
         this.particles = [];
 
@@ -32,14 +32,20 @@ class Particle {
             let mx = Math.sin(radians) * particle.speed;
             let my = Math.cos(radians) * particle.speed;
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.globalAlpha = this.opacity;
-            ctx.arc(particle.x, particle.y, this.r, 0, 2 * Math.PI);
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.closePath();
-            ctx.restore();
+            if(self.type === -1) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.globalAlpha = self.opacity;
+                ctx.arc(particle.x, particle.y, self.r, 0, 2 * Math.PI);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            }else {
+                let img = new Image();
+                img.src = './assets/coin-particle.png';
+                ctx.drawImage(img, particle.x, particle.y, self.r ** 2, self.r ** 2);
+            }
 
             particle.x += mx;
             particle.y += my;

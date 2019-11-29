@@ -45,6 +45,15 @@ class Game {
 
         this.player = new Player();
 
+        // Shop ship
+
+        this.shopShip = new ShopShip();
+
+        // Shop
+
+        this.shop = new Shop();
+        this.shop.displayData();
+
         //  Fuel
 
         this.fuel = new Fuel();
@@ -60,6 +69,8 @@ class Game {
             fuel: 30,
             distance: 0,
             level: 0,
+            shopTime: this.shopShip.shopTimeDefault,
+            coins: 0
         };
 
         this.rng();
@@ -208,6 +219,10 @@ class Game {
                 if (particle.opacity <= 0) this.particles.splice(i, 1);
             }
 
+            // Rendering Shop Ship
+
+            this.shopShip.render();
+
             //  Count Time
 
             this.countTime();
@@ -253,9 +268,11 @@ class Game {
         }
         if (obj.life <= 0) {
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.score));
+            if (obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins));
             obj.sound.volume = this.volume;
             obj.sound.play();
             this.stats.score += obj.score;
+            this.stats.coins += obj.coins;
             obj.generateLocation();
         }
     }
@@ -281,8 +298,11 @@ class Game {
             this.stats.fuel = 0;
 
         $('.score-text').html(this.stats.score);
+        $('.coins-text').html(this.stats.coins);
         $('.time-text').html(this.stats.time);
-        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 50 * 100) + '%');
+        $('.shopTime-text').html(this.stats.shopTime);
+
+        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 30 * 100) + '%');
     }
 
     countTime() {
@@ -295,6 +315,7 @@ class Game {
         if (stats.countTime % 60 === 0) {
             stats.time++;
             stats.fuel--;
+            if(stats.shopTime) stats.shopTime--;
         }
     }
 
