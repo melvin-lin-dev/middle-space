@@ -5,12 +5,13 @@
 }
 
 html, body {
-    padding: 0;
-    margin: 0;
-    color: #fff;
-    font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
-    font-weight: bold;
-    background-color: #2a1d50;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-family: Rockwell, "Segoe UI", Arial, Serif, sans-serif;
+  font-weight: bold;
+  background-color: #2a1d50;
+  overflow: hidden;
 }
 
 /* Layout */
@@ -33,11 +34,13 @@ html, body {
 }
 
 .full-width {
-    width: 100%;
+  /*width: 960px;*/
+  width: 100%;
 }
 
 .full-height {
-    min-height: 100vh;
+  /*height: 600px;*/
+  height: 100%;
 }
 
 .row {
@@ -267,11 +270,11 @@ html, body {
 /* Canvas */
 
 #canvas {
-    background-image: url("./assets/background.png");
-    border: 1px solid #fff;
-    background-size: 128px;
-    width: 100vw;
-    height: 100vh;
+  background-image: url("./assets/background.png");
+  border: 1px solid #fff;
+  background-size: 128px;
+  -webkit-background-size: contain;
+  background-size: contain;
 }
 
 .animate-canvas {
