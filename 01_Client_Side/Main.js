@@ -9,12 +9,18 @@ canvas.height = canvas.scrollHeight;
 let game = new Game();
 let gameBtnTimeout = null;
 
+// window.onload = () => { // temp
+//     game.start($(this).data('god'));
+//     game.volume = 0; // temp
+//     game.GOD_MODE = true;
+// };
+
 $(function () {
     $('.start-game-btn').on('click', function () {
         if (gameBtnTimeout)
             clearTimeout(gameBtnTimeout);
         gameBtnTimeout = setTimeout(async () => {
-            const body = document.querySelector('body')
+            const body = document.querySelector('body');
             if (body.requestFullscreen) {
                 await body.requestFullscreen()
             } else if (body.webkitRequestFullscreen) {
@@ -27,6 +33,7 @@ $(function () {
 
             setTimeout(() => {
                 game.start($(this).data('god'));
+                game.volume = 0; // temp
             }, 1000)
         }, 1000);
     });

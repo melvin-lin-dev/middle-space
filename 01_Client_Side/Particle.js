@@ -51,14 +51,14 @@ class Particle {
             particle.y += my;
         }
 
-        ctx.save()
-        ctx.beginPath()
+        ctx.save();
+        ctx.beginPath();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.score.score > 0 ? "#0f0" : "#f00"
-        ctx.font = "bold 20px Rockwell"
-        ctx.fillText(this.score.score, this.score.x, this.score.y)
-        ctx.closePath()
-        ctx.restore()
+        ctx.fillStyle = this.score.score > 0 ? "#0f0" : "#f00";
+        ctx.font = "bold 20px Rockwell";
+        ctx.fillText(this.score.score, this.score.x, this.score.y);
+        ctx.closePath();
+        ctx.restore();
 
         this.score.y -= 2
 

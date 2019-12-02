@@ -70,6 +70,20 @@ class Player {
         this.do_shoot = null;
         this.shoot_timer = null;
         this.last_shoot = null;
+
+        // Upgrade
+
+        this.stats = {
+            fuel: 30
+        };
+
+        this.upgrade = {
+            fuel: {
+                maxUpgrade: 10,
+                upgradeLevel: 0,
+                value: 20
+            }
+        };
     }
 
     render() {

@@ -1,8 +1,8 @@
-let imageAssets = {}
-let audioAssets = {}
+let imageAssets = {};
+let audioAssets = {};
 
 function loadAssets(items, onComplete) {
-    let loaded = 0
+    let loaded = 0;
 
     function onLoad() {
         loaded++;
@@ -17,14 +17,14 @@ function loadAssets(items, onComplete) {
     for (let i = 0; i < items.length; i++) {
         let item = items[i]
         if (item.type == 'image') {
-            let img = new Image()
-            img.onload = onLoad
-            img.src = './assets/' + item.value
+            let img = new Image();
+            img.onload = onLoad;
+            img.src = './assets/' + item.value;
             imageAssets[item.value] = img
         } else if (item.type == 'audio') {
-            let audio = new Audio()
-            audio.oncanplaythrough = onLoad
-            audio.src = './sound/' + item.value
+            let audio = new Audio();
+            audio.oncanplaythrough = onLoad;
+            audio.src = './sound/' + item.value;
             audioAssets[item.value] = audio
         }
     }
@@ -91,6 +91,10 @@ loadAssets([
         value: 'destroyed.mp3',
         type: 'audio',
     },
+    {
+        value: 'shopShip.png',
+        type: 'image'
+    }
 ], complete);
 
 function complete() {

@@ -66,7 +66,7 @@ class Game {
             time: 0,
             countTime: 0,
             score: 0,
-            fuel: 30,
+            fuel: this.player.stats.fuel,
             distance: 0,
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
@@ -97,7 +97,7 @@ class Game {
             zone: zoneJoystick,
             mode: 'static',
             position: {left: '50%', top: '50%'},
-            color: 'black',
+            color: 'white',
             size: 100,
         });
 
@@ -187,7 +187,7 @@ class Game {
             //  Rendering Player's Bullets
 
             for (let i = 0; i < this.player.bullets.length; i++) {
-                let bullet = this.player.bullets[i]
+                let bullet = this.player.bullets[i];
                 bullet.render();
 
                 if (bullet.x > canvas.width) {
@@ -217,7 +217,7 @@ class Game {
             //  Rendering Particles
 
             for (let i = 0; i < this.particles.length; i++) {
-                let particle = this.particles[i]
+                let particle = this.particles[i];
                 particle.render();
 
                 if (particle.opacity <= 0) this.particles.splice(i, 1);
@@ -293,9 +293,8 @@ class Game {
 
     renderText() {
         //  Rendering Stats
-
-        if (this.stats.fuel > this.stats.upgrade.maxFuel)
-            this.stats.fuel = this.stats.upgrade.maxFuel;
+        if (this.stats.fuel > this.player.stats.fuel)
+            this.stats.fuel = this.player.stats.fuel;
         if (this.stats.fuel < 0)
             this.stats.fuel = 0;
 
@@ -304,7 +303,7 @@ class Game {
         $('.time-text').html(this.stats.time);
         $('.shopTime-text').html(this.stats.shopTime);
 
-        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.stats.upgrade.maxFuel * 100) + '%');
+        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
     }
 
     countTime() {

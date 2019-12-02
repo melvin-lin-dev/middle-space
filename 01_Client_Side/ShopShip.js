@@ -18,9 +18,9 @@ class ShopShip {
         this.arrived = false;
         this.mode = 'arriving';
 
-        this.shopTimeDefault = 0;
+        this.shopTimeDefault = 20;
 
-        this.waitingTime = 50000;
+        this.waitingTime = 5000;
 
         this.shopTimeout = null;
     }
