@@ -6,7 +6,6 @@ class Player {
         this.width = 65;
         this.height = 50;
 
-
         this.collision = {
             x: 10,
             width: 75,
@@ -46,7 +45,6 @@ class Player {
             rangeAngle: 3
         };
 
-
         if (canvas.offsetHeight > 600) {
             this.width *= 5 / 3;
             this.height *= 5 / 3;
@@ -54,10 +52,12 @@ class Player {
             this.exhaust.height *= 5 / 3;
         }
 
-
         //  Declaring Bullet
 
         this.bullets = [];
+
+        this.shoot_delay = 500;
+        this.bullet_level = 1;
 
         // Entering Position
         setTimeout(() => {
@@ -191,7 +191,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, 500)
+        }, this.shoot_delay)
     }
 
     triggerBullet() {
@@ -200,18 +200,15 @@ class Player {
         if (this.last_shoot) {
             let next_shoot = new Date()
 
-            let diff = next_shoot - this.last_shoot
+            ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()))
 
-            ms = 500 - ((next_shoot.getTime() - this.last_shoot.getTime()))
-
-            ms = ms > 500 ? 500 : ms
+            ms = ms > this.shoot_delay ? this.shoot_delay : ms
         }
 
         this.shoot_timer = setTimeout(() => {
-            this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2));
-            this.last_shoot = new Date()
+            this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
+            this.last_shoot = new Date();
         }, ms)
-
     }
 
     setEnteringShop() {
@@ -238,5 +235,13 @@ class Player {
             this.shopMode = '';
             game.shopShip.leave();
         }
+    }
+
+    upgradeBulletDelay(delay) {
+        this.shoot_delay = delay;
+    }
+
+    upgradeBulletLevel(level) {
+        this.bullet_level = level
     }
 }

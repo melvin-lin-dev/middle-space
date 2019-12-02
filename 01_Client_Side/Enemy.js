@@ -13,7 +13,23 @@ class Enemy {
                 this.speed = 3.2;
                 this.score = 5;
                 this.coins = 2;
-                this.maxLife = 10;
+                switch (this.level) {
+                    case 1:
+                        this.maxLife = 10;
+                        break;
+                    case 2:
+                        this.maxLife = 20;
+                        break;
+                    case 3:
+                        this.maxLife = 30;
+                        break;
+                    case 4:
+                        this.maxLife = 40;
+                        break;
+                    case 5:
+                        this.maxLife = 50;
+                        break;
+                }
                 break;
             case 2:
                 this.img = imageAssets['asteroid.png'];
@@ -22,7 +38,23 @@ class Enemy {
                 this.speed = 3.6;
                 this.score = 10;
                 this.coins = 4;
-                this.maxLife = 20;
+                switch (this.level) {
+                    case 1:
+                        this.maxLife = 20;
+                        break;
+                    case 2:
+                        this.maxLife = 30;
+                        break;
+                    case 3:
+                        this.maxLife = 40;
+                        break;
+                    case 4:
+                        this.maxLife = 60;
+                        break;
+                    case 5:
+                        this.maxLife = 100;
+                        break;
+                }
                 break;
         }
 

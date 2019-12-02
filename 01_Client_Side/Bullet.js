@@ -1,5 +1,5 @@
 class Bullet {
-    constructor(x, y, IS_LEFT = 0) {
+    constructor(x, y, IS_LEFT = 0, bullet_level = 0) {
         //  Declaring Bullet
 
         this.IS_LEFT = IS_LEFT;
@@ -20,7 +20,7 @@ class Bullet {
         this.speed = 16;
 
         if (canvas.offsetWidth > 1000) {
-            this.speed*= 5/3;
+            this.speed *= 5 / 3;
         }
 
         this.sound = audioAssets['shoot.mp3'];
@@ -28,11 +28,19 @@ class Bullet {
         this.sound.autoplay = true;
 
         this.power = 10
+
+        switch (bullet_level) {
+            case 2:
+                this.power = 30;
+                break;
+            default:
+                this.power = 10;
+                break;
+        }
     }
 
     render() {
         //  Rendering Bullet
-
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
         if (this.IS_LEFT) {
@@ -40,5 +48,6 @@ class Bullet {
         } else {
             this.x += this.speed;
         }
+
     }
 }

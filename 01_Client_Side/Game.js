@@ -23,15 +23,15 @@ class Game {
 
         //  Planets
 
-    this.planets = [];
+        this.planets = [];
 
-    for (let i = 0; i < 5; i++) {
-      this.planets.push(new Planet(i + 1));
-    }
+        for (let i = 0; i < 5; i++) {
+            this.planets.push(new Planet(i + 1));
+        }
 
-    //  Friends
+        //  Friends
 
-    this.friends = [];
+        this.friends = [];
 
         // for (let i = 0; i < 2; i++) {
         //     this.friends.push(new Friend);
@@ -56,11 +56,11 @@ class Game {
 
         //  Fuel
 
-    this.fuel = new Fuel();
+        this.fuel = new Fuel();
 
-    this.pause = -1;
+        this.pause = -1;
 
-    //  Declaring Stats
+        //  Declaring Stats
 
         this.stats = {
             time: 0,
@@ -70,18 +70,22 @@ class Game {
             distance: 0,
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
-            coins: 0
+            coins: 0,
+            upgrade: {
+                maxFuel: 30,
+                bulletLevel: 1,
+            },
         };
 
         this.rng();
 
         this.IS_CHANGING_LEVEL = false;
 
-    //  Clear Previous Game
+        //  Clear Previous Game
 
         if (this.rendering) cancelAnimationFrame(this.rendering);
 
-    this.rendering = null;
+        this.rendering = null;
 
         event.hideExcept('#gameBoard');
         $('#zone_joystick').removeClass('hide');
@@ -114,7 +118,7 @@ class Game {
         this.render();
     }
 
-  // Rendering Game
+    // Rendering Game
 
     render() {
         if (this.pause === -1) {
@@ -123,9 +127,9 @@ class Game {
 
             this.animateBackground();
 
-      //  Clearing Canvas
+            //  Clearing Canvas
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             //  Rendering Planets
 
@@ -133,7 +137,7 @@ class Game {
                 this.planets[i].render()
             }
 
-      //  Rendering Friend
+            //  Rendering Friend
 
             this.field_is_empty = true;
 
@@ -146,7 +150,7 @@ class Game {
                 if (friend.x + friend.width > 0) this.field_is_empty = false;
             }
 
-      //  Rendering Enemy
+            //  Rendering Enemy
 
             for (let i = 0; i < this.enemies.length; i++) {
                 let enemy = this.enemies[i];
@@ -180,7 +184,7 @@ class Game {
                 }
             }
 
-      //  Rendering Player's Bullets
+            //  Rendering Player's Bullets
 
             for (let i = 0; i < this.player.bullets.length; i++) {
                 let bullet = this.player.bullets[i]
@@ -206,11 +210,11 @@ class Game {
                 }
             }
 
-      //  Rendering Player
+            //  Rendering Player
 
-      this.player.render();
+            this.player.render();
 
-      //  Rendering Particles
+            //  Rendering Particles
 
             for (let i = 0; i < this.particles.length; i++) {
                 let particle = this.particles[i]
@@ -225,8 +229,8 @@ class Game {
 
             //  Count Time
 
-      this.countTime();
-      this.renderText();
+            this.countTime();
+            this.renderText();
 
             this.rng();
 
@@ -258,16 +262,15 @@ class Game {
             $('.collide-animation').removeClass('animate-canvas');
         }, 1000);
 
-    this.stats.fuel -= 15;
-  }
+        this.stats.fuel -= 15;
+    }
 
     collided(obj, bullet = null) {
         // Handle Collided Object
-        if (bullet) {
-            obj.life -= bullet.power;
-        }
+        if (bullet) obj.life -= bullet.power;
+
         if (obj.life <= 0) {
-            if (obj.coins) this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
+            this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
             obj.sound.volume = this.volume;
             obj.sound.play();
             this.stats.score += obj.score;
@@ -285,14 +288,14 @@ class Game {
             return 1;
         }
 
-    return 0;
-  }
+        return 0;
+    }
 
-  renderText() {
-    //  Rendering Stats
+    renderText() {
+        //  Rendering Stats
 
-        if (this.stats.fuel > 50)
-            this.stats.fuel = 50;
+        if (this.stats.fuel > this.stats.upgrade.maxFuel)
+            this.stats.fuel = this.stats.upgrade.maxFuel;
         if (this.stats.fuel < 0)
             this.stats.fuel = 0;
 
@@ -301,7 +304,7 @@ class Game {
         $('.time-text').html(this.stats.time);
         $('.shopTime-text').html(this.stats.shopTime);
 
-        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / 30 * 100) + '%');
+        $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.stats.upgrade.maxFuel * 100) + '%');
     }
 
     countTime() {
@@ -352,11 +355,12 @@ class Game {
 
             if (this.IS_CHANGING_LEVEL && this.field_is_empty) {
                 if (!this.level_timeout) {
-                    // console.log('changing-level-2')
                     this.level_timeout = setTimeout(() => {
                         this.stats.level += 1;
 
                         let level = new Level(this.stats.level);
+
+                        this.enemies = [];
 
                         for (let i = 0; i < level.maxEnemy; i++) {
                             this.enemies.push(new Enemy(1, this.stats.level));
@@ -365,6 +369,13 @@ class Game {
                         for (let i = 0; i < level.maxAsteroid; i++) {
                             this.enemies.push(new Enemy(2, this.stats.level));
                         }
+
+                        $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`);
+                        $('.level-info').addClass('popup-animation');
+
+                        setTimeout(() => {
+                            $('.level-info').removeClass('popup-animation');
+                        }, 2000)
 
                         this.stats.distance += 1;
                         this.IS_CHANGING_LEVEL = false;
