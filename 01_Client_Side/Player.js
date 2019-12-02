@@ -209,10 +209,10 @@ class Player {
     }
 
     triggerBullet() {
-        let ms = 0
+        let ms = 0;
 
         if (this.last_shoot) {
-            let next_shoot = new Date()
+            let next_shoot = new Date();
 
             ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()))
 
