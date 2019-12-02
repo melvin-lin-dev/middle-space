@@ -23,11 +23,13 @@ class Bullet {
             this.speed *= 5 / 3;
         }
 
-        this.sound = audioAssets['shoot.mp3'];
+        this.sound = new Audio();
+        this.sound.src = audioAssets['shoot.mp3'].src;
         this.sound.volume = game.volume;
         this.sound.autoplay = true;
+        this.sound.play();
 
-        this.power = 10
+        this.power = 10;
 
         switch (bullet_level) {
             case 2:

@@ -9,6 +9,8 @@ canvas.height = canvas.scrollHeight;
 let game = new Game();
 let gameBtnTimeout = null;
 
+console.log = function() {};
+
 // window.onload = () => { // temp
 //     game.start($(this).data('god'));
 //     game.volume = 0; // temp
@@ -33,7 +35,6 @@ $(function () {
 
             setTimeout(() => {
                 game.start($(this).data('god'));
-                game.volume = 0; // temp
             }, 1000)
         }, 1000);
     });

@@ -220,8 +220,10 @@ class Player {
         }
 
         this.shoot_timer = setTimeout(() => {
-            this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
-            this.last_shoot = new Date();
+            if (game.pause === -1) {
+                this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
+                this.last_shoot = new Date();
+            }
         }, ms)
     }
 

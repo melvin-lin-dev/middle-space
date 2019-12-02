@@ -66,7 +66,8 @@ class Enemy {
             this.speed *= 5 / 3;
         }
 
-        this.sound = audioAssets['destroyed.mp3'];
+        this.sound = new Audio();
+        this.sound.src = audioAssets['destroyed.mp3'].src;
 
         this.generateLocation();
 

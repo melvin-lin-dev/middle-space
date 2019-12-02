@@ -54,24 +54,24 @@ class Planet {
     render() {
         //  Rendering Planet
 
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
+            this.y < canvas.offsetHeight && this.y + this.height > 0
+        ) {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
 
         if (this.x < -500)
             this.generateLocation();
 
         this.x -= this.speed;
 
-        if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
-            this.y < canvas.offsetHeight && this.y + this.height > 0
-        ) {
-            ctx.save()
-            ctx.beginPath()
-            ctx.fillStyle = "#000"
-            ctx.globalAlpha = .15
-            ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
-            ctx.closePath()
-            ctx.restore()
-        }
+        ctx.save()
+        ctx.beginPath()
+        ctx.fillStyle = "#000"
+        ctx.globalAlpha = .15
+        ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
+        ctx.closePath()
+        ctx.restore()
     }
 
     generateLocation() {

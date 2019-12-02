@@ -123,7 +123,7 @@ class Game {
     render() {
         if (this.pause === -1) {
             this.sound.volume = this.volume;
-            this.sound.play()
+            this.sound.play();
 
             this.animateBackground();
 
@@ -371,6 +371,8 @@ class Game {
 
                         $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`);
                         $('.level-info').addClass('popup-animation');
+
+                        console.log(this.enemies);
 
                         setTimeout(() => {
                             $('.level-info').removeClass('popup-animation');
