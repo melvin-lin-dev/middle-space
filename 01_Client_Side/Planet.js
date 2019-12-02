@@ -66,10 +66,9 @@ class Planet {
         ) {
             ctx.save()
             ctx.beginPath()
-            ctx.rect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
             ctx.fillStyle = "#000"
             ctx.globalAlpha = .15
-            ctx.fill()
+            ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
             ctx.closePath()
             ctx.restore()
         }

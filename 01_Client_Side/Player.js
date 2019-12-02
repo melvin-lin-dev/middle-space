@@ -256,6 +256,6 @@ class Player {
     }
 
     upgradeBulletLevel(level) {
-        this.bullet_level = level
+        this.bullet_level = level;
     }
 }
