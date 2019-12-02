@@ -73,47 +73,48 @@ class Enemy {
         this.bullets = [];
     }
 
-    render(x, y) {
-        if (this.type === 1) {
-            if (game.stats.countTime % 5 === 0) {
-                this.frame++;
+    render() {
+        if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
+            this.y < canvas.offsetHeight && this.y + this.height > 0
+        ) {
 
-                if (this.frame >= 3)
-                    this.frame = 0;
+            if (this.type === 1) {
+                if (game.stats.countTime % 5 === 0) {
+                    this.frame++;
+
+                    if (this.frame >= 3)
+                        this.frame = 0;
+                }
+
+                if (this.x + this.width < canvas.width - 100 && this.IS_SHOOT) {
+                    this.bullets.push(new Bullet(this.x + 20, this.y + this.height / 2, 1));
+                    this.IS_SHOOT = 0;
+                }
+
+                ctx.drawImage(this.img, 80 * this.frame, 0, 80, 80, this.x, this.y, this.width, this.height);
+            } else if (this.type === 2) {
+                ctx.save();
+                ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+                ctx.rotate(this.angle * Math.PI / 180);
+
+                ctx.drawImage(this.img, this.frame * 512, 0, 512, 512, -this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.restore();
+
+                this.angle += 2;
             }
 
-            if (this.x + this.width < canvas.width - 100 && this.IS_SHOOT) {
-                this.bullets.push(new Bullet(this.x + 20, this.y + this.height / 2, 1));
-                this.IS_SHOOT = 0;
-            }
+            ctx.beginPath();
+            ctx.rect(this.x, this.y + this.height + 4, this.width, 5);
+            ctx.fillStyle = "#ccc";
+            ctx.fill();
+            ctx.closePath();
 
-            ctx.drawImage(this.img, 80 * this.frame, 0, 80, 80, this.x, this.y, this.width, this.height);
-        } else if (this.type === 2) {
-            ctx.save();
-            ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
-            ctx.rotate(this.angle * Math.PI / 180);
-            // if (this.life === 2)
-            //     this.frame = 0;
-            // else
-            //     this.frame = 1;
-
-            ctx.drawImage(this.img, this.frame * 512, 0, 512, 512, -this.width / 2, -this.height / 2, this.width, this.height);
-            ctx.restore();
-
-            this.angle += 2;
+            ctx.beginPath();
+            ctx.rect(this.x, this.y + this.height + 4, this.width * this.life / this.maxLife, 5);
+            ctx.fillStyle = "#0f0";
+            ctx.fill();
+            ctx.closePath();
         }
-
-        ctx.beginPath();
-        ctx.rect(this.x, this.y + this.height + 4, this.width, 5);
-        ctx.fillStyle = "#ccc";
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.rect(this.x, this.y + this.height + 4, this.width * this.life / this.maxLife, 5);
-        ctx.fillStyle = "#0f0";
-        ctx.fill();
-        ctx.closePath();
 
         if (this.x < -500 && !game.IS_CHANGING_LEVEL)
             this.generateLocation();

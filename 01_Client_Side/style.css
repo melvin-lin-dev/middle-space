@@ -266,6 +266,7 @@ p {
     height: 100px;
     background-color: rgba(0, 0, 0, .4);
     border-radius: 100%;
+    z-index: 1;
 }
 
 .game-control-item {
@@ -333,7 +334,6 @@ p {
 
 .collide-animation {
     position: fixed;
-    z-index: 2;
     left: 0;
     top: 0;
     bottom: 0;
