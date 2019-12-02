@@ -605,6 +605,25 @@ p {
     right: 0;
 }
 
+.shop .notification{
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid #db3f3d;
+    color: #db3f3d;
+    background-color: #dbb6bb;
+    z-index: 5;
+    position: absolute;
+    width: 60%;
+    left: 50%;
+    top: -100px;
+    transform: translateX(-50%);
+    transition: .4s top;
+}
+
+.shop .notification.active{
+    top: 20px;
+}
+
 .enter-zone {
     height: 35px;
     width: 35px;
@@ -639,4 +658,22 @@ p {
     50% {
         transform: scale(1.2);
     }
+}
+
+.progress-bar{
+    background-color: rgb(220,220,220);
+    border-radius: 100px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.progress-bar > div{
+    padding: 3px 0;
+    transition: .4s width;
+    height: 100%;
+    background-color: #db3f3d;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
 }
