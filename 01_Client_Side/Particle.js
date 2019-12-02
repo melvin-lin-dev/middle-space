@@ -42,9 +42,11 @@ class Particle {
                 ctx.closePath();
                 ctx.restore();
             }else {
-                let img = new Image();
-                img.src = './assets/coin-particle.png';
+                let img = imageAssets['coin-particle.png'];
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
                 ctx.drawImage(img, particle.x, particle.y, this.r ** 2, this.r ** 2);
+                ctx.restore();
             }
 
             particle.x += mx;

@@ -80,6 +80,10 @@ loadAssets([
         type: 'image',
     },
     {
+        value: 'coin-particle.png',
+        type: 'image',
+    },
+    {
         value: 'background.mp3',
         type: 'audio',
     },
