@@ -81,8 +81,6 @@ class ShopShip {
 
     shopping() {
         if (this.arrived) {
-            clearInterval(this.shopTimeout);
-
             event.toggleShop();
         }
     }
@@ -93,7 +91,8 @@ class ShopShip {
 
         let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
 
-        if(x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping'){
+        if(x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping')
+            clearTimeout(this.shopTimeout);
             game.player.setEnteringShop();
             this.mode = 'shopping';
         }
