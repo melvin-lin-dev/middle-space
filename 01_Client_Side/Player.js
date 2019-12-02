@@ -74,7 +74,8 @@ class Player {
         // Upgrade
 
         this.stats = {
-            fuel: 30
+            fuel: 30,
+            bullet: 1
         };
 
         this.upgrade = {
@@ -82,8 +83,16 @@ class Player {
                 maxUpgrade: 10,
                 upgradeLevel: 0,
                 value: 20
+            },
+            bullet: {
+                maxUpgrade: 5,
+                upgradeLevel: 0,
+                value: 1
             }
         };
+
+        // Fire Effects
+        this.fireEffects = [];
     }
 
     render() {
@@ -130,9 +139,38 @@ class Player {
         // ctx.closePath()
 
         if (!this.shooting && this.do_shoot) {
-            clearInterval(this.do_shoot)
+            clearInterval(this.do_shoot);
             clearTimeout(this.shoot_timer)
         }
+    }
+
+    renderFireEffects() {
+        if (game.stats.countTime % 30 === 0) {
+            let size = 30;
+            let scale = .1;
+            this.fireEffects.push({
+                x: this.x * this.scale - this.exhaust.width / 2,
+                y: this.y + this.height / 2,
+                s: size * this.scale,
+                opacity: .8,
+                scale,
+                image: imageAssets['fire-effect.png']
+            });
+        }
+
+        this.fireEffects.forEach(fireEffect => {
+            ctx.save();
+            ctx.globalAlpha = fireEffect.opacity;
+            ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1-fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
+            ctx.restore();
+
+            fireEffect.opacity -= .01;
+            fireEffect.scale += .04;
+
+            if(fireEffect.opacity < 0){
+                this.fireEffects.shift();
+            }
+        })
     }
 
     animate() {
@@ -201,7 +239,7 @@ class Player {
     }
 
     shoot() {
-        this.triggerBullet()
+        this.triggerBullet();
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
@@ -214,7 +252,7 @@ class Player {
         if (this.last_shoot) {
             let next_shoot = new Date();
 
-            ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()))
+            ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
 
             ms = ms > this.shoot_delay ? this.shoot_delay : ms
         }

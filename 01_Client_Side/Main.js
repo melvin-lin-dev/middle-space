@@ -9,7 +9,7 @@ canvas.height = canvas.scrollHeight;
 let game = new Game();
 let gameBtnTimeout = null;
 
-console.log = function() {};
+// console.log = function() {};
 
 // window.onload = () => { // temp
 //     game.start($(this).data('god'));

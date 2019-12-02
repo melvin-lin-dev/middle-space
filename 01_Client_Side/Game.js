@@ -91,9 +91,9 @@ class Game {
         $('#zone_joystick').removeClass('hide');
         event.showCanvas(1);
 
-        let zoneJoystick = document.getElementById('zone_joystick')
+        let zoneJoystick = document.getElementById('zone_joystick');
 
-        var joystick = nipplejs.create({
+        let joystick = nipplejs.create({
             zone: zoneJoystick,
             mode: 'static',
             position: {left: '50%', top: '50%'},
@@ -142,7 +142,7 @@ class Game {
             this.field_is_empty = true;
 
             for (let i = 0; i < this.friends.length; i++) {
-                let friend = this.friends[i]
+                let friend = this.friends[i];
                 friend.render();
                 if (this.checkCollision(friend, this.player)) {
                     this.planeCollided(friend);
@@ -209,6 +209,10 @@ class Game {
                     }
                 }
             }
+
+            //  Rendering Player Fire Effects
+
+            this.player.renderFireEffects();
 
             //  Rendering Player
 
@@ -302,6 +306,7 @@ class Game {
         $('.coins-text').html(this.stats.coins);
         $('.time-text').html(this.stats.time);
         $('.shopTime-text').html(this.stats.shopTime);
+        $('.shop-coins span').html(this.stats.coins);
 
         $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
     }
@@ -372,7 +377,7 @@ class Game {
                         $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`);
                         $('.level-info').addClass('popup-animation');
 
-                        console.log(this.enemies);
+                        // console.log(this.enemies);
 
                         setTimeout(() => {
                             $('.level-info').removeClass('popup-animation');

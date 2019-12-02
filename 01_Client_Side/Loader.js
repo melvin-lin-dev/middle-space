@@ -15,12 +15,12 @@ function loadAssets(items, onComplete) {
     }
 
     for (let i = 0; i < items.length; i++) {
-        let item = items[i]
+        let item = items[i];
         if (item.type == 'image') {
             let img = new Image();
             img.onload = onLoad;
             img.src = './assets/' + item.value;
-            imageAssets[item.value] = img
+            imageAssets[item.value] = img;
         } else if (item.type == 'audio') {
             let audio = new Audio();
             audio.oncanplaythrough = onLoad;
@@ -80,8 +80,16 @@ loadAssets([
         type: 'image',
     },
     {
-        value: 'coin-particle.png',
+        value: 'coin.png',
         type: 'image',
+    },
+    {
+        value: 'shopShip.png',
+        type: 'image'
+    },
+    {
+        value: 'bullet.png',
+        type: 'image'
     },
     {
         value: 'background.mp3',
@@ -96,9 +104,13 @@ loadAssets([
         type: 'audio',
     },
     {
-        value: 'shopShip.png',
-        type: 'image'
-    }
+        value: 'kaching.mp3',
+        type: 'audio',
+    },
+    {
+        value: 'fire-effect.png',
+        type: 'image',
+    },
 ], complete);
 
 function complete() {

@@ -65,13 +65,13 @@ class Planet {
 
         this.x -= this.speed;
 
-        ctx.save()
-        ctx.beginPath()
-        ctx.fillStyle = "#000"
-        ctx.globalAlpha = .15
-        ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
-        ctx.closePath()
-        ctx.restore()
+        // ctx.save()
+        // ctx.beginPath()
+        // ctx.fillStyle = "#000"
+        // ctx.globalAlpha = .15
+        // ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
+        // ctx.closePath()
+        // ctx.restore()
     }
 
     generateLocation() {

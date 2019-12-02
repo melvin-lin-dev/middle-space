@@ -5,15 +5,24 @@ class Shop {
                 name: 'Fuel',
                 type: 'fuel',
                 image: imageAssets['fuel.png'],
-                description: 'bbbbb',
+                description: 'Ship HP',
                 cost: 200
-            }
-        ]
+            },
+            {
+                name: 'Bullet',
+                type: 'bullet',
+                image: imageAssets['bullet.png'],
+                description: 'Weapon',
+                cost: 300
+            },
+        ];
     }
 
     displayData() {
+        let tbody = document.querySelector('#shop table tbody');
+        tbody.innerHTML = '';
+
         this.data.forEach(data => {
-            let tbody = document.querySelector('#shop table tbody');
 
             let row = document.createElement('tr');
 
@@ -68,6 +77,28 @@ class Shop {
             }
             button.innerHTML = innerHTML;
             this.setUpgradeBar(data.type, progressBarDiv);
+
+            game.renderText();
+
+            // let kachingSound = audioAssets['kaching.mp3'];
+            // kachingSound.currentTime = 0;
+            let kachingSound = new Audio('./sound/kaching.mp3');
+            kachingSound.play();
+
+
+            let shopCoins = document.querySelector('.shop-coins').getBoundingClientRect();
+            let x = shopCoins.left + shopCoins.width / 2;
+            let y = shopCoins.top + shopCoins.height / 2;
+            game.particles.push(new Particle(x, y, 10));
+
+
+            let effect = document.createElement('img');
+            effect.src = './assets/coin.png';
+            $('#shop .bought-effects').append(effect);
+
+            setTimeout(() => {
+                effect.remove();
+            }, 1400);
         }else if(game.stats.coins < button.value){
             $('#shop .notification').addClass('active');
 
@@ -81,6 +112,5 @@ class Shop {
         let currentUpgrade = game.player.upgrade[type];
         progressBarDiv.style.width = currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%';
         progressBarDiv.innerHTML = `${currentUpgrade.upgradeLevel} (${game.player.stats[type]})`;
-
     }
 }
