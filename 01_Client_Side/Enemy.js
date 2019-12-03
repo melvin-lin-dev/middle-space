@@ -26,10 +26,19 @@ class Enemy {
                     case 4:
                         this.maxLife = 40;
                         break;
-                    case 5:
+                    default:
                         this.maxLife = 50;
                         break;
                 }
+                break;
+            case 3:
+                this.img = imageAssets['ship_2.png'];
+                this.width = 50;
+                this.height = 50;
+                this.speed = 4;
+                this.score = -5;
+                this.coins = 0;
+                this.maxLife = 10;
                 break;
             case 2:
                 this.img = imageAssets['asteroid.png'];
@@ -51,7 +60,7 @@ class Enemy {
                     case 4:
                         this.maxLife = 60;
                         break;
-                    case 5:
+                    default:
                         this.maxLife = 100;
                         break;
                 }
@@ -79,7 +88,7 @@ class Enemy {
             this.y < canvas.offsetHeight && this.y + this.height > 0
         ) {
 
-            if (this.type === 1) {
+            if (this.type === 1 || this.type === 3) {
                 if (game.stats.countTime % 5 === 0) {
                     this.frame++;
 
@@ -87,7 +96,7 @@ class Enemy {
                         this.frame = 0;
                 }
 
-                if (this.x + this.width < canvas.width - 100 && this.IS_SHOOT) {
+                if (this.type === 1 && this.x + this.width < canvas.width - 100 && this.IS_SHOOT) {
                     this.bullets.push(new Bullet(this.x + 20, this.y + this.height / 2, 1));
                     this.IS_SHOOT = 0;
                 }
@@ -98,6 +107,8 @@ class Enemy {
                 ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
                 ctx.rotate(this.angle * Math.PI / 180);
 
+                this.frame = this.life / this.maxLife > .5 ? 0 : 1;
+
                 ctx.drawImage(this.img, this.frame * 512, 0, 512, 512, -this.width / 2, -this.height / 2, this.width, this.height);
                 ctx.restore();
 
@@ -105,14 +116,14 @@ class Enemy {
             }
 
             ctx.beginPath();
-            ctx.rect(this.x, this.y + this.height + 4, this.width, 5);
+            ctx.rect(this.x, this.y - 10, this.width, 5);
             ctx.fillStyle = "#ccc";
             ctx.fill();
             ctx.closePath();
 
             ctx.beginPath();
-            ctx.rect(this.x, this.y + this.height + 4, this.width * this.life / this.maxLife, 5);
-            ctx.fillStyle = "#0f0";
+            ctx.rect(this.x, this.y - 10, this.width * this.life / this.maxLife, 5);
+            ctx.fillStyle = this.type === 3 ? "#0f0" :  "#f00";
             ctx.fill();
             ctx.closePath();
         }

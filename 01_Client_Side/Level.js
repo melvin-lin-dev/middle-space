@@ -10,12 +10,16 @@ class Level {
                 this.maxAsteroid = 4;
                 break;
             case 3:
-                this.maxEnemy = 8;
-                this.maxAsteroid = 6;
+                this.maxEnemy = 6;
+                this.maxAsteroid = 4;
+                break;
+            case 4:
+                this.maxEnemy = 7;
+                this.maxAsteroid = 4;
                 break;
             default:
                 this.maxEnemy = 10;
-                this.maxAsteroid = 8;
+                this.maxAsteroid = 4;
                 break;
         }
     }

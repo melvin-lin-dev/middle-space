@@ -20,8 +20,8 @@ html, body {
 /* Layout */
 
 .container {
-    background-image: url("./assets/background.png");
-    background-size: contain;
+    background-image: url("./assets/background__.png");
+    background-size: 100px;
     width: 100vw;
     height: 100vh;
     justify-content: center;
@@ -328,6 +328,7 @@ p {
 /* Canvas */
 
 #canvas {
+    background-color: rgba(0, 0, 0, .4);
     width: 100vw;
     position: relative;
 }
@@ -438,6 +439,15 @@ p {
     bottom: 0;
     z-index: 999999999999999;
     background-color: rgba(0, 0, 0, .2);
+    transition: all .5s;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-hide {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transform: scale(0);
 }
 
 .modal-dialog {
@@ -627,7 +637,7 @@ p {
     right: 0;
 }
 
-.shop .notification{
+.shop .notification {
     padding: 10px 15px;
     border-radius: 5px;
     border: 2px solid #db3f3d;
@@ -642,13 +652,13 @@ p {
     transition: .4s top;
 }
 
-.shop .notification.active{
+.shop .notification.active {
     top: 100px;
 }
 
-.shop .shop-coins{
+.shop .shop-coins {
     border-radius: 100px;
-    background-color: rgba(255,255,255,.4);
+    background-color: rgba(255, 255, 255, .4);
     padding: 5px 15px;
     position: absolute;
     top: 3px;
@@ -657,12 +667,12 @@ p {
     right: 70px;
 }
 
-.shop .shop-coins span{
+.shop .shop-coins span {
     font-size: 17px;
     margin-left: 7px;
 }
 
-.shop .bought-effects img{
+.shop .bought-effects img {
     position: absolute;
     left: 50%;
     top: 20px;
@@ -674,12 +684,12 @@ p {
     z-index: 5;
 }
 
-@keyframes boughtEffectAnimation{
-    from{
+@keyframes boughtEffectAnimation {
+    from {
         opacity: 1;
         top: 20px;
     }
-    to{
+    to {
         opacity: 0;
         top: 150px;
     }
@@ -721,15 +731,15 @@ p {
     }
 }
 
-.progress-bar{
-    background-color: rgb(220,220,220);
+.progress-bar {
+    background-color: rgb(220, 220, 220);
     border-radius: 100px;
     margin-bottom: 6px;
     font-size: 12px;
     overflow: hidden;
 }
 
-.progress-bar > div{
+.progress-bar > div {
     padding: 3px 0;
     transition: .4s width;
     height: 100%;
@@ -737,4 +747,28 @@ p {
     color: white;
     overflow: hidden;
     white-space: nowrap;
+}
+
+/* custom checkbox*/
+
+.custom-checkbox {
+    position: relative;
+    width: 100%;
+}
+
+.custom-checkbox > input {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.custom-checkbox > span {
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+}
+
+.custom-checkbox > input:checked + span {
+    background-color: #db3f3d;
 }

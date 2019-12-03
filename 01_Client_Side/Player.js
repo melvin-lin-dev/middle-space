@@ -6,12 +6,6 @@ class Player {
         this.width = 65;
         this.height = 50;
 
-        this.collision = {
-            x: 10,
-            width: 75,
-            height: 65
-        };
-
         this.x = 100;
         this.y = (canvas.height - this.height) / 2;
 
@@ -128,15 +122,6 @@ class Player {
         if ((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)) {
             this[this.shopMode + 'Shop']();
         }
-        //  Collision for later
-        // this.collision.x = this.x + 5
-        // this.collision.y = this.y + (this.height - this.collision.height) / 2
-        //
-        // ctx.beginPath()
-        // ctx.rect(this.collision.x, this.collision.y, this.collision.width, this.collision.height)
-        // ctx.fillStyle = "#f00"
-        // ctx.fill()
-        // ctx.closePath()
 
         if (!this.shooting && this.do_shoot) {
             clearInterval(this.do_shoot);
@@ -164,8 +149,8 @@ class Player {
             ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1-fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
             ctx.restore();
 
-            fireEffect.opacity -= .01;
-            fireEffect.scale += .04;
+            fireEffect.opacity -= .02;
+            fireEffect.scale += .06;
 
             if(fireEffect.opacity < 0){
                 this.fireEffects.shift();

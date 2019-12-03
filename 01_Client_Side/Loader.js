@@ -60,23 +60,23 @@ loadAssets([
         type: 'image',
     },
     {
-        value: '006-mars.png',
+        value: 'planet_1.png',
         type: 'image',
     },
     {
-        value: '001-global.png',
+        value: 'planet_2.png',
         type: 'image',
     },
     {
-        value: '012-jupiter.png',
+        value: 'planet_3.png',
         type: 'image',
     },
     {
-        value: '009-saturn.png',
+        value: 'planet_4.png',
         type: 'image',
     },
     {
-        value: '010-uranus.png',
+        value: 'planet_5.png',
         type: 'image',
     },
     {

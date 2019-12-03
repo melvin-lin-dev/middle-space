@@ -39,6 +39,13 @@ class Friend {
 
         ctx.drawImage(this.img, 80.25 * this.frame, 0, 80.25, 81, this.x, this.y, this.width, this.height);
 
+        ctx.beginPath();
+        ctx.rect(this.x, this.y - 10, this.width * this.life / this.maxLife, 5);
+        ctx.fillStyle = "#0f0";
+        ctx.fill();
+        ctx.closePath();
+
+
         if (this.x < -500 && !game.IS_CHANGING_LEVEL)
             this.generateLocation();
 

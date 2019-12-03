@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-        this.volume = 1;
+        this.volume = localStorage.getItem('star-battle-checked') || 1;
     }
 
     //  Starting Game
@@ -71,10 +71,6 @@ class Game {
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
             coins: 0,
-            upgrade: {
-                maxFuel: 30,
-                bulletLevel: 1,
-            },
         };
 
         this.rng();
@@ -365,6 +361,10 @@ class Game {
                         let level = new Level(this.stats.level);
 
                         this.enemies = [];
+
+                        for (let i = 0; i < 2; i++) {
+                            this.enemies.push(new Enemy(3, 0));
+                        }
 
                         for (let i = 0; i < level.maxEnemy; i++) {
                             this.enemies.push(new Enemy(1, this.stats.level));

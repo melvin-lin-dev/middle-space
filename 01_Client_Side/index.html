@@ -95,7 +95,9 @@
             <div class="shop-coins">
                 <img src="./assets/coin.png" alt="Coin">
                 <span>asdas</span>
-                <div class="bought-effects"><div></div></div>
+                <div class="bought-effects">
+                    <div></div>
+                </div>
             </div>
             <div class="notification">Insufficient Money</div>
             <div class="content">
@@ -172,7 +174,7 @@
 
 <div class="fixed-center level-info text-center"></div>
 
-<div class="modal setting hide">
+<div class="modal modal-hide setting">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -182,12 +184,15 @@
                 <div class="flex">
                     <label for="inputSound" class="input-row">
                         <span>Sound</span>
-                        <input type="checkbox" id="inputSound" class="input-checkbox">
+                        <span class="custom-checkbox">
+                            <input type="checkbox" id="inputSound" class="input-checkbox">
+                            <span></span>
+                        </span>
                     </label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-close-settings">OK</button>
+                <button class="btn btn-close-settings">Close</button>
             </div>
         </div>
     </div>

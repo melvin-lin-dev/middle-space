@@ -13,13 +13,6 @@ class Event {
         game.pause = -game.pause;
     }
 
-    sound() {
-        if (game.volume)
-            game.volume = 0;
-        else
-            game.volume = 1;
-    }
-
     fontPlus() {
         let size = parseInt($('body').css('font-size'));
         size += 1;
@@ -49,7 +42,7 @@ class Event {
             $('canvas').addClass('opacity-5');
     }
 
-    toggleShop(){
+    toggleShop() {
         game.pause = game.pause === -1 ? 1 : -1;
         let shop = $('#shop');
 
@@ -57,12 +50,12 @@ class Event {
         shop.css('transition-delay', shop.hasClass('active') ? 'initial' : '.4s');
         $('#shop > div').css('transition-delay', shop.hasClass('active') ? '.4s' : 'initial');
 
-        if(!shop.hasClass('active')){
+        if (!shop.hasClass('active')) {
             setTimeout(() => {
                 game.player.shopMode = 'leaving';
                 $('#zone_joystick').toggleClass('d-none');
             }, 700);
-        }else{
+        } else {
             $('#zone_joystick').toggleClass('d-none');
         }
     }
@@ -107,21 +100,20 @@ $(document).on('touchstart', function (e) {
     if ($(e.target).hasClass('game-shoot')) {
         event.shoot(1)
     }
-})
-//     .on('mousedown', function (e) {
-//     if ($(e.target).hasClass('game-shoot')) {
-//         event.shoot(1)
-//     }
-// })
+}).on('touchmove', function (e) {
+    e.preventDefault()
+});
 
 
 $(document).on('touchend', function (e) {
     if (game.player) {
         game.player.speedX = 0
         game.player.speedY = 0
-        event.shoot(0)
+        if ($(e.target).hasClass('game-shoot')) {
+            event.shoot(0)
+        }
     }
-})
+});
 
 function moveJoystick(data) {
     let zoneJoystick = document.getElementById('zone_joystick')
@@ -154,9 +146,24 @@ function moveJoystick(data) {
 
 //  Button Trigger
 
-$('.pause').on('click', function () {
+$('.pause,.btn-close-settings').on('click', function () {
+    $('.modal.setting').toggleClass('modal-hide');
     event.pause();
 });
+
+$('#inputSound').on('click', function () {
+
+    if ($(this).is(':checked'))
+        localStorage.setItem('star-battle-audio', 1);
+    else
+        localStorage.setItem('star-battle-audio', 0);
+
+    game.volume = parseInt(localStorage.getItem('star-battle-audio'));
+});
+
+if (parseInt(localStorage.getItem('star-battle-audio') )!== 0) {
+    $('#inputSound').prop('checked', 1);
+}
 
 $('.sound').on('click', function () {
     event.sound();

@@ -1,15 +1,10 @@
 //  Declaring Canvas
-
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
-canvas.width = canvas.scrollWidth;
-canvas.height = canvas.scrollHeight;
 
 //  Starting Game
 let game = new Game();
 let gameBtnTimeout = null;
-
-// console.log = function() {};
 
 // window.onload = () => { // temp
 //     game.start($(this).data('god'));
@@ -19,8 +14,7 @@ let gameBtnTimeout = null;
 
 $(function () {
     $('.start-game-btn').on('click', function () {
-        if (gameBtnTimeout)
-            clearTimeout(gameBtnTimeout);
+        if (gameBtnTimeout) clearTimeout(gameBtnTimeout);
         gameBtnTimeout = setTimeout(async () => {
             const body = document.querySelector('body');
             if (body.requestFullscreen) {
@@ -36,7 +30,7 @@ $(function () {
             setTimeout(() => {
                 game.start($(this).data('god'));
             }, 1000)
-        }, 1000);
+        }, 0);
     });
 });
 
@@ -44,26 +38,21 @@ document.onfullscreenchange = function (e) {
     if (document.fullscreen) {
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
-
-        try {
-            screen.orientation.lock("landscape")
-        } catch (e) {
-
-        }
+        screen.orientation.lock("landscape");
     } else {
         game.sound.pause()
         cancelAnimationFrame(game.rendering);
+        $('#zone_joystick').html('');
         event.hideExcept('#instructions');
         event.showCanvas(0);
     }
 }
 
 function resetHeight() {
-    let gameBoard = document.getElementById('gameBoard')
+    let gameBoard = document.getElementById('gameBoard');
     // reset the body height to that of the inner browser
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
-    // document.body.style.height = window.innerHeight + "px";
     $('.full-height').css('height', window.innerHeight + 'px')
 }
 

@@ -8,34 +8,34 @@ class Planet {
 
         switch (type) {
             case 1:
-                this.img = imageAssets['010-uranus.png'];
-                this.width = 80;
+                this.img = imageAssets['planet_5.png'];
+                this.width = 64;
                 this.height = 64;
                 this.speed = 1.1;
                 break;
             case 2:
-                this.img = imageAssets['009-saturn.png'];
-                this.width = 156;
+                this.img = imageAssets['planet_4.png'];
+                this.width = 90;
                 this.height = 90;
                 this.speed = 1.7;
                 break;
             case 3:
-                this.img = imageAssets['012-jupiter.png'];
+                this.img = imageAssets['planet_3.png'];
                 this.width = 140;
                 this.height = 140;
                 this.speed = 2.4;
                 break;
             case 4:
-                this.img = imageAssets['001-global.png'];
+                this.img = imageAssets['planet_2.png'];
                 this.width = 180;
                 this.height = 180;
-                this.speed = 2.9;
+                this.speed = 3;
                 break;
             case 5:
-                this.img = imageAssets['006-mars.png'];
+                this.img = imageAssets['planet_1.png'];
                 this.width = 240;
                 this.height = 240;
-                this.speed = 3.8;
+                this.speed = 4;
                 break;
         }
 
@@ -64,14 +64,6 @@ class Planet {
             this.generateLocation();
 
         this.x -= this.speed;
-
-        // ctx.save()
-        // ctx.beginPath()
-        // ctx.fillStyle = "#000"
-        // ctx.globalAlpha = .15
-        // ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
-        // ctx.closePath()
-        // ctx.restore()
     }
 
     generateLocation() {
