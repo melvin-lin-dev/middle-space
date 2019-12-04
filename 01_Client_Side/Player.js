@@ -149,7 +149,7 @@ class Player {
             let size = 30;
             let scale = .1;
             this.fireEffects.push({
-                x: this.x * this.scale - this.exhaust.width / 2,
+                x: this.x + (this.x * (this.defaultScale - this.scale)) - this.exhaust.width * this.exhaust.scale / 2,
                 y: this.y + this.height / 2,
                 s: size * this.scale,
                 opacity: .8,
@@ -271,6 +271,9 @@ class Player {
 
         this.entering = true;
         this.shopMode = 'entering';
+
+        ev.toggleEnterZone();
+        game.player.invisible();
     }
 
     enteringShop() {
@@ -278,6 +281,7 @@ class Player {
 
         if (this.scale <= 0) {
             game.shopShip.shopping();
+            $('#shop .content-menu > div').removeClass('active');
         }
     }
 
@@ -288,6 +292,7 @@ class Player {
             this.entering = false;
             this.shopMode = '';
             game.shopShip.leave();
+            this.deactiveInvisible();
         }
     }
 

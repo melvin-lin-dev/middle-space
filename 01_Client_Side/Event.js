@@ -15,6 +15,20 @@ class Event {
 
     pause() {
         game.pause = -game.pause;
+
+        let enterZone = $(`.enter-zone`);
+        if(enterZone.css('animation-play-state') === 'paused'){
+            enterZone.css('animation-play-state', 'running');
+        }else{
+            enterZone.css('animation-play-state', 'paused');
+        }
+    }
+
+    sound() {
+        if (game.volume)
+            game.volume = 0;
+        else
+            game.volume = 1;
     }
 
     fontPlus() {
@@ -46,26 +60,36 @@ class Event {
             $('canvas').addClass('opacity-5');
     }
 
-    toggleShop() {
-        game.pause = game.pause === -1 ? 1 : -1;
+    toggleShop(){
+        this.pause();
+
         let shop = $('#shop');
 
         shop.toggleClass('active');
-        shop.css('transition-delay', shop.hasClass('active') ? 'initial' : '.4s');
-        $('#shop > div').css('transition-delay', shop.hasClass('active') ? '.4s' : 'initial');
+        shop.css({'animation-delay': shop.hasClass('active') ? 'initial' : '.4s', 'transition-delay': shop.hasClass('active') ? 'initial' : '.4s'});
+        $('#shop > div.menu.top').css('transition-delay', shop.hasClass('active') ? '.6s' : 'initial');
 
-        if (!shop.hasClass('active')) {
+        if(!shop.hasClass('active')){
+            $('#shop .menu.bottom').removeClass('active');
             setTimeout(() => {
                 game.player.shopMode = 'leaving';
                 $('#zone_joystick').toggleClass('d-none');
             }, 700);
-        } else {
+        }else{
             $('#zone_joystick').toggleClass('d-none');
         }
     }
 
     toggleEnterZone() {
-        $('.enter-zone').toggleClass('active');
+        let enterZone = $('.enter-zone');
+
+        if(enterZone.hasClass('active')){
+            enterZone.css('animation', 'none');
+            setTimeout(() => { enterZone.removeClass('active') }, 40);
+        }else{
+            enterZone.addClass('active');
+            enterZone.css('animation', '1s enterZoneAnimation infinite .4s');
+        }
     }
 }
 
@@ -174,7 +198,7 @@ $('.sound').on('click', function () {
     ev.sound();
 });
 
-$('.close-shop-btn').on('click', function () {
+$('.exit-shop').on('click', function () {
     ev.toggleShop();
 });
 

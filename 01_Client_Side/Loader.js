@@ -111,6 +111,14 @@ loadAssets([
         value: 'fire-effect.png',
         type: 'image',
     },
+    {
+        value: 'exit.png',
+        type: 'image',
+    },
+    {
+        value: 'stats.png',
+        type: 'image',
+    },
 ], complete);
 
 function complete() {

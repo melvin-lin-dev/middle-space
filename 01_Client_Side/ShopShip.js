@@ -55,7 +55,9 @@ class ShopShip {
 
     leave(){
         this.arrived = false;
-        ev.toggleEnterZone();
+        let enterZone = $('.enter-zone');
+        enterZone.css('animation', 'none');
+        setTimeout(() => { enterZone.removeClass('active') }, 40);
         this.mode = 'leaving';
     }
 

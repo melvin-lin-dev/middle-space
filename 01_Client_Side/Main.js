@@ -6,11 +6,13 @@ let ctx = canvas.getContext('2d');
 let game = new Game();
 let gameBtnTimeout = null;
 
-// window.onload = () => { // temp
-//     game.start($(this).data('god'));
-//     game.volume = 0; // temp
-//     game.GOD_MODE = true;
-// };
+// console.log = function() {};
+
+window.onload = () => { // temp
+    game.start($(this).data('god'));
+    // game.volume = 0; // temp
+    game.GOD_MODE = true;
+};
 
 $(function () {
     $('.start-game-btn').on('click', function () {

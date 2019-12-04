@@ -103,6 +103,12 @@ class Game {
             moveJoystick(data)
         });
 
+        $('#shop').css('opacity', '0');
+
+        setTimeout(() => {
+            $('#shop').css('opacity', '1');
+        }, 600);
+
         this.render = this.render.bind(this);
         this.render();
     }
@@ -244,7 +250,7 @@ class Game {
 
     collided(obj, bullet = null) {
         // Handle Collided Object
-        if (bullet) obj.life -= bullet.power;
+        if (bullet) obj.life -= bullet.power * game.player.stats.bullet;
 
         if (obj.life <= 0) {
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
@@ -279,7 +285,7 @@ class Game {
         $('.coins-text').html(this.stats.coins);
         $('.time-text').html(this.stats.time);
         $('.shopTime-text').html(this.stats.shopTime);
-        $('.shop-coins span').html(this.stats.coins);
+        $('#shop .coins span').html(this.stats.coins);
 
         $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
     }
