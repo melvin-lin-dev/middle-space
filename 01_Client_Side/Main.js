@@ -53,7 +53,6 @@ document.onfullscreenchange = function (e) {
 }
 
 function resetHeight() {
-    let gameBoard = document.getElementById('gameBoard');
     // reset the body height to that of the inner browser
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;

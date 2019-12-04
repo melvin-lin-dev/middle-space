@@ -147,7 +147,7 @@ class Game {
                     let bullet = enemy.bullets[j];
                     bullet.render();
 
-                    if (this.checkCollision(bullet, this.player) && this.player.touchable) {
+                    if (this.player.touchable && this.checkCollision(bullet, this.player)) {
                         enemy.bullets.splice(j, 1);
                         this.planeCollided();
                     }
@@ -155,7 +155,7 @@ class Game {
 
                 enemy.render();
 
-                if (this.checkCollision(enemy, this.player) && this.player.touchable) {
+                if (this.player.touchable && this.checkCollision(enemy, this.player)) {
                     this.planeCollided(enemy);
                 }
 
