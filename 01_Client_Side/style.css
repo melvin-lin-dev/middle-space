@@ -8,13 +8,17 @@ html, body {
     padding: 0;
     margin: 0;
     color: #fff;
-    font-family: "Century Gothic", "Segoe UI", Arial, Serif, sans-serif;
+    font-family: 'Monda', "Century Gothic", "Segoe UI", Arial, Serif, sans-serif;
     font-weight: bold;
     background-color: #2a1d50;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
     -webkit-overflow-scrolling: touch;
+}
+
+canvas {
+    font-family: inherit;
 }
 
 /* Layout */
@@ -254,7 +258,8 @@ p {
 }
 
 .stat-overlay span {
-    font-size: 1.2rem;
+    font-size: .9rem;
+    letter-spacing: .1em;
     margin: 0 10px;
 }
 
@@ -287,7 +292,7 @@ p {
     width: 80px;
     height: 80px;
     background-color: rgba(255, 0, 0, .4);
-    border: .12rem solid rgba(255,0,0,.8);
+    border: .12rem solid rgba(255, 0, 0, .8);
 }
 
 .game-invisible {
@@ -331,6 +336,35 @@ p {
 .progress-circle__svg .progress-circle__stroke:nth-child(2) {
     stroke: #fff;
     stroke-dasharray: 314.1592%;
+}
+
+.game-combo {
+    position: absolute;
+    font-family: "Permanent Marker", Prompt;
+    color: #fff;
+    z-index: 999;
+    pointer-events: none;
+    right: 20px;
+    top: 80px;
+    transition: all .1s;
+    transform: scale(0);
+    opacity: 0;
+    font-size: 1.4rem;
+}
+
+.game-combo.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-combo.animate-combo {
+    animation: animateCombo .1s;
+}
+
+@keyframes animateCombo {
+    to {
+        font-size: 1.4rem;
+    }
 }
 
 #fuelCounter {
@@ -543,76 +577,76 @@ p {
 
 /* shop */
 
-.shop-container{
+.shop-container {
     top: 50%;
     left: 50%;
     height: 0;
     width: 0;
-    background-image: linear-gradient(to right, rgba(0,0,0,.2), rgba(0,0,0,.2)), url('./assets/background-shop.png');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), url('./assets/background-shop.png');
     background-position: center;
     background-size: cover;
     overflow: hidden;
     font-size: 13px;
     font-weight: normal;
     z-index: 9999999;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     animation: .6s hideShopAnimation linear;
 }
 
-.shop-container.active{
+.shop-container.active {
     border: 1px solid #db3f3d;
     height: 100vh;
     width: 100vw;
     animation: .6s showShopAnimation linear;
 }
 
-@keyframes hideShopAnimation{
-    0%{
+@keyframes hideShopAnimation {
+    0% {
         border: 1px solid #db3f3d;
         width: 100vw;
         height: 100vh;
     }
-    30%{
+    30% {
         width: 100vw;
         border: 1px solid #db3f3d;
         height: 0;
     }
-    100%{
+    100% {
         width: 0;
         border-width: 0;
     }
 }
 
-@keyframes showShopAnimation{
-    0%{
+@keyframes showShopAnimation {
+    0% {
         width: 0;
         height: 0;
     }
-    30%{
+    30% {
         width: 100vw;
         height: 0;
     }
-    100%{
+    100% {
         height: 100vh;
     }
 }
 
-.shop-container.active .menu.top{
+.shop-container.active .menu.top {
     margin: 0;
 }
 
-.shop-container .menu{
+.shop-container .menu {
     position: absolute;
     width: 100vw;
     overflow-x: scroll;
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
     color: white;
     overflow-y: hidden;
     transition: .4s margin;
     margin: -200px 0;
 }
 
-.shop-container .menu.top{
+.shop-container .menu.top {
     top: 0;
     /*transition-delay: 1s;*/
 }
@@ -622,27 +656,27 @@ p {
     transform: rotateX(180deg);
 }
 
-.shop-container .menu.active{
+.shop-container .menu.active {
     margin: 0;
 }
 
-.shop-container .menu::-webkit-scrollbar{
+.shop-container .menu::-webkit-scrollbar {
     height: 5px;
 }
 
-.shop-container .menu::-webkit-scrollbar-track{
-    background-color: rgba(150,150,150,.75);
+.shop-container .menu::-webkit-scrollbar-track {
+    background-color: rgba(150, 150, 150, .75);
 }
 
-.shop-container .menu::-webkit-scrollbar-thumb{
-    background-color: rgba(219,63,61,.75);
+.shop-container .menu::-webkit-scrollbar-thumb {
+    background-color: rgba(219, 63, 61, .75);
 }
 
-.shop-container .menu::-webkit-scrollbar-thumb:hover{
-    background-color: rgba(219,63,61,.9);
+.shop-container .menu::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(219, 63, 61, .9);
 }
 
-.shop-container .menu .content-menu{
+.shop-container .menu .content-menu {
     display: flex;
     width: 100%;
 }
@@ -655,56 +689,56 @@ p {
     text-align: center;
 }
 
-.shop-container .menu .content-menu > div:hover{
-    background-color: rgba(219,63,61,.3);
+.shop-container .menu .content-menu > div:hover {
+    background-color: rgba(219, 63, 61, .3);
 }
 
-.shop-container .menu .content-menu > div.active{
-    background-color: rgba(219,63,61,.7);
+.shop-container .menu .content-menu > div.active {
+    background-color: rgba(219, 63, 61, .7);
 }
 
-.shop-container .menu span{
+.shop-container .menu span {
     display: block;
     margin-bottom: 5px;
 }
 
-.shop-container .menu .content-menu > div > div{
+.shop-container .menu .content-menu > div > div {
     position: relative;
     height: 45px;
 }
 
-.shop-container .menu img{
+.shop-container .menu img {
     height: auto !important;
     max-height: 35px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-.shop-container img.plane{
+.shop-container img.plane {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     height: 20% !important;
 }
 
-.shop-container .stats, .shop-container .coins{
+.shop-container .stats, .shop-container .coins {
     position: absolute;
     top: 90px;
     margin: 15px;
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
     color: white;
 }
 
-.shop-container .stats{
+.shop-container .stats {
     padding: 5px 10px;
     border-radius: 5px;
     left: 0;
 }
 
-.shop-container .coins{
+.shop-container .coins {
     display: flex;
     align-items: center;
     border-radius: 100px;
@@ -712,30 +746,30 @@ p {
     right: 0;
 }
 
-.shop-container .coins img{
+.shop-container .coins img {
     height: 25px !important;
     margin-right: 5px;
 }
 
-.shop-container .stats > div{
+.shop-container .stats > div {
     display: flex;
     align-items: center;
     margin: 5px 0;
 }
 
-.shop-container .stats > div > *:first-child{
+.shop-container .stats > div > *:first-child {
     width: 100px;
 }
 
-.shop-container .stats > div > *:last-child{
+.shop-container .stats > div > *:last-child {
     flex: 3;
     margin-left: 5px;
 }
 
-.shop-container .stats .progress-bar{
+.shop-container .stats .progress-bar {
     width: 100px;
     height: 5px;
-    background-color: rgba(200,200,200,.7);
+    background-color: rgba(200, 200, 200, .7);
     border-radius: 100px;
     overflow: hidden;
     /*position: relative;*/
@@ -751,46 +785,46 @@ p {
     /*left: 0;*/
 }
 
-.shop-container .exit-shop{
+.shop-container .exit-shop {
     position: absolute;
     left: 15px;
     bottom: 15px;
     transition: .4s bottom;
 }
 
-.shop-container .menu.bottom.active + .exit-shop{
+.shop-container .menu.bottom.active + .exit-shop {
     bottom: 130px;
 }
 
-.shop-container button.btn{
+.shop-container button.btn {
     margin-top: 5px;
     font-weight: normal;
     padding: 3px 7px;
     border-radius: 3px;
 }
 
-.shop-container .notification{
-padding: 10px 15px;
-border-radius: 5px;
-border: 2px solid #db3f3d;
-color: #db3f3d;
-background-color: #dbb6bb;
-z-index: 5;
-position: absolute;
-width: 60%;
-left: 50%;
-top: -100px;
-transform: translateX(-50%);
-transition: .4s top;
+.shop-container .notification {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid #db3f3d;
+    color: #db3f3d;
+    background-color: #dbb6bb;
+    z-index: 5;
+    position: absolute;
+    width: 60%;
+    left: 50%;
+    top: -100px;
+    transform: translateX(-50%);
+    transition: .4s top;
 }
 
-.shop-container .notification.active{
-top: 100px;
+.shop-container .notification.active {
+    top: 100px;
 }
 
-.shop-container .shop-coins{
+.shop-container .shop-coins {
     border-radius: 100px;
-    background-color: rgba(255,255,255,.4);
+    background-color: rgba(255, 255, 255, .4);
     padding: 5px 15px;
     position: absolute;
     top: 3px;
@@ -799,12 +833,12 @@ top: 100px;
     right: 70px;
 }
 
-.shop-container .shop-coins span{
+.shop-container .shop-coins span {
     font-size: 17px;
     margin-left: 7px;
 }
 
-.shop-container .bought-effects img{
+.shop-container .bought-effects img {
     position: absolute;
     left: 50%;
     top: 20px;
@@ -816,12 +850,12 @@ top: 100px;
     z-index: 5;
 }
 
-@keyframes boughtEffectAnimation{
-    from{
+@keyframes boughtEffectAnimation {
+    from {
         opacity: 1;
         top: 20px;
     }
-    to{
+    to {
         opacity: 0;
         top: 110px;
     }

@@ -64,6 +64,7 @@ class Game {
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
             coins: 9999999,
+            combo: 0,
         };
 
         this.rng();
@@ -118,7 +119,9 @@ class Game {
     render() {
         if (this.pause === -1) {
             this.sound.volume = this.volume;
-            this.sound.play();
+            this.sound.onload = () => {
+                this.sound.play();
+            };
 
             this.animateBackground();
 
@@ -144,7 +147,7 @@ class Game {
                     let bullet = enemy.bullets[j];
                     bullet.render();
 
-                    if (this.checkCollision(bullet, this.player)  && this.player.touchable) {
+                    if (this.checkCollision(bullet, this.player) && this.player.touchable) {
                         enemy.bullets.splice(j, 1);
                         this.planeCollided();
                     }
@@ -152,7 +155,7 @@ class Game {
 
                 enemy.render();
 
-                if (this.checkCollision(enemy, this.player)  && this.player.touchable) {
+                if (this.checkCollision(enemy, this.player) && this.player.touchable) {
                     this.planeCollided(enemy);
                 }
 
@@ -232,8 +235,11 @@ class Game {
         // Handle Plane Collided
         if (obj) {
             obj.life = 0;
-            this.collided(obj)
+            this.collided(obj);
         }
+
+        game.stats.combo = 0;
+        $('.game-combo').removeClass('active');
 
         this.player.sound.volume = this.volume;
         this.player.sound.play();
@@ -250,9 +256,27 @@ class Game {
 
     collided(obj, bullet = null) {
         // Handle Collided Object
-        if (bullet) obj.life -= bullet.power * game.player.stats.bullet;
+        if (bullet) {
+            obj.life -= bullet.power * game.player.stats.bullet;
+            if (obj.score > 0) {
+                game.stats.combo += bullet.power * game.player.stats.bullet;
+                $('.game-combo').addClass('active').addClass('animate-combo');
+                if (this.animate_combo) clearTimeout(this.animate_combo);
+                this.animate_combo = setTimeout(() => {
+                    $('.game-combo').removeClass('animate-combo');
+                }, 100);
+                $('.total-combo').html(game.stats.combo);
+            } else {
+                game.stats.combo = 0;
+                $('.game-combo').removeClass('active');
+            }
+        } else {
+            game.stats.combo = 0;
+            $('.game-combo').removeClass('active');
+        }
 
         if (obj.life <= 0) {
+
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
             obj.sound.volume = this.volume;
             obj.sound.play();
