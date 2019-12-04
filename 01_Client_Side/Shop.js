@@ -58,12 +58,12 @@ class Shop {
 
     displayData(side = 'top', menu = '', el = '') {
         let contentMenu = $(`.menu.${side} .content-menu`);
-        if(side === 'bottom') {
+        if (side === 'bottom') {
             $('.shop-container .content-menu .active').removeClass('active');
             el.classList.add('active');
             $('.menu.bottom').addClass('active');
         }
-        else if(side === 'top') this.setUpgradeBar();
+        else if (side === 'top') this.setUpgradeBar();
         contentMenu.html('');
 
         let list = side === 'top' ? this.menus : menu.data;
@@ -72,7 +72,9 @@ class Shop {
 
         list.forEach(menu => {
             let type = document.createElement('div');
-            if(side === 'top') type.onclick = function() {_self.displayData('bottom', menu, this)};
+            if (side === 'top') type.onclick = function () {
+                _self.displayData('bottom', menu, this)
+            };
 
             let name = document.createElement('span');
             name.innerHTML = menu.name;
@@ -84,12 +86,15 @@ class Shop {
             type.appendChild(div);
             div.appendChild(menu.image);
 
-            if(side === 'bottom'){
+            if (side === 'bottom') {
+                let currentUpgrade = game.player.upgrade[menu.type];
                 let buyButton = document.createElement('button');
-                buyButton.innerHTML = menu.cost;
-                buyButton.value = menu.cost;
+                buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
+                buyButton.value = menu.cost * (currentUpgrade.upgradeLevel + 1);
                 buyButton.className = 'btn';
-                buyButton.onclick = (e) => { this.upgradeShip(e.target, menu) };
+                buyButton.onclick = (e) => {
+                    this.upgradeShip(e.target, menu)
+                };
                 type.appendChild(buyButton);
             }
         })
@@ -104,18 +109,20 @@ class Shop {
     upgradeShip(button, data) {
         let currentUpgrade = game.player.upgrade[data.type];
 
-        if(currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade && game.stats.coins >= button.value){
+        if (currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade && game.stats.coins >= button.value) {
             game.stats.coins -= button.value;
             currentUpgrade.upgradeLevel++;
             game.player.stats[data.type] += currentUpgrade.value;
 
             let innerHTML = '';
 
-            if(currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade){
+            if (currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade) {
                 innerHTML = 'MAXED';
-            }else{
-                innerHTML = data.cost  * (currentUpgrade.upgradeLevel + 1)
+            } else {
+                innerHTML = data.cost * (currentUpgrade.upgradeLevel + 1)
             }
+
+            button.value = data.cost * (currentUpgrade.upgradeLevel + 1);
 
             button.innerHTML = innerHTML;
             this.setUpgradeBar(data.type);
@@ -132,7 +139,7 @@ class Shop {
             setTimeout(() => {
                 effect.remove();
             }, 1400);
-        }else if(game.stats.coins < button.value){
+        } else if (game.stats.coins < button.value) {
             $('#shop .notification').addClass('active');
 
             setTimeout(() => {
@@ -141,12 +148,12 @@ class Shop {
         }
     }
 
-    setUpgradeBar(type = ''){
-        if(!type){
+    setUpgradeBar(type = '') {
+        if (!type) {
             let stats = $('.shop-container .stats');
             stats.html('');
 
-            for(let type in game.player.upgrade){
+            for (let type in game.player.upgrade) {
                 let currentUpgrade = game.player.upgrade[type];
 
                 let stat = document.createElement('div');
@@ -167,7 +174,7 @@ class Shop {
 
                 progressBarDiv.style.width = currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%';
             }
-        }else{
+        } else {
             let currentUpgrade = game.player.upgrade[type];
             $(`#shop #stat-${type} span`).html(`${type.toUpperCase()} (${currentUpgrade.upgradeLevel})`);
             $(`#shop #stat-${type} .progress-bar > div`).css('width', currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%');
