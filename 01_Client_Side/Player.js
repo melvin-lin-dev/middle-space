@@ -144,7 +144,7 @@ class Player {
         if (this.invisible_cooldown > 0) this.invisible_cooldown--;
         else if (this.invisible_timeout) this.invisible_timeout--;
 
-        if (this.invisible_timeout === 1) this.deactiveInvisible();
+        if (this.invisible_timeout === 1) this.deactiveInvisible(this.invisible_max_cooldown);
 
         $('.invisible-cooldown-percentage').css({
             strokeDashoffset: `calc(314.1592% * (${((this.invisible_max_cooldown - this.invisible_cooldown) / this.invisible_max_cooldown) * 100} / 100))`
@@ -218,7 +218,7 @@ class Player {
             return false;
         }
 
-        if (this.speedX && this.speedY) { 
+        if (this.speedX && this.speedY) {
             this.x += this.speedX;
             this.y += this.speedY;
 
@@ -325,10 +325,10 @@ class Player {
         }
     }
 
-    deactiveInvisible() {
+    deactiveInvisible(cooldown = 0) {
         this.invisible_timeout = 0;
         $('.game-invisible').removeClass('opacity-5');
         this.touchable = 1;
-        this.invisible_cooldown = 0;
+        this.invisible_cooldown = cooldown;
     }
 }
