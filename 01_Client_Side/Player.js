@@ -38,11 +38,15 @@ class Player {
             rangeAngle: 3
         };
 
-        if (canvas.offsetHeight > 600) {
+        if (canvas.height > 600) {
             this.width *= 5 / 3;
             this.height *= 5 / 3;
             this.exhaust.width *= 5 / 3;
             this.exhaust.height *= 5 / 3;
+        }
+
+        if (canvas.width > 1000) {
+            this.speed *= 5 / 3;
         }
 
         //  Declaring Bullet
@@ -91,7 +95,7 @@ class Player {
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
         this.touchable = 1;
-        this.invisible_duration = 4500;
+        this.invisible_duration = 420;
     }
 
     render() {
@@ -138,6 +142,9 @@ class Player {
         }
 
         if (this.invisible_cooldown > 0) this.invisible_cooldown--;
+        else if (this.invisible_timeout) this.invisible_timeout--;
+
+        if (this.invisible_timeout === 1) this.deactiveInvisible();
 
         $('.invisible-cooldown-percentage').css({
             strokeDashoffset: `calc(314.1592% * (${((this.invisible_max_cooldown - this.invisible_cooldown) / this.invisible_max_cooldown) * 100} / 100))`
@@ -158,7 +165,8 @@ class Player {
             });
         }
 
-        this.fireEffects.forEach(fireEffect => {
+        for (let i = 0; i < this.fireEffects.length; i++) {
+            let fireEffect = this.fireEffects[i];
             ctx.save();
             ctx.globalAlpha = fireEffect.opacity;
             ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1 - fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
@@ -170,7 +178,7 @@ class Player {
             if (fireEffect.opacity < 0) {
                 this.fireEffects.shift();
             }
-        })
+        }
     }
 
     animate() {
@@ -210,32 +218,34 @@ class Player {
             return false;
         }
 
-        this.x += this.speedX;
-        this.y += this.speedY;
+        if (this.speedX && this.speedY) { 
+            this.x += this.speedX;
+            this.y += this.speedY;
 
-        if (this.speedY < -2) {
-            if (exhaust.angle > exhaust.minAngle) {
-                exhaust.angle -= exhaust.rangeAngle;
+            if (this.speedY < -2) {
+                if (exhaust.angle > exhaust.minAngle) {
+                    exhaust.angle -= exhaust.rangeAngle;
+                }
+            } else if (this.speedY > 2) {
+                if (exhaust.angle < exhaust.maxAngle) {
+                    exhaust.angle += exhaust.rangeAngle;
+                }
+            } else {
+                if (exhaust.angle > 0)
+                    exhaust.angle -= exhaust.rangeAngle;
+                if (exhaust.angle < 0)
+                    exhaust.angle += exhaust.rangeAngle;
             }
-        } else if (this.speedY > 2) {
-            if (exhaust.angle < exhaust.maxAngle) {
-                exhaust.angle += exhaust.rangeAngle;
-            }
-        } else {
-            if (exhaust.angle > 0)
-                exhaust.angle -= exhaust.rangeAngle;
-            if (exhaust.angle < 0)
-                exhaust.angle += exhaust.rangeAngle;
+
+            if (this.x < 0)
+                this.x = 0;
+            if (this.x + this.width > canvas.width)
+                this.x = canvas.width - this.width;
+            if (this.y < 0)
+                this.y = 0;
+            if (this.y + this.height > canvas.height)
+                this.y = canvas.height - this.height
         }
-
-        if (this.x < 0)
-            this.x = 0;
-        if (this.x + this.width > canvas.width)
-            this.x = canvas.width - this.width;
-        if (this.y < 0)
-            this.y = 0;
-        if (this.y + this.height > canvas.height)
-            this.y = canvas.height - this.height
     }
 
     shoot() {
@@ -311,16 +321,12 @@ class Player {
 
             $('.game-invisible').addClass('opacity-5');
 
-            this.invisible_timeout = setTimeout(() => {
-                $('.game-invisible').removeClass('opacity-5');
-                this.invisible_cooldown = this.invisible_max_cooldown;
-                this.touchable = 1;
-            }, this.invisible_duration);
+            this.invisible_timeout = this.invisible_duration;
         }
     }
 
     deactiveInvisible() {
-        clearTimeout(this.invisible_timeout);
+        this.invisible_timeout = 0;
         $('.game-invisible').removeClass('opacity-5');
         this.touchable = 1;
         this.invisible_cooldown = 0;

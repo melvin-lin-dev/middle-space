@@ -2,6 +2,8 @@
 
 * {
     box-sizing: border-box;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 html, body {
@@ -347,24 +349,28 @@ p {
     right: 20px;
     top: 80px;
     transition: all .1s;
-    transform: scale(0);
     opacity: 0;
     font-size: 1.4rem;
-}
-
-.game-combo.active {
-    opacity: 1;
-    transform: scale(1);
+    text-shadow: 2px 2px 1px rgba(255, 255, 255, .3);
 }
 
 .game-combo.animate-combo {
-    animation: animateCombo .1s;
+    animation: animateCombo .5s;
 }
 
 @keyframes animateCombo {
-    to {
-        font-size: 1.4rem;
+    80% {
+        font-size: 2rem;
+        opacity: 1;
     }
+    100% {
+        font-size: 2rem;
+        opacity: 0;
+    }
+}
+
+.game-combo.animate-combo .total-combo {
+    animation: totalCombo .5s;
 }
 
 #fuelCounter {
