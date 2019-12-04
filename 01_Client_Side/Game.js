@@ -64,9 +64,10 @@ class Game {
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
             coins: 9999999,
+            combo: 0,
         };
 
-        this.rng();
+        this.enemyGenerator();
 
         this.IS_CHANGING_LEVEL = false;
 
@@ -118,7 +119,9 @@ class Game {
     render() {
         if (this.pause === -1) {
             this.sound.volume = this.volume;
-            this.sound.play();
+            this.sound.onload = () => {
+                this.sound.play();
+            };
 
             this.animateBackground();
 
@@ -144,7 +147,7 @@ class Game {
                     let bullet = enemy.bullets[j];
                     bullet.render();
 
-                    if (this.checkCollision(bullet, this.player)  && this.player.touchable) {
+                    if (this.player.touchable && this.checkCollision(bullet, this.player)) {
                         enemy.bullets.splice(j, 1);
                         this.planeCollided();
                     }
@@ -152,7 +155,7 @@ class Game {
 
                 enemy.render();
 
-                if (this.checkCollision(enemy, this.player)  && this.player.touchable) {
+                if (this.player.touchable && this.checkCollision(enemy, this.player)) {
                     this.planeCollided(enemy);
                 }
 
@@ -215,7 +218,7 @@ class Game {
             this.countTime();
             this.renderText();
 
-            this.rng();
+            this.enemyGenerator();
 
             if (this.stats.fuel <= 0) {
                 this.over();
@@ -232,8 +235,10 @@ class Game {
         // Handle Plane Collided
         if (obj) {
             obj.life = 0;
-            this.collided(obj)
+            this.collided(obj);
         }
+
+        game.stats.combo = 0;
 
         this.player.sound.volume = this.volume;
         this.player.sound.play();
@@ -250,7 +255,18 @@ class Game {
 
     collided(obj, bullet = null) {
         // Handle Collided Object
-        if (bullet) obj.life -= bullet.power * game.player.stats.bullet;
+        if (bullet) {
+            obj.life -= bullet.power * game.player.stats.bullet;
+            if (obj.score > 0 && obj.life <= 0) {
+                game.stats.combo += bullet.power * game.player.stats.bullet;
+                $('.game-combo').removeClass('animate-combo').addClass('animate-combo');
+                if (this.animate_combo) clearTimeout(this.animate_combo);
+                this.animate_combo = setTimeout(() => {
+                    $('.game-combo').removeClass('animate-combo');
+                }, 500);
+                $('.total-combo').html(game.stats.combo);
+            }
+        } else game.stats.combo = 0;
 
         if (obj.life <= 0) {
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
@@ -264,22 +280,14 @@ class Game {
 
     checkCollision(a, b) {
         // Checking Collision
-        if (a.x <= b.x + b.width &&
-            a.x + a.width >= b.x &&
-            a.y <= b.y + b.height &&
-            a.y + a.height >= b.y) {
-            return 1;
-        }
-
+        if (a.x <= b.x + b.width && a.x + a.width >= b.x && a.y <= b.y + b.height && a.y + a.height >= b.y) return 1;
         return 0;
     }
 
     renderText() {
         //  Rendering Stats
-        if (this.stats.fuel > this.player.stats.fuel)
-            this.stats.fuel = this.player.stats.fuel;
-        if (this.stats.fuel < 0)
-            this.stats.fuel = 0;
+        if (this.stats.fuel > this.player.stats.fuel) this.stats.fuel = this.player.stats.fuel;
+        else if (this.stats.fuel < 0) this.stats.fuel = 0;
 
         $('.score-text').html(this.stats.score);
         $('.coins-text').html(this.stats.coins);
@@ -332,7 +340,7 @@ class Game {
     }
 
     // random number generators
-    rng() {
+    enemyGenerator() {
         if (this.stats.distance % 2000 === 0) {
             this.IS_CHANGING_LEVEL = true;
 
@@ -357,8 +365,7 @@ class Game {
                             this.enemies.push(new Enemy(2, this.stats.level));
                         }
 
-                        $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`);
-                        $('.level-info').addClass('popup-animation');
+                        $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`).addClass('popup-animation');
 
                         // console.log(this.enemies);
 
