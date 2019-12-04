@@ -63,7 +63,7 @@ class Game {
             distance: 0,
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
-            coins: 0,
+            coins: 9999999,
         };
 
         this.rng();

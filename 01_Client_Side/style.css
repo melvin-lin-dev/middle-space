@@ -788,7 +788,7 @@ transition: .4s top;
 top: 100px;
 }
 
-.shop .shop-coins{
+.shop-container .shop-coins{
     border-radius: 100px;
     background-color: rgba(255,255,255,.4);
     padding: 5px 15px;
@@ -799,17 +799,17 @@ top: 100px;
     right: 70px;
 }
 
-.shop .shop-coins span{
+.shop-container .shop-coins span{
     font-size: 17px;
     margin-left: 7px;
 }
 
-.shop .bought-effects img{
+.shop-container .bought-effects img{
     position: absolute;
     left: 50%;
     top: 20px;
     transform: translateX(-50%);
-    animation: 1.3s boughtEffectAnimation;
+    animation: .8s boughtEffectAnimation;
     width: 30px;
     opacity: 0 !important;
     height: auto !important;
@@ -823,7 +823,7 @@ top: 100px;
     }
     to{
         opacity: 0;
-        top: 150px;
+        top: 110px;
     }
 }
 
