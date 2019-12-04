@@ -51,6 +51,7 @@ class Player {
 
         this.shoot_delay = 500;
         this.bullet_level = 1;
+        this.bulletType = 1;
 
         // Entering Position
         setTimeout(() => {
@@ -259,7 +260,7 @@ class Player {
 
         this.shoot_timer = setTimeout(() => {
             if (game.pause === -1) {
-                this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
+                this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.bulletType));
                 this.last_shoot = new Date();
             }
         }, ms)

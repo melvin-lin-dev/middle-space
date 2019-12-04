@@ -95,10 +95,10 @@ loadAssets([
     //     value: 'background.mp3',
     //     type: 'audio',
     // },
-    // {
-    //     value: 'shoot.mp3',
-    //     type: 'audio',
-    // },
+    {
+        value: 'shoot.mp3',
+        type: 'audio',
+    },
     // {
     //     value: 'destroyed.mp3',
     //     type: 'audio',
@@ -118,6 +118,18 @@ loadAssets([
     {
         value: 'stats.png',
         type: 'image',
+    },
+    {
+        value: 'rocket.png',
+        type: 'image',
+    },
+    {
+        value: 'rocket-exhaust.png',
+        type: 'image',
+    },
+    {
+        value: 'rocket.mp3',
+        type: 'audio',
     },
 ], complete);
 

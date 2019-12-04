@@ -4,6 +4,7 @@ class Shop {
             {
                 name: 'Stats',
                 type: 'stats',
+                menuType: 'upgrade',
                 image: imageAssets['stats.png'],
                 data: [
                     {
@@ -25,14 +26,26 @@ class Shop {
             {
                 name: 'Bullet',
                 type: 'bullet',
+                menuType: 'equipment',
                 image: imageAssets['bullet.png'],
                 data: [
                     {
-                        name: 'Fuel',
-                        type: 'fuel',
-                        image: imageAssets['fuel.png'],
-                        description: 'Ship HP',
-                        cost: 200
+                        name: 'Original',
+                        type: 'original',
+                        image: this.loadShopImage('bullet.png'),
+                        description: 'Original Bullet',
+                        cost: 0,
+                        equipmentType: 1,
+                        owned: true
+                    },
+                    {
+                        name: 'Rocket',
+                        type: 'rocket',
+                        image: this.loadShopImage('rocket.png'),
+                        description: 'Rocket',
+                        cost: 400,
+                        equipmentType: 2,
+                        owned: false
                     }
                 ]
             }
@@ -56,17 +69,19 @@ class Shop {
         // ];
     }
 
-    displayData(side = 'top', menu = '', el = '') {
+    displayData(side = 'top', parentMenu = '', el = '') {
         let contentMenu = $(`.menu.${side} .content-menu`);
         if (side === 'bottom') {
+
             $('.shop-container .content-menu .active').removeClass('active');
             el.classList.add('active');
             $('.menu.bottom').addClass('active');
+            $('.menu.bottom').prop('id', 'menu-'+parentMenu.menuType);
         }
         else if (side === 'top') this.setUpgradeBar();
         contentMenu.html('');
 
-        let list = side === 'top' ? this.menus : menu.data;
+        let list = side === 'top' ? this.menus : parentMenu.data;
 
         let _self = this;
 
@@ -88,16 +103,62 @@ class Shop {
 
             if (side === 'bottom') {
                 let currentUpgrade = game.player.upgrade[menu.type];
-                let buyButton = document.createElement('button');
-                buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
-                buyButton.value = menu.cost * (currentUpgrade.upgradeLevel + 1);
-                buyButton.className = 'btn';
+                let buyButton = document.createElement('button');;
+                buyButton.value = menu.cost;
+                if(parentMenu.menuType === 'upgrade'){
+                    buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
+                    buyButton.value *= currentUpgrade.upgradeLevel + 1;
+                }else if(parentMenu.menuType === 'equipment'){
+                    buyButton.innerHTML = menu.owned ? 'EQUIP' : 'BUY';
+                    if(game.player.bulletType === menu.equipmentType){
+                        buyButton.innerHTML = 'EQUIPPED';
+                    }
+                }
+                buyButton.className = `btn`;
                 buyButton.onclick = (e) => {
-                    this.upgradeShip(e.target, menu)
+                    this.checkMenuType(e.target, parentMenu.menuType, menu);
                 };
                 type.appendChild(buyButton);
             }
         })
+    }
+
+    checkMenuType(button, parentMenuType, menu){
+        if(game.stats.coins >= button.value){
+            let currentUpgrade = game.player.upgrade[menu.type];
+
+            if((parentMenuType === 'equipment' && !menu.owned) || (parentMenuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
+                game.stats.coins -= button.value;
+
+                game.renderText();
+
+                let kachingSound = new Audio('./sound/kaching.mp3');
+                kachingSound.play();
+
+                let effect = document.createElement('img');
+                effect.src = './assets/coin.png';
+                $('#shop .bought-effects').append(effect);
+
+                setTimeout(() => {
+                    effect.remove();
+                }, 1400);
+            }
+
+            switch(parentMenuType) {
+                case 'upgrade':
+                    this.upgradeShip(button, menu, currentUpgrade);
+                    break;
+                case 'equipment':
+                    this.buyEquipment(button, menu, currentUpgrade, parentMenuType);
+                    break;
+            }
+        }else{
+            $('#shop .notification').addClass('active');
+
+            setTimeout(() => {
+                $('#shop .notification').removeClass('active');
+            }, 1000);
+        }
     }
 
     loadShopImage(imageName) {
@@ -106,46 +167,37 @@ class Shop {
         return newImage;
     }
 
-    upgradeShip(button, data) {
-        let currentUpgrade = game.player.upgrade[data.type];
-
-        if (currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade && game.stats.coins >= button.value) {
-            game.stats.coins -= button.value;
+    upgradeShip(button, menu, currentUpgrade) {
+        if (currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade) {
             currentUpgrade.upgradeLevel++;
-            game.player.stats[data.type] += currentUpgrade.value;
+            game.player.stats[menu.type] += currentUpgrade.value;
 
             let innerHTML = '';
 
             if (currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade) {
                 innerHTML = 'MAXED';
             } else {
-                innerHTML = data.cost * (currentUpgrade.upgradeLevel + 1)
+                innerHTML = menu.cost * (currentUpgrade.upgradeLevel + 1)
             }
 
-            button.value = data.cost * (currentUpgrade.upgradeLevel + 1);
+            button.value = menu.cost * (currentUpgrade.upgradeLevel + 1);
 
             button.innerHTML = innerHTML;
-            this.setUpgradeBar(data.type);
-
-            game.renderText();
-
-            let kachingSound = new Audio('./sound/kaching.mp3');
-            kachingSound.play();
-
-            let effect = document.createElement('img');
-            effect.src = './assets/coin.png';
-            $('#shop .bought-effects').append(effect);
-
-            setTimeout(() => {
-                effect.remove();
-            }, 1400);
-        } else if (game.stats.coins < button.value) {
-            $('#shop .notification').addClass('active');
-
-            setTimeout(() => {
-                $('#shop .notification').removeClass('active');
-            }, 1000);
+            this.setUpgradeBar(menu.type);
         }
+    }
+
+    buyEquipment(button, menu, currentUpgrade, parentMenuType){
+        if(!menu.owned){
+            button.value = 0;
+            menu.cost = 0;
+            menu.owned = true;
+        }
+
+        $(`#menu-${parentMenuType} button[value=0]`).html('EQUIP');
+
+        button.innerHTML = 'EQUIPPED';
+        game.player.bulletType = menu.equipmentType;
     }
 
     setUpgradeBar(type = '') {
