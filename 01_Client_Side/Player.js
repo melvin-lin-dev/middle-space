@@ -218,34 +218,32 @@ class Player {
             return false;
         }
 
-        if (this.speedX && this.speedY) {
-            this.x += this.speedX;
-            this.y += this.speedY;
+        this.x += this.speedX;
+        this.y += this.speedY;
 
-            if (this.speedY < -2) {
-                if (exhaust.angle > exhaust.minAngle) {
-                    exhaust.angle -= exhaust.rangeAngle;
-                }
-            } else if (this.speedY > 2) {
-                if (exhaust.angle < exhaust.maxAngle) {
-                    exhaust.angle += exhaust.rangeAngle;
-                }
-            } else {
-                if (exhaust.angle > 0)
-                    exhaust.angle -= exhaust.rangeAngle;
-                if (exhaust.angle < 0)
-                    exhaust.angle += exhaust.rangeAngle;
+        if (this.speedY < -2) {
+            if (exhaust.angle > exhaust.minAngle) {
+                exhaust.angle -= exhaust.rangeAngle;
             }
-
-            if (this.x < 0)
-                this.x = 0;
-            if (this.x + this.width > canvas.width)
-                this.x = canvas.width - this.width;
-            if (this.y < 0)
-                this.y = 0;
-            if (this.y + this.height > canvas.height)
-                this.y = canvas.height - this.height
+        } else if (this.speedY > 2) {
+            if (exhaust.angle < exhaust.maxAngle) {
+                exhaust.angle += exhaust.rangeAngle;
+            }
+        } else {
+            if (exhaust.angle > 0)
+                exhaust.angle -= exhaust.rangeAngle;
+            if (exhaust.angle < 0)
+                exhaust.angle += exhaust.rangeAngle;
         }
+
+        if (this.x < 0)
+            this.x = 0;
+        if (this.x + this.width > canvas.width)
+            this.x = canvas.width - this.width;
+        if (this.y < 0)
+            this.y = 0;
+        if (this.y + this.height > canvas.height)
+            this.y = canvas.height - this.height
     }
 
     shoot() {

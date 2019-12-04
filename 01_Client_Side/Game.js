@@ -233,7 +233,7 @@ class Game {
 
     planeCollided(obj = null) {
         // Handle Plane Collided
-        if (obj) {
+        if (obj && !obj.boss) {
             obj.life = 0;
             this.collided(obj);
         }
@@ -280,6 +280,8 @@ class Game {
 
     checkCollision(a, b) {
         // Checking Collision
+        a = a.collision || a;
+        b = b.collision || b;
         if (a.x <= b.x + b.width && a.x + a.width >= b.x && a.y <= b.y + b.height && a.y + a.height >= b.y) return 1;
         return 0;
     }
@@ -349,37 +351,40 @@ class Game {
                     this.level_timeout = setTimeout(() => {
                         this.stats.level += 1;
 
-                        let level = new Level(this.stats.level);
-
                         this.enemies = [];
 
-                        for (let i = 0; i < 2; i++) {
-                            this.enemies.push(new Enemy(3, 0));
+                        if (this.stats.level % 5 !== 0) {
+                            let level = new Level(this.stats.level);
+
+                            for (let i = 0; i < 2; i++) {
+                                this.enemies.push(new Enemy(3, 0));
+                            }
+
+                            for (let i = 0; i < level.maxEnemy; i++) {
+                                this.enemies.push(new Enemy(1, this.stats.level));
+                            }
+
+                            for (let i = 0; i < level.maxAsteroid; i++) {
+                                this.enemies.push(new Enemy(2, this.stats.level));
+                            }
+
+                            $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`).addClass('popup-animation');
+
+                            setTimeout(() => {
+                                $('.level-info').removeClass('popup-animation');
+                            }, 2000)
+
+                            this.stats.distance += 1;
+                            this.IS_CHANGING_LEVEL = false;
+                            this.level_timeout = null;
+                        } else {
+                            this.enemies.push(
+                                new Boss()
+                            );
                         }
-
-                        for (let i = 0; i < level.maxEnemy; i++) {
-                            this.enemies.push(new Enemy(1, this.stats.level));
-                        }
-
-                        for (let i = 0; i < level.maxAsteroid; i++) {
-                            this.enemies.push(new Enemy(2, this.stats.level));
-                        }
-
-                        $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`).addClass('popup-animation');
-
-                        // console.log(this.enemies);
-
-                        setTimeout(() => {
-                            $('.level-info').removeClass('popup-animation');
-                        }, 2000)
-
-                        this.stats.distance += 1;
-                        this.IS_CHANGING_LEVEL = false;
-                        this.level_timeout = null
                     }, 1000);
                 }
 
-                this.enemies = [];
             }
         }
 
