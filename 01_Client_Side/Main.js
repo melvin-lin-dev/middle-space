@@ -43,8 +43,8 @@ document.onfullscreenchange = function (e) {
         game.sound.pause()
         cancelAnimationFrame(game.rendering);
         $('#zone_joystick').html('');
-        event.hideExcept('#instructions');
-        event.showCanvas(0);
+        ev.hideExcept('#instructions');
+        ev.showCanvas(0);
     }
 }
 

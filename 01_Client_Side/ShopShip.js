@@ -44,7 +44,7 @@ class ShopShip {
             this.enterZoneChecking();
             if (!this.arrived) {
                 this.arrived = true;
-                event.toggleEnterZone();
+                ev.toggleEnterZone();
 
                 this.shopTimeout = setTimeout(() => {
                     this.leave();
@@ -55,7 +55,7 @@ class ShopShip {
 
     leave(){
         this.arrived = false;
-        event.toggleEnterZone();
+        ev.toggleEnterZone();
         this.mode = 'leaving';
     }
 
@@ -81,7 +81,7 @@ class ShopShip {
 
     shopping() {
         if (this.arrived) {
-            event.toggleShop();
+            ev.toggleShop();
         }
     }
 

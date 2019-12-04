@@ -24,7 +24,7 @@ class Bullet {
         }
 
         this.sound = new Audio();
-        this.sound.src = audioAssets['shoot.mp3'].src;
+        this.sound.src = './sound/shoot.mp3';
         this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();

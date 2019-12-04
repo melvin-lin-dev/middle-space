@@ -76,7 +76,7 @@ class Enemy {
         }
 
         this.sound = new Audio();
-        this.sound.src = audioAssets['destroyed.mp3'].src;
+        this.sound.src = './sound/destroyed.mp3';
 
         this.generateLocation();
 

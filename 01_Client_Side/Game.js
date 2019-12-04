@@ -8,7 +8,8 @@ class Game {
     start(GOD_MODE = false) {
         this.GOD_MODE = GOD_MODE;
 
-        this.sound = audioAssets['background.mp3'];
+        this.sound = new Audio();
+        this.sound.src = './sound/background.mp3'
         this.sound.loop = true;
         this.sound.volume = this.volume;
 
@@ -28,14 +29,6 @@ class Game {
         for (let i = 0; i < 5; i++) {
             this.planets.push(new Planet(i + 1));
         }
-
-        //  Friends
-
-        this.friends = [];
-
-        // for (let i = 0; i < 2; i++) {
-        //     this.friends.push(new Friend);
-        // }
 
         //  Enemies
 
@@ -83,9 +76,9 @@ class Game {
 
         this.rendering = null;
 
-        event.hideExcept('#gameBoard');
+        ev.hideExcept('#gameBoard');
         $('#zone_joystick').removeClass('hide');
-        event.showCanvas(1);
+        ev.showCanvas(1);
 
         let zoneJoystick = document.getElementById('zone_joystick');
 
@@ -137,15 +130,6 @@ class Game {
 
             this.field_is_empty = true;
 
-            for (let i = 0; i < this.friends.length; i++) {
-                let friend = this.friends[i];
-                friend.render();
-                if (this.checkCollision(friend, this.player)) {
-                    this.planeCollided(friend);
-                }
-                if (friend.x + friend.width > 0) this.field_is_empty = false;
-            }
-
             //  Rendering Enemy
 
             for (let i = 0; i < this.enemies.length; i++) {
@@ -154,7 +138,7 @@ class Game {
                     let bullet = enemy.bullets[j];
                     bullet.render();
 
-                    if (this.checkCollision(bullet, this.player)) {
+                    if (this.checkCollision(bullet, this.player)  && this.player.touchable) {
                         enemy.bullets.splice(j, 1);
                         this.planeCollided();
                     }
@@ -162,7 +146,7 @@ class Game {
 
                 enemy.render();
 
-                if (this.checkCollision(enemy, this.player)) {
+                if (this.checkCollision(enemy, this.player)  && this.player.touchable) {
                     this.planeCollided(enemy);
                 }
 
@@ -194,13 +178,6 @@ class Game {
                         if (this.checkCollision(bullet, enemy)) {
                             this.player.bullets.splice(i, 1);
                             this.collided(enemy, bullet);
-                        }
-                    }
-                    for (let j = 0; j < this.friends.length; j++) {
-                        let friend = this.friends[j];
-                        if (this.checkCollision(bullet, friend)) {
-                            this.player.bullets.splice(i, 1);
-                            this.collided(friend, bullet);
                         }
                     }
                 }
@@ -343,8 +320,8 @@ class Game {
             $('#zone_joystick').html('')
             cancelAnimationFrame(this.rendering);
 
-            event.hideExcept('#scoreForm');
-            event.showCanvas(0);
+            ev.hideExcept('#scoreForm');
+            ev.showCanvas(0);
         }
     }
 

@@ -296,6 +296,8 @@ VirtualJoystick.prototype._onTouchMove = function (event) {
     if (i === touchList.length) return;
     var touch = touchList[i];
 
+    console.log(event)
+
     event.preventDefault();
 
     var x = touch.pageX;

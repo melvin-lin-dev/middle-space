@@ -18,7 +18,6 @@ class Player {
         this.entering = false;
         this.shopMode = '';
 
-
         this.sound = new Audio();
         this.sound.src = './sound/destroyed.mp3';
 
@@ -87,6 +86,12 @@ class Player {
 
         // Fire Effects
         this.fireEffects = [];
+
+        //    Invisible
+        this.invisible_cooldown = 0;
+        this.invisible_max_cooldown = 360;
+        this.touchable = 1;
+        this.invisible_duration = 4500;
     }
 
     render() {
@@ -107,6 +112,7 @@ class Player {
         ctx.save();
         ctx.translate(exhaustX + exhaustWidth, exhaustY + exhaustHeight / 2);
         ctx.rotate(exhaust.angle * Math.PI / 180);
+        if (this.invisible_cooldown === -1) ctx.globalAlpha = .3;
         ctx.drawImage(exhaust.img, -exhaustWidth, -exhaustHeight / 2, exhaustWidth, exhaustHeight);
         ctx.restore();
 
@@ -117,7 +123,10 @@ class Player {
         let playerX = this.x - 22 * (this.defaultScale - this.scale) + this.width - playerWidth;
         let playerY = this.y + (this.height - playerHeight) / 2;
 
+        ctx.save();
+        if (this.invisible_cooldown === -1) ctx.globalAlpha = .7;
         ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
+        ctx.restore();
 
         if ((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)) {
             this[this.shopMode + 'Shop']();
@@ -127,6 +136,12 @@ class Player {
             clearInterval(this.do_shoot);
             clearTimeout(this.shoot_timer)
         }
+
+        if (this.invisible_cooldown > 0) this.invisible_cooldown--;
+
+        $('.invisible-cooldown-percentage').css({
+            strokeDashoffset: `calc(314.1592% * (${((this.invisible_max_cooldown - this.invisible_cooldown) / this.invisible_max_cooldown) * 100} / 100))`
+        })
     }
 
     renderFireEffects() {
@@ -146,13 +161,13 @@ class Player {
         this.fireEffects.forEach(fireEffect => {
             ctx.save();
             ctx.globalAlpha = fireEffect.opacity;
-            ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1-fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
+            ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1 - fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
             ctx.restore();
 
             fireEffect.opacity -= .02;
             fireEffect.scale += .06;
 
-            if(fireEffect.opacity < 0){
+            if (fireEffect.opacity < 0) {
                 this.fireEffects.shift();
             }
         })
@@ -282,5 +297,27 @@ class Player {
 
     upgradeBulletLevel(level) {
         this.bullet_level = level;
+    }
+
+    invisible() {
+        if (this.invisible_cooldown === 0) {
+            this.invisible_cooldown = -1;
+            this.touchable = 0;
+
+            $('.game-invisible').addClass('opacity-5');
+
+            this.invisible_timeout = setTimeout(() => {
+                $('.game-invisible').removeClass('opacity-5');
+                this.invisible_cooldown = this.invisible_max_cooldown;
+                this.touchable = 1;
+            }, this.invisible_duration);
+        }
+    }
+
+    deactiveInvisible() {
+        clearTimeout(this.invisible_timeout);
+        $('.game-invisible').removeClass('opacity-5');
+        this.touchable = 1;
+        this.invisible_cooldown = 0;
     }
 }

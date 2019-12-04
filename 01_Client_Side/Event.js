@@ -1,4 +1,8 @@
 class Event {
+    invisible() {
+        game.player.invisible();
+    }
+
     shoot(s) {
         if (game.pause === -1) {
             game.SHOOT = s;
@@ -65,7 +69,7 @@ class Event {
     }
 }
 
-let event = new Event();
+let ev = new Event();
 
 //  KeyDown Event
 
@@ -74,7 +78,7 @@ window.addEventListener('keydown', function (e) {
 
     switch (keycode) {
         case 32:
-            event.shoot(1);
+            ev.shoot(1);
             break;
     }
 });
@@ -86,10 +90,10 @@ window.addEventListener('keyup', function (e) {
 
     switch (keycode) {
         case 32:
-            event.shoot(0);
+            ev.shoot(0);
             break;
         case 80:
-            event.pause();
+            ev.pause();
             break;
     }
 });
@@ -98,10 +102,11 @@ window.addEventListener('keyup', function (e) {
 
 $(document).on('touchstart', function (e) {
     if ($(e.target).hasClass('game-shoot')) {
-        event.shoot(1)
+        ev.shoot(1)
+    } else if ($(e.target).hasClass('invisible-btn')) {
+        ev.invisible()
     }
 }).on('touchmove', function (e) {
-    e.preventDefault()
 });
 
 
@@ -110,7 +115,7 @@ $(document).on('touchend', function (e) {
         game.player.speedX = 0
         game.player.speedY = 0
         if ($(e.target).hasClass('game-shoot')) {
-            event.shoot(0)
+            ev.shoot(0)
         }
     }
 });
@@ -148,7 +153,7 @@ function moveJoystick(data) {
 
 $('.pause,.btn-close-settings').on('click', function () {
     $('.modal.setting').toggleClass('modal-hide');
-    event.pause();
+    ev.pause();
 });
 
 $('#inputSound').on('click', function () {
@@ -161,16 +166,16 @@ $('#inputSound').on('click', function () {
     game.volume = parseInt(localStorage.getItem('star-battle-audio'));
 });
 
-if (parseInt(localStorage.getItem('star-battle-audio') )!== 0) {
+if (parseInt(localStorage.getItem('star-battle-audio')) !== 0) {
     $('#inputSound').prop('checked', 1);
 }
 
 $('.sound').on('click', function () {
-    event.sound();
+    ev.sound();
 });
 
 $('.close-shop-btn').on('click', function () {
-    event.toggleShop();
+    ev.toggleShop();
 });
 
 //  Score Form Submit
@@ -183,7 +188,7 @@ $('[name="name"]').keyup(function () {
 });
 
 $('#scoreForm').submit(function (e) {
-    e.preventDefault();
+    e.prevDefault();
 
     let data = JSON.parse(localStorage.getItem('star-battle')) || []
 
@@ -230,5 +235,5 @@ $('#scoreForm').submit(function (e) {
             '        </tr>');
     }
 
-    event.hideExcept('#ranking');
+    ev.hideExcept('#ranking');
 });

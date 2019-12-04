@@ -91,22 +91,22 @@ loadAssets([
         value: 'bullet.png',
         type: 'image'
     },
-    {
-        value: 'background.mp3',
-        type: 'audio',
-    },
-    {
-        value: 'shoot.mp3',
-        type: 'audio',
-    },
-    {
-        value: 'destroyed.mp3',
-        type: 'audio',
-    },
-    {
-        value: 'kaching.mp3',
-        type: 'audio',
-    },
+    // {
+    //     value: 'background.mp3',
+    //     type: 'audio',
+    // },
+    // {
+    //     value: 'shoot.mp3',
+    //     type: 'audio',
+    // },
+    // {
+    //     value: 'destroyed.mp3',
+    //     type: 'audio',
+    // },
+    // {
+    //     value: 'kaching.mp3',
+    //     type: 'audio',
+    // },
     {
         value: 'fire-effect.png',
         type: 'image',

@@ -282,11 +282,55 @@ p {
 
 .game-shoot {
     left: unset;
-    right: 50px;
-    bottom: 80px;
+    right: 40px;
+    bottom: 100px;
     width: 80px;
     height: 80px;
     background-color: rgba(255, 0, 0, .4);
+    border: .12rem solid rgba(255,0,0,.8);
+}
+
+.game-invisible {
+    left: unset;
+    right: 130px;
+    bottom: 60px;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255, 0, 0, .4);
+}
+
+.game-invisible > .cooldown {
+    width: 80px;
+    height: 80px;
+}
+
+.progress-circle {
+    height: 80px;
+    position: relative;
+    width: 80px;
+    pointer-events: none;
+    touch-action: none;
+}
+
+.progress-circle__svg {
+    border-radius: 50%;
+    height: 100%;
+    transform: scaleX(-1) rotate(-90deg);
+    width: 100%;
+}
+
+.progress-circle__svg .progress-circle__stroke {
+    fill: none;
+    stroke-width: 0.25rem;
+}
+
+.progress-circle__svg .progress-circle__stroke:nth-child(1) {
+    stroke: rgba(255, 0, 0, .8);
+}
+
+.progress-circle__svg .progress-circle__stroke:nth-child(2) {
+    stroke: #fff;
+    stroke-dasharray: 314.1592%;
 }
 
 #fuelCounter {
