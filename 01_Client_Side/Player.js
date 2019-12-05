@@ -144,7 +144,10 @@ class Player {
 
         if (this.invisible_cooldown > 0) {
             this.invisible_cooldown--;
-        } else if (this.invisible_timeout) this.invisible_timeout--;
+        } else if (this.invisible_timeout) {
+            this.touchable = 0;
+            this.invisible_timeout--;
+        }
 
         if (this.invisible_timeout === 1) this.deactiveInvisible(this.invisible_max_cooldown);
 
@@ -285,7 +288,7 @@ class Player {
         this.shopMode = 'entering';
 
         ev.toggleEnterZone();
-        game.player.invisible();
+        this.touchable = 0;
     }
 
     enteringShop() {
@@ -304,7 +307,6 @@ class Player {
             this.entering = false;
             this.shopMode = '';
             game.shopShip.leave();
-            this.deactiveInvisible();
         }
     }
 
@@ -319,7 +321,6 @@ class Player {
     invisible() {
         if (this.invisible_cooldown === 0) {
             this.invisible_cooldown = -1;
-            this.touchable = 0;
 
             $('.game-invisible').addClass('opacity-5');
 
@@ -328,7 +329,6 @@ class Player {
     }
 
     deactiveInvisible(cooldown = 0) {
-        clearTimeout(this.invisible_timeout);
         this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
         this.touchable = 1;

@@ -57,7 +57,10 @@ class ShopShip {
         this.arrived = false;
         let enterZone = $('.enter-zone');
         enterZone.css('animation', 'none');
-        setTimeout(() => { enterZone.removeClass('active') }, 40);
+        setTimeout(() => {
+            enterZone.removeClass('active')
+            game.player.touchable = 1;
+        }, 40);
         this.mode = 'leaving';
     }
 

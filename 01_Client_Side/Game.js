@@ -219,7 +219,7 @@ class Game {
             this.countTime();
             this.renderText();
 
-            this.enemyGenerator();
+            if (this.stats.distance % 500 === 0) this.enemyGenerator();
 
             if (this.stats.fuel <= 0) {
                 this.over();
@@ -307,6 +307,8 @@ class Game {
 
         $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
 
+        if (!this.IS_CHANGING_LEVEL) this.stats.distance++;
+
         if (this.stats.comboText < this.stats.combo) {
             this.stats.comboText++;
             $('.game-combo').html(`${game.stats.comboText} combo`);
@@ -352,17 +354,13 @@ class Game {
     // random number generators
     enemyGenerator(change_now = false) {
         if (!change_now) {
-            if (this.stats.distance % 1500 === 0) {
-                this.IS_CHANGING_LEVEL = true;
-                if (this.field_is_empty) {
-                    if (!this.level_timeout) {
-                        this.level_timeout = setTimeout(() => {
-                            this.changeLevel();
-                        }, 1000);
-                    }
+            this.IS_CHANGING_LEVEL = true;
+            if (this.field_is_empty) {
+                if (!this.level_timeout) {
+                    this.level_timeout = setTimeout(() => {
+                        this.changeLevel();
+                    }, 1000);
                 }
-            } else if (!this.IS_CHANGING_LEVEL) {
-                this.stats.distance++;
             }
         } else {
             if (!this.level_timeout) {
