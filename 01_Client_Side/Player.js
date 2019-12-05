@@ -157,8 +157,12 @@ class Player {
             clearTimeout(this.shoot_timer)
         }
 
-        if (this.invisible_cooldown > 0) this.invisible_cooldown--;
-        else if (this.invisible_timeout) this.invisible_timeout--;
+        if (this.invisible_cooldown > 0) {
+            this.invisible_cooldown--;
+        } else if (this.invisible_timeout) {
+            this.touchable = 0;
+            this.invisible_timeout--;
+        }
 
         if (this.invisible_timeout === 1) this.deactiveInvisible(this.invisible_max_cooldown);
 
@@ -202,7 +206,7 @@ class Player {
 
         let exhaust = this.exhaust;
 
-        if (this.speedX == 0) {
+        if (this.speedX === 0) {
             if (exhaust.isScaling) {
                 exhaust.scale += exhaust.rangeScale;
             } else {
@@ -271,7 +275,7 @@ class Player {
     }
 
     triggerBullet() {
-        if (!game.IS_CHANGING_LEVEL) {
+        if (!game.IS_CHANGING_LEVEL || !game.field_is_empty) {
             let ms = 0;
 
             if (this.last_shoot) {
@@ -299,7 +303,7 @@ class Player {
         this.shopMode = 'entering';
 
         ev.toggleEnterZone();
-        game.player.invisible();
+        this.touchable = 0;
     }
 
     enteringShop() {
@@ -318,7 +322,6 @@ class Player {
             this.entering = false;
             this.shopMode = '';
             game.shopShip.leave();
-            this.deactiveInvisible();
         }
     }
 
@@ -333,7 +336,6 @@ class Player {
     invisible() {
         if (this.invisible_cooldown === 0) {
             this.invisible_cooldown = -1;
-            this.touchable = 0;
 
             $('.game-invisible').addClass('opacity-5');
 
@@ -341,10 +343,10 @@ class Player {
         }
     }
 
-    deactiveInvisible() {
-        clearTimeout(this.invisible_timeout);
+    deactiveInvisible(cooldown = 0) {
+        this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
         this.touchable = 1;
-        this.invisible_cooldown = 0;
+        this.invisible_cooldown = cooldown;
     }
 }

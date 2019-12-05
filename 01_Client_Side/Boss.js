@@ -2,7 +2,6 @@ class Boss {
     constructor() {
         this.img = new Image();
 
-        this.img = imageAssets['enemy4.svg'];
         this.width = canvas.offsetHeight - 100;
         this.height = canvas.offsetHeight - 100;
 
@@ -22,7 +21,7 @@ class Boss {
 
         this.bullets = [];
 
-        this.frame = 0;
+        this.frame = 1;
 
         this.coming = true;
 
@@ -37,20 +36,33 @@ class Boss {
         this.lasers = [];
         this.is_laser_out = false;
         this.laser_go_out = false;
+
+        this.bombs = [];
     }
 
     render() {
-        if (game.stats.countTime % (60 * 10) === 0 && !this.lasers.length && !this.lose) {
-            this.is_laser_out = false;
-            this.laser_go_out = false;
-            this.lasers.push({
-                x: canvas.offsetWidth,
-                y: game.player.y - 15,
-                height: game.player.height + 30,
-                width: canvas.offsetWidth + 100,
-                opacity: .5,
-                is_background: true,
-            });
+        if (game.stats.countTime % 6 === 0) {
+            this.frame++;
+            if (this.frame === 5) this.frame = 1;
+        }
+
+        this.img = imageAssets[`enemy${this.frame}.svg`];
+
+        if (game.stats.countTime % (60 * 10) === 0 && !this.lose) {
+            // if (this.life / this.maxLife > .5) {
+                if (!this.lasers.length) {
+                    this.is_laser_out = false;
+                    this.laser_go_out = false;
+                    this.lasers.push({
+                        x: canvas.offsetWidth,
+                        y: game.player.y - 15,
+                        height: game.player.height + 30,
+                        width: canvas.offsetWidth + 100,
+                        opacity: .5,
+                        is_background: true,
+                    });
+                }
+            // }
         }
 
         this.collision = {
@@ -60,7 +72,7 @@ class Boss {
             height: this.height - 50,
         };
 
-        let laser = this.drawLaser();
+        if (this.lasers.length) this.drawLaser();
 
         ctx.save();
         if (this.lose) {
@@ -81,10 +93,10 @@ class Boss {
         if (this.coming) {
             this.x -= 4;
 
-            game.IS_CHANGING_LEVEL  = true;
+            game.IS_CHANGING_LEVEL = true;
 
             if (this.x < canvas.offsetWidth - this.width * 2 / 3) {
-                game.IS_CHANGING_LEVEL  = false;
+                game.IS_CHANGING_LEVEL = false;
                 this.coming = false;
             }
         }
@@ -117,7 +129,7 @@ class Boss {
                 ctx.closePath();
                 ctx.restore();
 
-                if (!laser.is_background && game.checkCollision(game.player, laser)) {
+                if (!laser.is_background && game.checkCollision(game.player, laser) && game.player.touchable) {
                     game.planeCollided();
                 }
 
@@ -166,6 +178,7 @@ class Boss {
         this.x += 2;
 
         if (this.x > canvas.offsetWidth) {
+            $('#bossHealth').addClass('hide');
             game.enemyGenerator(true);
         }
     }

@@ -342,15 +342,14 @@ p {
 
 .game-combo {
     position: absolute;
-    font-family: "Permanent Marker", Prompt;
+    font-family: "Permanent Marker", Prompt, sans-serif;
     color: #fff;
     z-index: 999;
     pointer-events: none;
     right: 20px;
     top: 80px;
     transition: all .1s;
-    opacity: 0;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-shadow: 2px 2px 1px rgba(255, 255, 255, .3);
 }
 
@@ -449,6 +448,8 @@ p {
     bottom: 0;
     right: 0;
     opacity: .4;
+    z-index: 9999;
+    pointer-events: none;
 }
 
 .animate-canvas {

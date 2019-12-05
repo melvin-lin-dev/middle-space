@@ -8,7 +8,7 @@ class Bullet {
 
         this.bulletType = bulletType;
 
-        switch(bulletType){
+        switch (bulletType) {
             case 1:
                 this.width = 30;
                 this.height = 6;
@@ -87,8 +87,8 @@ class Bullet {
 
 
         this.sound = new Audio();
-        this.sound.src = audioAssets[audioType].src;
-        // this.sound.volume = game.volume;
+        this.sound.src = './sound/' + audioType;
+        this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }

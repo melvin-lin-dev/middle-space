@@ -96,6 +96,18 @@ loadAssets([
         type: 'image'
     },
     {
+        value: 'enemy1.svg',
+        type: 'image'
+    },
+    {
+        value: 'enemy2.svg',
+        type: 'image'
+    },
+    {
+        value: 'enemy3.svg',
+        type: 'image'
+    },
+    {
         value: 'enemy4.svg',
         type: 'image'
     },
@@ -103,10 +115,10 @@ loadAssets([
     //     value: 'background.mp3',
     //     type: 'audio',
     // },
-    {
-        value: 'shoot.mp3',
-        type: 'audio',
-    },
+    // {
+    //     value: 'shoot.mp3',
+    //     type: 'audio',
+    // },
     // {
     //     value: 'destroyed.mp3',
     //     type: 'audio',
@@ -138,14 +150,6 @@ loadAssets([
     {
         value: 'rocket-exhaust.png',
         type: 'image',
-    },
-    {
-        value: 'rocket.mp3',
-        type: 'audio',
-    },
-    {
-        value: 'shop.mp3',
-        type: 'audio',
     },
 ], complete);
 

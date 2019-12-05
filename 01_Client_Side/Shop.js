@@ -93,6 +93,8 @@ class Shop {
         //         cost: 300
         //     },
         // ];
+
+        this.music = new Audio('./sound/shop.mp3');
     }
 
     displayData(side = 'top', parentMenu = '', el = '') {
@@ -261,15 +263,13 @@ class Shop {
     }
 
     toggleMusic(){
-        let shopMusic = audioAssets['shop.mp3'];
-
-        if(shopMusic.currentTime === 0){
-            shopMusic.play();
-            // shopMusic.volume = game.volume;
-            shopMusic.loop = true;
+        if(this.music.currentTime === 0){
+            this.music.play();
+            this.music.volume = game.volume;
+            this.music.loop = true;
         }else{
-            shopMusic.pause();
-            shopMusic.currentTime = 0;
+            this.music.pause();
+            this.music.currentTime = 0;
         }
     }
 }
