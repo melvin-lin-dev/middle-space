@@ -257,7 +257,7 @@ class Player {
     }
 
     triggerBullet() {
-        if (!game.IS_CHANGING_LEVEL) {
+        if (!game.IS_CHANGING_LEVEL || !game.field_is_empty) {
             let ms = 0;
 
             if (this.last_shoot) {

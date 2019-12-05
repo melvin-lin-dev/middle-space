@@ -61,10 +61,11 @@ class Game {
             score: 0,
             fuel: this.player.stats.fuel,
             distance: 0,
-            level: 0,
+            level: 4,
             shopTime: this.shopShip.shopTimeDefault,
             coins: 9999999,
             combo: 0,
+            comboText: 0,
         };
 
         this.enemyGenerator(true);
@@ -239,6 +240,7 @@ class Game {
         }
 
         game.stats.combo = 0;
+        game.stats.comboText = 0;
         $('.game-combo').html('');
 
         this.player.sound.volume = this.volume;
@@ -260,10 +262,14 @@ class Game {
             obj.life -= bullet.power * game.player.stats.bullet;
             if (obj.score > 0) {
                 game.stats.combo += bullet.power * game.player.stats.bullet;
-                $('.game-combo').html(`${game.stats.combo} combo`);
+            } else {
+                game.stats.combo = 0;
+                game.stats.comboText = 0;
+                $('.game-combo').html(``);
             }
         } else {
             game.stats.combo = 0;
+            game.stats.comboText = 0;
             $('.game-combo').html(``);
         }
 
@@ -297,6 +303,11 @@ class Game {
         $('#shop .coins span').html(this.stats.coins);
 
         $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
+
+        if (this.stats.comboText < this.stats.combo) {
+            this.stats.comboText++;
+            $('.game-combo').html(`${game.stats.comboText} combo`);
+        }
     }
 
     countTime() {
@@ -338,7 +349,7 @@ class Game {
     // random number generators
     enemyGenerator(change_now = false) {
         if (!change_now) {
-            if (this.stats.distance % 1500 === 0 || this.IS_CHANGING_LEVEL) {
+            if (this.stats.distance % 1500 === 0) {
                 this.IS_CHANGING_LEVEL = true;
                 if (this.field_is_empty) {
                     if (!this.level_timeout) {
@@ -347,9 +358,7 @@ class Game {
                         }, 1000);
                     }
                 }
-            }
-
-            if (!this.IS_CHANGING_LEVEL) {
+            } else if (!this.IS_CHANGING_LEVEL) {
                 this.stats.distance++;
             }
         } else {
@@ -370,33 +379,32 @@ class Game {
 
         setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
+
+            if (this.stats.level % 5 !== 0) {
+                let level = new Level(this.stats.level);
+
+                for (let i = 0; i < 2; i++) {
+                    this.enemies.push(new Enemy(3, 0));
+                }
+
+                for (let i = 0; i < level.maxEnemy; i++) {
+                    this.enemies.push(new Enemy(1, this.stats.level));
+                }
+
+                for (let i = 0; i < level.maxAsteroid; i++) {
+                    this.enemies.push(new Enemy(2, this.stats.level));
+                }
+
+                this.stats.distance += 1;
+            } else {
+                this.enemies.push(
+                    new Boss()
+                );
+            }
+
+            this.IS_CHANGING_LEVEL = false;
+            this.level_timeout = null;
         }, 2000);
-
-        if (this.stats.level % 5 !== 0) {
-            let level = new Level(this.stats.level);
-
-            for (let i = 0; i < 2; i++) {
-                this.enemies.push(new Enemy(3, 0));
-            }
-
-            for (let i = 0; i < level.maxEnemy; i++) {
-                this.enemies.push(new Enemy(1, this.stats.level));
-            }
-
-            for (let i = 0; i < level.maxAsteroid; i++) {
-                this.enemies.push(new Enemy(2, this.stats.level));
-            }
-
-            this.stats.distance += 1;
-            this.IS_CHANGING_LEVEL = false;
-            this.level_timeout = null;
-        } else {
-            this.enemies.push(
-                new Boss()
-            );
-            this.IS_CHANGING_LEVEL = false;
-            this.level_timeout = null;
-        }
     }
 
 }
