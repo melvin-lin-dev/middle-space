@@ -142,8 +142,9 @@ class Player {
             clearTimeout(this.shoot_timer)
         }
 
-        if (this.invisible_cooldown > 0) this.invisible_cooldown--;
-        else if (this.invisible_timeout) this.invisible_timeout--;
+        if (this.invisible_cooldown > 0) {
+            this.invisible_cooldown--;
+        } else if (this.invisible_timeout) this.invisible_timeout--;
 
         if (this.invisible_timeout === 1) this.deactiveInvisible(this.invisible_max_cooldown);
 
@@ -187,7 +188,7 @@ class Player {
 
         let exhaust = this.exhaust;
 
-        if (this.speedX == 0) {
+        if (this.speedX === 0) {
             if (exhaust.isScaling) {
                 exhaust.scale += exhaust.rangeScale;
             } else {
@@ -326,10 +327,11 @@ class Player {
         }
     }
 
-    deactiveInvisible() {
+    deactiveInvisible(cooldown = 0) {
         clearTimeout(this.invisible_timeout);
+        this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
         this.touchable = 1;
-        this.invisible_cooldown = 0;
+        this.invisible_cooldown = cooldown;
     }
 }

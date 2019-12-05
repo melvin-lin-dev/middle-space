@@ -9,7 +9,7 @@ class Game {
         this.GOD_MODE = GOD_MODE;
 
         this.sound = new Audio();
-        this.sound.src = './sound/background.mp3'
+        this.sound.src = './sound/background.mp3';
         this.sound.loop = true;
         this.sound.volume = this.volume;
 
@@ -239,6 +239,7 @@ class Game {
         }
 
         game.stats.combo = 0;
+        $('.game-combo').html('');
 
         this.player.sound.volume = this.volume;
         this.player.sound.play();
@@ -257,16 +258,14 @@ class Game {
         // Handle Collided Object
         if (bullet) {
             obj.life -= bullet.power * game.player.stats.bullet;
-            if (obj.score > 0 && obj.life <= 0) {
+            if (obj.score > 0) {
                 game.stats.combo += bullet.power * game.player.stats.bullet;
-                $('.game-combo').removeClass('animate-combo').addClass('animate-combo');
-                if (this.animate_combo) clearTimeout(this.animate_combo);
-                this.animate_combo = setTimeout(() => {
-                    $('.game-combo').removeClass('animate-combo');
-                }, 500);
-                $('.total-combo').html(game.stats.combo);
+                $('.game-combo').html(`${game.stats.combo} combo`);
             }
-        } else game.stats.combo = 0;
+        } else {
+            game.stats.combo = 0;
+            $('.game-combo').html(``);
+        }
 
         if (obj.life <= 0) {
             this.particles.push(new Particle(obj.x + obj.width / 2, obj.y + obj.height / 2, obj.coins, obj.score));
@@ -322,18 +321,13 @@ class Game {
         this.backgroundPosition--;
     }
 
-    // Get Assets
-    getAsset(url) {
-        return this.assetUrl + url;
-    }
-
     //  Game Over
 
     over() {
         if (!this.GOD_MODE) {
             this.sound.pause();
             this.pause = 1;
-            $('#zone_joystick').html('')
+            $('#zone_joystick').html('');
             cancelAnimationFrame(this.rendering);
 
             ev.hideExcept('#scoreForm');
@@ -344,9 +338,9 @@ class Game {
     // random number generators
     enemyGenerator(change_now = false) {
         if (!change_now) {
-            if (this.stats.distance % 2000 === 0 || this.IS_CHANGING_LEVEL) {
+            if (this.stats.distance % 1500 === 0 || this.IS_CHANGING_LEVEL) {
+                this.IS_CHANGING_LEVEL = true;
                 if (this.field_is_empty) {
-                    this.IS_CHANGING_LEVEL = true;
                     if (!this.level_timeout) {
                         this.level_timeout = setTimeout(() => {
                             this.changeLevel();
@@ -376,7 +370,7 @@ class Game {
 
         setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
-        }, 2000)
+        }, 2000);
 
         if (this.stats.level % 5 !== 0) {
             let level = new Level(this.stats.level);
