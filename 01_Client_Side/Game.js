@@ -61,7 +61,7 @@ class Game {
             score: 0,
             fuel: this.player.stats.fuel,
             distance: 0,
-            level: 4,
+            level: 0,
             shopTime: this.shopShip.shopTimeDefault,
             coins: 9999999,
             combo: 0,
@@ -229,6 +229,7 @@ class Game {
         }
 
         //  Looping Animation
+        //  Looping Animation
         this.rendering = requestAnimationFrame(this.render);
     }
 
@@ -246,12 +247,14 @@ class Game {
         this.player.sound.volume = this.volume;
         this.player.sound.play();
         $('.collide-animation').addClass('animate-canvas');
+        this.player.touchable = 0;
 
         if (this.animateCanvas) clearTimeout(this.animateCanvas);
 
-        this.animateCanvas = setTimeout(function () {
+        this.animateCanvas = setTimeout(() => {
+            this.player.touchable = 1;
             $('.collide-animation').removeClass('animate-canvas');
-        }, 1000);
+        }, 1500);
 
         this.stats.fuel -= 15;
     }

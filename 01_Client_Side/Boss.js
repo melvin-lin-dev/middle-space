@@ -178,6 +178,7 @@ class Boss {
         this.x += 2;
 
         if (this.x > canvas.offsetWidth) {
+            $('#bossHealth').addClass('hide');
             game.enemyGenerator(true);
         }
     }
