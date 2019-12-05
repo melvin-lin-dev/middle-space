@@ -17,6 +17,8 @@ class Particle {
             score: (score > 0 ? '+' : '') + score,
         };
 
+        if (type > 10) type = 10;
+
         this.particleTypes.forEach(particleType => {
             for (let i = 0; i < (particleType === 'particles' ? total : type); i++) {
                 this[particleType].push({
@@ -32,7 +34,7 @@ class Particle {
     render() {
         this.particleTypes.forEach(particleType => {
             for (let i = 0; i < this[particleType].length; i++) {
-                let particle = this.particles[i];
+                let particle = this[particleType][i];
                 let radians = particle.angle * Math.PI / 180;
 
                 let mx = Math.sin(radians) * particle.speed;

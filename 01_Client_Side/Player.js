@@ -255,22 +255,24 @@ class Player {
     }
 
     triggerBullet() {
-        let ms = 0;
+        if (!game.IS_CHANGING_LEVEL) {
+            let ms = 0;
 
-        if (this.last_shoot) {
-            let next_shoot = new Date();
+            if (this.last_shoot) {
+                let next_shoot = new Date();
 
-            ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+                ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
 
-            ms = ms > this.shoot_delay ? this.shoot_delay : ms
-        }
-
-        this.shoot_timer = setTimeout(() => {
-            if (game.pause === -1) {
-                this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
-                this.last_shoot = new Date();
+                ms = ms > this.shoot_delay ? this.shoot_delay : ms
             }
-        }, ms)
+
+            this.shoot_timer = setTimeout(() => {
+                if (game.pause === -1) {
+                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level));
+                    this.last_shoot = new Date();
+                }
+            }, ms)
+        }
     }
 
     setEnteringShop() {

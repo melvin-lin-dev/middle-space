@@ -11,7 +11,7 @@ class Boss {
         this.sound = new Audio();
         this.sound.src = './sound/destroyed.mp3';
 
-        this.x = canvas.offsetWidth - this.width * 2 / 3;
+        this.x = canvas.offsetWidth;
         this.y = 50;
 
         this.minY = this.y - 10;
@@ -24,26 +24,23 @@ class Boss {
 
         this.frame = 0;
 
-        this.maxLife = 1000;
-        this.life = this.maxLife;
+        this.coming = true;
 
-        this.collision = {
-            x: this.x + this.width / 2,
-            y: this.y + 25,
-            width: this.width - 50,
-            height: this.height - 50,
-        };
+        // this.maxLife = 1000;
+        this.maxLife = 10;
+        this.life = this.maxLife;
+        this.score = 100;
+        this.coins = 100;
 
         $('#bossHealth').removeClass('hide');
 
         this.lasers = [];
         this.is_laser_out = false;
         this.laser_go_out = false;
-
     }
 
     render() {
-        if (game.stats.countTime % (60 * 10) === 0 && !this.lasers.length) {
+        if (game.stats.countTime % (60 * 10) === 0 && !this.lasers.length && !this.lose) {
             this.is_laser_out = false;
             this.laser_go_out = false;
             this.lasers.push({
@@ -65,13 +62,32 @@ class Boss {
 
         let laser = this.drawLaser();
 
+        ctx.save();
+        if (this.lose) {
+            if (game.stats.countTime % 5 === 0) {
+                ctx.globalAlpha = .5;
+            }
+            this.destroy();
+        }
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.restore();
 
         this.movement();
 
         $('#bossHp').css({
             width: ((this.life / this.maxLife) * 100) + '%'
-        })
+        });
+
+        if (this.coming) {
+            this.x -= 4;
+
+            game.IS_CHANGING_LEVEL  = true;
+
+            if (this.x < canvas.offsetWidth - this.width * 2 / 3) {
+                game.IS_CHANGING_LEVEL  = false;
+                this.coming = false;
+            }
+        }
     }
 
     drawLaser() {
@@ -89,6 +105,8 @@ class Boss {
                     } else {
                         all_out = false;
                     }
+                } else if (laser.x < 0) {
+                    laser.x = 0;
                 }
 
                 ctx.save();
@@ -130,13 +148,36 @@ class Boss {
     }
 
     movement() {
-        if (this.move_up) {
-            this.y -= this.speed;
-        } else {
-            this.y += this.speed;
-        }
+        if (!this.lose) {
+            if (this.move_up) {
+                this.y -= this.speed;
+            } else {
+                this.y += this.speed;
+            }
 
-        if (this.y < this.minY) this.move_up = false;
-        if (this.y > this.maxY) this.move_up = true;
+            if (this.y < this.minY) this.move_up = false;
+            if (this.y > this.maxY) this.move_up = true;
+        }
+    }
+
+    destroy() {
+        this.lose = 1;
+        this.randomMovement();
+        this.x += 2;
+
+        if (this.x > canvas.offsetWidth) {
+            game.enemyGenerator(true);
+        }
+    }
+
+    randomMovement() {
+        let angle = Math.floor(Math.random() * 360);
+        let radians = angle * Math.PI / 180;
+
+        let mx = Math.sin(radians) * 8;
+        let my = Math.cos(radians) * 8;
+
+        this.x += mx;
+        this.y += my;
     }
 }
