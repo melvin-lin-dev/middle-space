@@ -45,6 +45,10 @@ class Player {
             this.exhaust.height *= 5 / 3;
         }
 
+        if (canvas.width > 1000) {
+            this.speed *= 5 / 3;
+        }
+
         //  Declaring Bullet
 
         this.bullets = [];
@@ -92,7 +96,7 @@ class Player {
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
         this.touchable = 1;
-        this.invisible_duration = 4500;
+        this.invisible_duration = 420;
     }
 
     render() {
@@ -139,6 +143,9 @@ class Player {
         }
 
         if (this.invisible_cooldown > 0) this.invisible_cooldown--;
+        else if (this.invisible_timeout) this.invisible_timeout--;
+
+        if (this.invisible_timeout === 1) this.deactiveInvisible(this.invisible_max_cooldown);
 
         $('.invisible-cooldown-percentage').css({
             strokeDashoffset: `calc(314.1592% * (${((this.invisible_max_cooldown - this.invisible_cooldown) / this.invisible_max_cooldown) * 100} / 100))`
@@ -159,7 +166,8 @@ class Player {
             });
         }
 
-        this.fireEffects.forEach(fireEffect => {
+        for (let i = 0; i < this.fireEffects.length; i++) {
+            let fireEffect = this.fireEffects[i];
             ctx.save();
             ctx.globalAlpha = fireEffect.opacity;
             ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1 - fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
@@ -171,7 +179,7 @@ class Player {
             if (fireEffect.opacity < 0) {
                 this.fireEffects.shift();
             }
-        })
+        }
     }
 
     animate() {
@@ -248,22 +256,24 @@ class Player {
     }
 
     triggerBullet() {
-        let ms = 0;
+        if (!game.IS_CHANGING_LEVEL) {
+            let ms = 0;
 
-        if (this.last_shoot) {
-            let next_shoot = new Date();
+            if (this.last_shoot) {
+                let next_shoot = new Date();
 
-            ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+                ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
 
-            ms = ms > this.shoot_delay ? this.shoot_delay : ms
-        }
-
-        this.shoot_timer = setTimeout(() => {
-            if (game.pause === -1) {
-                this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.bulletType));
-                this.last_shoot = new Date();
+                ms = ms > this.shoot_delay ? this.shoot_delay : ms
             }
-        }, ms)
+
+            this.shoot_timer = setTimeout(() => {
+                if (game.pause === -1) {
+                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.bulletType));
+                    this.last_shoot = new Date();
+                }
+            }, ms)
+        }
     }
 
     setEnteringShop() {
@@ -312,11 +322,7 @@ class Player {
 
             $('.game-invisible').addClass('opacity-5');
 
-            this.invisible_timeout = setTimeout(() => {
-                $('.game-invisible').removeClass('opacity-5');
-                this.invisible_cooldown = this.invisible_max_cooldown;
-                this.touchable = 1;
-            }, this.invisible_duration);
+            this.invisible_timeout = this.invisible_duration;
         }
     }
 

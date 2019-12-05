@@ -91,6 +91,10 @@ loadAssets([
         value: 'bullet.png',
         type: 'image'
     },
+    {
+        value: 'enemy4.svg',
+        type: 'image'
+    },
     // {
     //     value: 'background.mp3',
     //     type: 'audio',
