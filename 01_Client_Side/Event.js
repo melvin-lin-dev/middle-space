@@ -72,6 +72,8 @@ class Event {
         });
         $('#shop > div.menu.top').css('transition-delay', shop.hasClass('active') ? '.6s' : 'initial');
 
+        game.shop.toggleMusic();
+
         if (!shop.hasClass('active')) {
             $('#shop .menu.bottom').removeClass('active');
             setTimeout(() => {

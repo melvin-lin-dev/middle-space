@@ -68,6 +68,17 @@ class Bullet {
                         this.power = 20;
                         break;
                 }
+
+                this.exhaust = {
+                    width: this.width / 3,
+                    height: this.height / 2,
+                    scale: 1,
+                    maxScale: 1.35,
+                    minScale: .75,
+                    isScaling: 1,
+                    rangeScale: .04,
+                    image: imageAssets['rocket-exhaust.png']
+                };
                 break;
         }
 
@@ -77,12 +88,38 @@ class Bullet {
 
         this.sound = new Audio();
         this.sound.src = audioAssets[audioType].src;
-        this.sound.volume = game.volume;
+        // this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }
 
     render() {
+        if(this.exhaust) {
+            // Rendering Exhaust
+
+            if(this.exhaust.isScaling){
+                this.exhaust.scale += this.exhaust.rangeScale;
+
+                if(this.exhaust.scale >= this.exhaust.maxScale){
+                    this.exhaust.isScaling = 0;
+                    this.exhaust.scale = this.exhaust.maxScale;
+                }
+            }else{
+                this.exhaust.scale -= this.exhaust.rangeScale;
+
+                if(this.exhaust.scale <= this.exhaust.minScale){
+                    this.exhaust.isScaling = 1;
+                    this.exhaust.scale = this.exhaust.minScale;
+                }
+            }
+
+            let exhaustX = this.x - this.exhaust.width * this.exhaust.scale + 8;
+            let exhaustY = this.y + this.height / 2 - this.exhaust.height * this.exhaust.scale / 2;
+            let exhaustWidth = this.exhaust.width * this.exhaust.scale;
+            let exhaustHeight = this.exhaust.height * this.exhaust.scale;
+            ctx.drawImage(this.exhaust.image, exhaustX, exhaustY, exhaustWidth, exhaustHeight);
+        }
+
         //  Rendering Bullet
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 

@@ -48,6 +48,32 @@ class Shop {
                         owned: false
                     }
                 ]
+            },
+            {
+                name: 'Exhaust',
+                type: 'exhaust',
+                menuType: 'equipment',
+                image: imageAssets['exhaust_1.png'],
+                data: [
+                    {
+                        name: 'Original',
+                        type: 'original',
+                        image: this.loadShopImage('exhaust_1.png'),
+                        description: 'Original Exhaust',
+                        cost: 0,
+                        equipmentType: 1,
+                        owned: true
+                    },
+                    {
+                        name: 'Blue Exhaust',
+                        type: 'exhaust_2',
+                        image: this.loadShopImage('exhaust_2.png'),
+                        description: 'Exhaust-2',
+                        cost: 500,
+                        equipmentType: 2,
+                        owned: false
+                    }
+                ]
             }
         ];
 
@@ -76,7 +102,7 @@ class Shop {
             $('.shop-container .content-menu .active').removeClass('active');
             el.classList.add('active');
             $('.menu.bottom').addClass('active');
-            $('.menu.bottom').prop('id', 'menu-'+parentMenu.menuType);
+            $('.menu.bottom').prop('id', 'menu-' + parentMenu.menuType);
         }
         else if (side === 'top') this.setUpgradeBar();
         contentMenu.html('');
@@ -103,14 +129,15 @@ class Shop {
 
             if (side === 'bottom') {
                 let currentUpgrade = game.player.upgrade[menu.type];
-                let buyButton = document.createElement('button');;
+                let buyButton = document.createElement('button');
+
                 buyButton.value = menu.cost;
-                if(parentMenu.menuType === 'upgrade'){
+                if (parentMenu.menuType === 'upgrade') {
                     buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
                     buyButton.value *= currentUpgrade.upgradeLevel + 1;
-                }else if(parentMenu.menuType === 'equipment'){
+                } else if (parentMenu.menuType === 'equipment') {
                     buyButton.innerHTML = menu.owned ? 'EQUIP' : 'BUY';
-                    if(game.player.bulletType === menu.equipmentType){
+                    if (game.player.bulletType === menu.equipmentType) {
                         buyButton.innerHTML = 'EQUIPPED';
                     }
                 }
@@ -197,7 +224,7 @@ class Shop {
         $(`#menu-${parentMenuType} button[value=0]`).html('EQUIP');
 
         button.innerHTML = 'EQUIPPED';
-        game.player.bulletType = menu.equipmentType;
+        game.player.equipment[parentMenuType] = menu.equipmentType;
     }
 
     setUpgradeBar(type = '') {
@@ -230,6 +257,19 @@ class Shop {
             let currentUpgrade = game.player.upgrade[type];
             $(`#shop #stat-${type} span`).html(`${type.toUpperCase()} (${currentUpgrade.upgradeLevel})`);
             $(`#shop #stat-${type} .progress-bar > div`).css('width', currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%');
+        }
+    }
+
+    toggleMusic(){
+        let shopMusic = audioAssets['shop.mp3'];
+
+        if(shopMusic.currentTime === 0){
+            shopMusic.play();
+            // shopMusic.volume = game.volume;
+            shopMusic.loop = true;
+        }else{
+            shopMusic.pause();
+            shopMusic.currentTime = 0;
         }
     }
 }

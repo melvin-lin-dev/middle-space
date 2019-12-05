@@ -44,7 +44,11 @@ loadAssets([
         type: 'image',
     },
     {
-        value: 'exhaust.png',
+        value: 'exhaust_1.png',
+        type: 'image',
+    },
+    {
+        value: 'exhaust_2.png',
         type: 'image',
     },
     {
@@ -112,7 +116,11 @@ loadAssets([
     //     type: 'audio',
     // },
     {
-        value: 'fire-effect.png',
+        value: 'fire-effect_1.png',
+        type: 'image',
+    },
+    {
+        value: 'fire-effect_2.png',
         type: 'image',
     },
     {
@@ -133,6 +141,10 @@ loadAssets([
     },
     {
         value: 'rocket.mp3',
+        type: 'audio',
+    },
+    {
+        value: 'shop.mp3',
         type: 'audio',
     },
 ], complete);

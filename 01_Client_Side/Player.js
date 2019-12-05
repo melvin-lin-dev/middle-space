@@ -24,7 +24,6 @@ class Player {
         //  Declaring Plane's Exhaust
 
         this.exhaust = {
-            img: imageAssets['exhaust.png'],
             width: 47,
             height: 20,
             scale: 1,
@@ -55,7 +54,13 @@ class Player {
 
         this.shoot_delay = 500;
         this.bullet_level = 1;
-        this.bulletType = 1;
+
+        // Declaring Equipment
+
+        this.equipment = {
+            bullet: 2,
+            exhaust: 2,
+        };
 
         // Entering Position
         setTimeout(() => {
@@ -109,6 +114,16 @@ class Player {
 
         let exhaust = this.exhaust;
 
+        let exhaustType = '';
+        switch(this.equipment.exhaust){
+            case 1:
+                exhaustType = 'exhaust_1.png';
+                break;
+            case 2:
+                exhaustType = 'exhaust_2.png';
+                break;
+        }
+        let exhaustImage = imageAssets[exhaustType];
         let exhaustWidth = exhaust.width * exhaust.scale * this.scale;
         let exhaustHeight = exhaust.height * exhaust.scale * this.scale;
         let exhaustX = this.x - exhaustWidth / 2 * this.scale + exhaust.width - exhaustWidth;
@@ -118,7 +133,7 @@ class Player {
         ctx.translate(exhaustX + exhaustWidth, exhaustY + exhaustHeight / 2);
         ctx.rotate(exhaust.angle * Math.PI / 180);
         if (this.invisible_cooldown === -1) ctx.globalAlpha = .3;
-        ctx.drawImage(exhaust.img, -exhaustWidth, -exhaustHeight / 2, exhaustWidth, exhaustHeight);
+        ctx.drawImage(exhaustImage, -exhaustWidth, -exhaustHeight / 2, exhaustWidth, exhaustHeight);
         ctx.restore();
 
         //  Rendering Plane
@@ -162,7 +177,7 @@ class Player {
                 s: size * this.scale,
                 opacity: .8,
                 scale,
-                image: imageAssets['fire-effect.png']
+                image: imageAssets[`fire-effect_${this.equipment.exhaust}.png`]
             });
         }
 
@@ -269,7 +284,7 @@ class Player {
 
             this.shoot_timer = setTimeout(() => {
                 if (game.pause === -1) {
-                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.bulletType));
+                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.equipment.bullet));
                     this.last_shoot = new Date();
                 }
             }, ms)
