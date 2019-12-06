@@ -87,7 +87,6 @@ class Enemy {
         if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
             this.y < canvas.offsetHeight && this.y + this.height > 0
         ) {
-
             if (this.type === 1 || this.type === 3) {
                 if (game.stats.countTime % 5 === 0) {
                     this.frame++;
@@ -135,7 +134,7 @@ class Enemy {
     }
 
     generateLocation() {
-        // Generate Friend Location
+        // Generate Enemy Location
         if (game.IS_CHANGING_LEVEL) {
             this.x = -this.width - 50;
         } else {

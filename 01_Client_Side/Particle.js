@@ -17,6 +17,8 @@ class Particle {
             score: (score > 0 ? '+' : '') + score,
         };
 
+        if (type > 10) type = 10;
+
         this.particleTypes.forEach(particleType => {
             for (let i = 0; i < (particleType === 'particles' ? total : type); i++) {
                 this[particleType].push({
@@ -32,13 +34,13 @@ class Particle {
     render() {
         this.particleTypes.forEach(particleType => {
             for (let i = 0; i < this[particleType].length; i++) {
-                let particle = this.particles[i];
+                let particle = this[particleType][i];
                 let radians = particle.angle * Math.PI / 180;
 
                 let mx = Math.sin(radians) * particle.speed;
                 let my = Math.cos(radians) * particle.speed;
 
-                if(particleType === 'particles') {
+                if (particleType === 'particles') {
                     ctx.save();
                     ctx.beginPath();
                     ctx.globalAlpha = this.opacity;
@@ -47,7 +49,7 @@ class Particle {
                     ctx.fill();
                     ctx.closePath();
                     ctx.restore();
-                }else {
+                } else {
                     let img = imageAssets['coin.png'];
                     ctx.save();
                     ctx.globalAlpha = this.opacity;
@@ -64,7 +66,7 @@ class Particle {
         ctx.beginPath();
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = this.score.score > 0 ? "#0f0" : "#f00";
-        ctx.font = "20px Arial";
+        ctx.font = "16px Permanent Marker";
         ctx.fontWeight = 900;
         ctx.fillText(this.score.score, this.score.x, this.score.y);
         ctx.closePath();

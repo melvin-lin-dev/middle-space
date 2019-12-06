@@ -44,7 +44,11 @@ loadAssets([
         type: 'image',
     },
     {
-        value: 'exhaust.png',
+        value: 'exhaust_1.png',
+        type: 'image',
+    },
+    {
+        value: 'exhaust_2.png',
         type: 'image',
     },
     {
@@ -91,6 +95,22 @@ loadAssets([
         value: 'bullet.png',
         type: 'image'
     },
+    {
+        value: 'enemy1.svg',
+        type: 'image'
+    },
+    {
+        value: 'enemy2.svg',
+        type: 'image'
+    },
+    {
+        value: 'enemy3.svg',
+        type: 'image'
+    },
+    {
+        value: 'enemy4.svg',
+        type: 'image'
+    },
     // {
     //     value: 'background.mp3',
     //     type: 'audio',
@@ -108,7 +128,11 @@ loadAssets([
     //     type: 'audio',
     // },
     {
-        value: 'fire-effect.png',
+        value: 'fire-effect_1.png',
+        type: 'image',
+    },
+    {
+        value: 'fire-effect_2.png',
         type: 'image',
     },
     {
@@ -117,6 +141,14 @@ loadAssets([
     },
     {
         value: 'stats.png',
+        type: 'image',
+    },
+    {
+        value: 'rocket.png',
+        type: 'image',
+    },
+    {
+        value: 'rocket-exhaust.png',
         type: 'image',
     },
 ], complete);

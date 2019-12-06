@@ -17,9 +17,9 @@ class Event {
         game.pause = -game.pause;
 
         let enterZone = $(`.enter-zone`);
-        if(enterZone.css('animation-play-state') === 'paused'){
+        if (enterZone.css('animation-play-state') === 'paused') {
             enterZone.css('animation-play-state', 'running');
-        }else{
+        } else {
             enterZone.css('animation-play-state', 'paused');
         }
     }
@@ -60,22 +60,27 @@ class Event {
             $('canvas').addClass('opacity-5');
     }
 
-    toggleShop(){
+    toggleShop() {
         this.pause();
 
         let shop = $('#shop');
 
         shop.toggleClass('active');
-        shop.css({'animation-delay': shop.hasClass('active') ? 'initial' : '.4s', 'transition-delay': shop.hasClass('active') ? 'initial' : '.4s'});
+        shop.css({
+            'animation-delay': shop.hasClass('active') ? 'initial' : '.4s',
+            'transition-delay': shop.hasClass('active') ? 'initial' : '.4s'
+        });
         $('#shop > div.menu.top').css('transition-delay', shop.hasClass('active') ? '.6s' : 'initial');
 
-        if(!shop.hasClass('active')){
+        game.shop.toggleMusic();
+
+        if (!shop.hasClass('active')) {
             $('#shop .menu.bottom').removeClass('active');
             setTimeout(() => {
                 game.player.shopMode = 'leaving';
                 $('#zone_joystick').toggleClass('d-none');
             }, 700);
-        }else{
+        } else {
             $('#zone_joystick').toggleClass('d-none');
         }
     }
@@ -83,10 +88,12 @@ class Event {
     toggleEnterZone() {
         let enterZone = $('.enter-zone');
 
-        if(enterZone.hasClass('active')){
+        if (enterZone.hasClass('active')) {
             enterZone.css('animation', 'none');
-            setTimeout(() => { enterZone.removeClass('active') }, 40);
-        }else{
+            setTimeout(() => {
+                enterZone.removeClass('active')
+            }, 40);
+        } else {
             enterZone.addClass('active');
             enterZone.css('animation', '1s enterZoneAnimation infinite .4s');
         }

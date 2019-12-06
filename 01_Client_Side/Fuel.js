@@ -60,13 +60,12 @@ class Fuel {
     }
 
     generateLocation() {
-        let self = this;
         this.status = 0;
 
-        setTimeout(function () {
-            self.x = Math.floor(Math.random() * (canvas.width / 2)) + canvas.width / 2;
-            self.y = -Math.floor(Math.random() * 200);
-            self.status = 1;
+        setTimeout(() => {
+            this.x = Math.floor(Math.random() * (canvas.width / 2)) + canvas.width / 2;
+            this.y = -Math.floor(Math.random() * 200);
+            this.status = 1;
         }, 5500);
     }
 }

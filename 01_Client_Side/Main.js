@@ -1,6 +1,8 @@
 //  Declaring Canvas
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
+canvas.width = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
 
 //  Starting Game
 let game = new Game();
@@ -51,7 +53,6 @@ document.onfullscreenchange = function (e) {
 }
 
 function resetHeight() {
-    let gameBoard = document.getElementById('gameBoard');
     // reset the body height to that of the inner browser
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
