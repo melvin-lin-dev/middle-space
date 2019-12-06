@@ -8,6 +8,9 @@ class Bullet {
 
         this.bulletType = bulletType;
 
+        this.speed = game.equipment.stats.bullet[bulletType].speed;
+        this.power = game.equipment.stats.bullet[bulletType].power;
+
         switch (bulletType) {
             case 1:
                 this.width = 30;
@@ -20,15 +23,11 @@ class Bullet {
 
                 this.img = imageAssets['bullet.png'];
 
-                this.speed = 16;
-
                 if (canvas.offsetWidth > 1000) {
                     this.speed *= 5 / 3;
                 }
 
                 audioType = 'shoot.mp3';
-
-                this.power = 10;
 
                 switch (bullet_level) {
                     case 2:
@@ -50,15 +49,11 @@ class Bullet {
 
                 this.img = imageAssets['rocket.png'];
 
-                this.speed = 7;
-
                 if (canvas.offsetWidth > 1000) {
                     this.speed *= 5 / 3;
                 }
 
                 audioType = 'rocket.mp3';
-
-                this.power = 30;
 
                 switch (bullet_level) {
                     case 2:

@@ -166,7 +166,6 @@ canvas {
     padding: 0 20px;
 }
 
-
 #instructions, #ranking, #scoreForm {
     width: 100%;
     height: 100%;
@@ -386,7 +385,7 @@ p {
 }
 
 #fuelCounter #fuel {
-    background-color: rgba(255,0,0,.6);
+    background-color: rgba(255, 0, 0, .6);
     width: 50%;
     height: 100%;
     border-radius: 100px;
@@ -426,7 +425,7 @@ p {
 }
 
 #bossHp {
-    background-color: rgba(255,0,0,.6);
+    background-color: rgba(255, 0, 0, .6);
     width: 100%;
     height: 100%;
     border-radius: 100px;
@@ -612,8 +611,10 @@ p {
 .shop-container {
     top: 50%;
     left: 50%;
-    height: 0;
-    width: 0;
+    /*height: 0;*/
+    /*width: 0;*/
+    height: 100vh;
+    width: 100vw;
     background-image: linear-gradient(to right, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), url('./assets/background-shop.png');
     background-position: center;
     background-size: cover;
@@ -675,7 +676,8 @@ p {
     color: white;
     overflow-y: hidden;
     transition: .4s margin;
-    margin: -200px 0;
+    /*margin: -200px 0;*/
+    z-index: 5;
 }
 
 .shop-container .menu.top {
@@ -714,7 +716,7 @@ p {
 }
 
 .shop-container .menu .content-menu > div {
-    padding: 10px 15px;
+    padding: 7px 10px;
     /*height: 100%;*/
     flex: 1 1 100px;
     max-width: 100px;
@@ -732,6 +734,9 @@ p {
 .shop-container .menu span {
     display: block;
     margin-bottom: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .shop-container .menu .content-menu > div > div {
@@ -748,6 +753,12 @@ p {
     transform: translate(-50%, -50%);
 }
 
+.shop-container .main-container {
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
 .shop-container img.plane {
     position: absolute;
     top: 50%;
@@ -756,18 +767,40 @@ p {
     height: 20% !important;
 }
 
-.shop-container .stats, .shop-container .coins {
+.shop-container .inspect, .shop-container .coins {
     position: absolute;
-    top: 90px;
     margin: 15px;
-    background-color: rgba(0, 0, 0, .5);
     color: white;
 }
 
-.shop-container .stats {
+.shop-container .inspect.stats, .shop-container .coins {
+    top: 90px;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.shop-container .inspect.stats {
+    left: 0;
+}
+
+.shop-container .inspect.equipment {
+    bottom: 130px;
+    right: 0;
+    padding: 5px 0;
+    white-space: nowrap;
+    transition: .4s max-width, .4s padding-left, .4s padding-right;
+    max-width: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .75);
+}
+
+.shop-container .inspect.equipment.active {
+    padding: 5px 10px;
+    max-width: 600px;
+}
+
+.shop-container .inspect {
     padding: 5px 10px;
     border-radius: 5px;
-    left: 0;
 }
 
 .shop-container .coins {
@@ -783,22 +816,27 @@ p {
     margin-right: 5px;
 }
 
-.shop-container .stats > div {
+.shop-container .inspect > div {
     display: flex;
     align-items: center;
-    margin: 5px 0;
+    font-size: 11px;
 }
 
-.shop-container .stats > div > *:first-child {
+.shop-container .inspect > div > *:first-child {
     width: 100px;
 }
 
-.shop-container .stats > div > *:last-child {
+.shop-container .inspect span span {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.shop-container .inspect > div > *:last-child {
     flex: 3;
     margin-left: 5px;
 }
 
-.shop-container .stats .progress-bar {
+.shop-container .inspect .progress-bar {
     width: 100px;
     height: 5px;
     background-color: rgba(200, 200, 200, .7);
@@ -807,14 +845,22 @@ p {
     /*position: relative;*/
 }
 
-.shop-container .stats .progress-bar > div {
+.shop-container .inspect .progress-bar > div {
     height: 100%;
     width: 30%;
     transition: .4s width;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.shop-container .inspect.stats .progress-bar > div {
     background-color: rgb(219, 63, 61);
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 0;*/
+}
+
+.shop-container .inspect.equipment .progress-bar > div.min {
+    background-color: rgba(255, 255, 255, .8);
+    z-index: 1;
 }
 
 .shop-container .exit-shop {
@@ -831,7 +877,7 @@ p {
 .shop-container button.btn {
     margin-top: 5px;
     font-weight: normal;
-    padding: 3px 7px;
+    padding: 1px 5px;
     border-radius: 3px;
 }
 
@@ -854,27 +900,15 @@ p {
     top: 100px;
 }
 
-.shop-container .shop-coins {
-    border-radius: 100px;
-    background-color: rgba(255, 255, 255, .4);
-    padding: 5px 15px;
+.shop-container .bought-effects {
     position: absolute;
-    top: 3px;
-    display: flex;
-    align-items: center;
-    right: 70px;
-}
-
-.shop-container .shop-coins span {
-    font-size: 17px;
-    margin-left: 7px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .shop-container .bought-effects img {
     position: absolute;
-    left: 50%;
-    top: 20px;
-    transform: translateX(-50%);
     animation: .8s boughtEffectAnimation;
     opacity: 0 !important;
     height: 23px !important;

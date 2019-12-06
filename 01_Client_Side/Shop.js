@@ -105,8 +105,9 @@ class Shop {
             el.classList.add('active');
             $('.menu.bottom').addClass('active');
             $('.menu.bottom').prop('id', 'menu-' + parentMenu.menuType);
+        } else if (side === 'top') {
+            this.setUpgradeBar();
         }
-        else if (side === 'top') this.setUpgradeBar();
         contentMenu.html('');
 
         let list = side === 'top' ? this.menus : parentMenu.data;
@@ -115,8 +116,13 @@ class Shop {
 
         list.forEach(menu => {
             let type = document.createElement('div');
-            if (side === 'top') type.onclick = function () {
-                _self.displayData('bottom', menu, this)
+            type.onclick = function () {
+                if (side === 'top') {
+                    $('.shop-container .inspect.equipment').removeClass('active');
+                    _self.displayData('bottom', menu, this);
+                } else if(parentMenu.menuType === 'equipment') {
+                    _self.inspectEquipment(menu, parentMenu.type);
+                }
             };
 
             let name = document.createElement('span');
@@ -229,16 +235,71 @@ class Shop {
         game.player.equipment[parentMenuType] = menu.equipmentType;
     }
 
+    inspectEquipment (menu, parentMenuType) {
+        let equipmentStats = $('.shop-container .inspect.equipment');
+        let timeout = equipmentStats.hasClass('active') ? 400 : 0;
+
+        equipmentStats.removeClass('active');
+
+        setTimeout(() => {
+            equipmentStats.addClass('active');
+
+            equipmentStats.html('');
+
+            for(let statType in game.equipment.maxStats[parentMenuType]){
+                let targetStat = game.equipment.stats[parentMenuType][menu.equipmentType][statType];
+                let maxStat = game.equipment.maxStats[parentMenuType][statType];
+                let currentStat =  game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
+                let isStatIncrease = targetStat > currentStat;
+                let statColor = isStatIncrease ? 'rgba(50,210,0,.7)' : 'rgba(220,50,0,.7)';
+
+                let equipmentStat = document.createElement('div');
+                // stat.id = `stat-${type}`;
+
+                let name = document.createElement('span');
+                name.innerHTML = statType.toUpperCase();
+
+                let point = document.createElement('span');
+                if(targetStat !== currentStat)
+                    point.innerHTML = (isStatIncrease ? '+' : '') + (targetStat - currentStat).toString();
+                point.style.color = statColor.replace('.7','1');
+
+                let progressBar = document.createElement('div');
+                progressBar.className = 'progress-bar';
+
+                let progressBarMax = document.createElement('div');
+                progressBarMax.className = 'max';
+                progressBarMax.style.width = 0;
+                let progressBarMin = document.createElement('div');
+                progressBarMin.className = 'min';
+                progressBarMin.style.width = 0;
+
+                equipmentStats.append(equipmentStat);
+                equipmentStat.appendChild(name);
+                name.appendChild(point);
+                equipmentStat.appendChild(progressBar);
+                progressBar.appendChild(progressBarMax);
+                progressBar.appendChild(progressBarMin);
+
+                setTimeout(() => {
+                    progressBarMax.style.backgroundColor = statColor;
+                    progressBarMax.style.width = (isStatIncrease ? targetStat : currentStat) / maxStat * 100 + '%';
+                    progressBarMin.style.width = (isStatIncrease ? currentStat : targetStat) / maxStat * 100 + '%';
+                }, 400);
+            }
+        }, timeout);
+    }
+
     setUpgradeBar(type = '') {
         if (!type) {
-            let stats = $('.shop-container .stats');
+            let stats = $('.shop-container .inspect.stats');
             stats.html('');
 
             for (let type in game.player.upgrade) {
                 let currentUpgrade = game.player.upgrade[type];
 
                 let stat = document.createElement('div');
-                stat.id = `stat-${type}`;
+                // stat.id = `stat-${type}`;
 
                 let name = document.createElement('span');
                 name.innerHTML = type.toUpperCase() + ` (${currentUpgrade.upgradeLevel})`;

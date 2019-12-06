@@ -51,6 +51,10 @@ class Game {
 
         this.fuel = new Fuel();
 
+        // Equiment
+
+        this.equipment = new Equipment();
+
         this.pause = -1;
 
         //  Declaring Stats
@@ -408,4 +412,11 @@ class Game {
         }, 2000);
     }
 
+    search(key, array){
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].name === key) {
+                return array[i];
+            }
+        }
+    }
 }
