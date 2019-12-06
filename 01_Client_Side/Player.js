@@ -58,8 +58,8 @@ class Player {
         // Declaring Equipment
 
         this.equipment = {
-            bullet: 2,
-            exhaust: 2,
+            bullet: 1,
+            exhaust: 1,
         };
 
         // Entering Position
@@ -238,8 +238,8 @@ class Player {
             return false;
         }
 
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
+        this.y += this.speedY * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
 
         if (this.speedY < -2) {
             if (exhaust.angle > exhaust.minAngle) {

@@ -611,10 +611,10 @@ p {
 .shop-container {
     top: 50%;
     left: 50%;
-    /*height: 0;*/
-    /*width: 0;*/
-    height: 100vh;
-    width: 100vw;
+    height: 0;
+    width: 0;
+    /*height: 100vh;*/
+    /*width: 100vw;*/
     background-image: linear-gradient(to right, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), url('./assets/background-shop.png');
     background-position: center;
     background-size: cover;
@@ -676,7 +676,7 @@ p {
     color: white;
     overflow-y: hidden;
     transition: .4s margin;
-    /*margin: -200px 0;*/
+    margin: -200px 0;
     z-index: 5;
 }
 

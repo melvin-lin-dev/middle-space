@@ -10,6 +10,14 @@ class Equipment{
                     speed: 7,
                     power: 30,
                 }
+            },
+            exhaust: {
+                1: {
+                    speed: 1
+                },
+                2: {
+                    speed: 1.2
+                }
             }
         };
 
@@ -17,6 +25,9 @@ class Equipment{
             bullet: {
                 speed: 20,
                 power: 50
+            },
+            exhaust: {
+                speed: 2
             }
         }
     }

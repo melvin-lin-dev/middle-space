@@ -100,11 +100,10 @@ class Shop {
     displayData(side = 'top', parentMenu = '', el = '') {
         let contentMenu = $(`.menu.${side} .content-menu`);
         if (side === 'bottom') {
-
             $('.shop-container .content-menu .active').removeClass('active');
             el.classList.add('active');
             $('.menu.bottom').addClass('active');
-            $('.menu.bottom').prop('id', 'menu-' + parentMenu.menuType);
+            $('.menu.bottom').prop('id', 'menu-' + parentMenu.type);
         } else if (side === 'top') {
             this.setUpgradeBar();
         }
@@ -151,18 +150,18 @@ class Shop {
                 }
                 buyButton.className = `btn`;
                 buyButton.onclick = (e) => {
-                    this.checkMenuType(e.target, parentMenu.menuType, menu);
+                    this.checkMenuType(e.target, parentMenu, menu);
                 };
                 type.appendChild(buyButton);
             }
         })
     }
 
-    checkMenuType(button, parentMenuType, menu){
+    checkMenuType(button, parentMenu, menu){
         if(game.stats.coins >= button.value){
             let currentUpgrade = game.player.upgrade[menu.type];
 
-            if((parentMenuType === 'equipment' && !menu.owned) || (parentMenuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
+            if((parentMenu === 'equipment' && !menu.owned) || (parentMenu === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
                 game.stats.coins -= button.value;
 
                 game.renderText();
@@ -179,12 +178,12 @@ class Shop {
                 }, 1400);
             }
 
-            switch(parentMenuType) {
+            switch(parentMenu.menuType) {
                 case 'upgrade':
                     this.upgradeShip(button, menu, currentUpgrade);
                     break;
                 case 'equipment':
-                    this.buyEquipment(button, menu, currentUpgrade, parentMenuType);
+                    this.buyEquipment(button, menu, currentUpgrade, parentMenu.type);
                     break;
             }
         }else{
@@ -230,7 +229,6 @@ class Shop {
         }
 
         $(`#menu-${parentMenuType} button[value=0]`).html('EQUIP');
-
         button.innerHTML = 'EQUIPPED';
         game.player.equipment[parentMenuType] = menu.equipmentType;
     }
@@ -261,7 +259,7 @@ class Shop {
 
                 let point = document.createElement('span');
                 if(targetStat !== currentStat)
-                    point.innerHTML = (isStatIncrease ? '+' : '') + (targetStat - currentStat).toString();
+                    point.innerHTML = (isStatIncrease ? '+' : '') + (targetStat - currentStat).toFixed(2).toString();
                 point.style.color = statColor.replace('.7','1');
 
                 let progressBar = document.createElement('div');
