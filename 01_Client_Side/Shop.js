@@ -161,7 +161,7 @@ class Shop {
         if(game.stats.coins >= button.value){
             let currentUpgrade = game.player.upgrade[menu.type];
 
-            if((parentMenu === 'equipment' && !menu.owned) || (parentMenu === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
+            if((parentMenu.menuType === 'equipment' && !menu.owned) || (parentMenu.menuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
                 game.stats.coins -= button.value;
 
                 game.renderText();
