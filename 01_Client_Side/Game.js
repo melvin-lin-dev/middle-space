@@ -9,9 +9,10 @@ class Game {
         this.GOD_MODE = GOD_MODE;
 
         this.sound = new Audio();
-        this.sound.src = './sound/background.mp3';
+        this.sound.src = 'sound/background.mp3';
         this.sound.loop = true;
         this.sound.volume = this.volume;
+        // this.sound.autoplay = true;
 
         //  Declaring Objects
         this.backgroundPosition = 0;
@@ -124,9 +125,7 @@ class Game {
     render() {
         if (this.pause === -1) {
             this.sound.volume = this.volume;
-            this.sound.onload = () => {
-                this.sound.play();
-            };
+            this.sound.play();
 
             this.animateBackground();
 
@@ -417,7 +416,7 @@ class Game {
         }, 5000);
     }
 
-    search(key, array){
+    search(key, array) {
         for (let i = 0; i < array.length; i++) {
             if (array[i].name === key) {
                 return array[i];

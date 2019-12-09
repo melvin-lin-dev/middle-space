@@ -13,10 +13,9 @@ class Bullet {
 
         switch (bulletType) {
             case 1:
-                this.width = 30;
-                this.height = 6;
+                this.width = 31;
+                this.height = 16;
                 this.img = imageAssets['bullet.png'];
-
 
                 audioType = 'shoot.mp3';
 
@@ -33,7 +32,6 @@ class Bullet {
                 this.width = 50;
                 this.height = 20;
                 this.img = imageAssets['rocket.png'];
-
 
                 audioType = 'rocket.mp3';
 
@@ -79,20 +77,20 @@ class Bullet {
     }
 
     render() {
-        if(this.exhaust) {
+        if (this.exhaust) {
             // Rendering Exhaust
 
-            if(this.exhaust.isScaling){
+            if (this.exhaust.isScaling) {
                 this.exhaust.scale += this.exhaust.rangeScale;
 
-                if(this.exhaust.scale >= this.exhaust.maxScale){
+                if (this.exhaust.scale >= this.exhaust.maxScale) {
                     this.exhaust.isScaling = 0;
                     this.exhaust.scale = this.exhaust.maxScale;
                 }
-            }else{
+            } else {
                 this.exhaust.scale -= this.exhaust.rangeScale;
 
-                if(this.exhaust.scale <= this.exhaust.minScale){
+                if (this.exhaust.scale <= this.exhaust.minScale) {
                     this.exhaust.isScaling = 1;
                     this.exhaust.scale = this.exhaust.minScale;
                 }
@@ -106,7 +104,15 @@ class Bullet {
         }
 
         //  Rendering Bullet
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if (this.IS_LEFT) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.img, 0, 0, this.width, this.height);
+            ctx.restore();
+        } else {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
 
         if (this.IS_LEFT) {
             this.x -= this.speed;
