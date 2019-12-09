@@ -138,6 +138,7 @@ if (/iP(hone|od|ad)/.test(navigator.platform)) {
 }
 
 $(document).on('touchstart, mousedown', function (e) {
+    e.preventDefault();
     if ($(e.target).hasClass('game-shoot')) {
         ev.shoot(1)
     } else if ($(e.target).hasClass('invisible-btn')) {
@@ -148,8 +149,6 @@ $(document).on('touchstart, mousedown', function (e) {
 
 $(document).on('touchend, mouseup', function (e) {
     if (game.player) {
-        game.player.speedX = 0
-        game.player.speedY = 0
         if ($(e.target).hasClass('game-shoot')) {
             ev.shoot(0)
         }

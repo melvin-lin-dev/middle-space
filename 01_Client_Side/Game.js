@@ -51,7 +51,7 @@ class Game {
 
         this.fuel = new Fuel();
 
-        // Equiment
+        // Equipment
 
         this.equipment = new Equipment();
 
