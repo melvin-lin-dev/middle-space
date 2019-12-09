@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="917caacd-972d-476e-b981-a9fc3b96945f" name="Default Changelist" comment="assets loader">
+<<<<<<< Updated upstream
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_Client_Side/Particle.js" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/Particle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_Client_Side/Player.js" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/Player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_Client_Side/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_Client_Side/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/style.css" afterDir="false" />
+=======
     <list default="true" id="917caacd-972d-476e-b981-a9fc3b96945f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/01_Client_Side/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/index.html" afterDir="false" />
+>>>>>>> origin/develop-design
+=======
+      <change beforePath="$PROJECT_DIR$/01_Client_Side/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/01_Client_Side/Game.js" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,6 +25,12 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+=======
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
@@ -115,6 +134,7 @@
         </entry>
       </file>
     </leaf>
+>>>>>>> origin/develop-design
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -126,6 +146,10 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+=======
   <component name="FindInProjectRecents">
     <findStrings>
       <find>opacit</find>
@@ -195,6 +219,7 @@
         <option value="$PROJECT_DIR$/01_Client_Side/index.html" />
       </list>
     </option>
+>>>>>>> origin/develop-design
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -228,6 +253,10 @@
       </profile-state>
     </entry>
   </component>
+<<<<<<< HEAD
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+=======
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -251,6 +280,7 @@
         </subPane>
       </pane>
     </panes>
+>>>>>>> origin/develop-design
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -303,6 +333,11 @@
     </task>
     <servers />
   </component>
+<<<<<<< HEAD
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+=======
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="25187000" />
   </component>
@@ -732,4 +767,5 @@
       </provider>
     </entry>
   </component>
+>>>>>>> origin/develop-design
 </project>

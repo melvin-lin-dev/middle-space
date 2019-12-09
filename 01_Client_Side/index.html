@@ -44,7 +44,7 @@
 
     <div id="instructions" class="absolute text-center">
         <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-<!--        <button class="btn start-game-btn" data-god="true">God Mode</button>-->
+        <!--        <button class="btn start-game-btn" data-god="true">God Mode</button>-->
         <button class="btn start-game-btn">Start Game</button>
     </div>
 
@@ -149,18 +149,19 @@
             </div>
         </div>
 
-        <img src="assets/shoot-icon.svg" alt="shoot-icon"  class="game-control game-shoot">
+        <div class="game-control game-shoot" style="background-image: url('./assets/shoot-icon.svg')"></div>
         <!--<div class="game-control game-shoot">-->
-            <!--<img src="assets/shoot-icon.svg" alt="shoot-icon" style="width: 100%;height: 100%;">-->
+        <!--<img src="assets/shoot-icon.svg" alt="shoot-icon" style="width: 100%;height: 100%;">-->
         <!--</div>-->
-        <div class="game-control game-invisible">
+        <div class="game-control game-invisible" style="background-image: url('./assets/invisible-icon.svg');">
             <div class="cooldown">
                 <svg class="progress-circle__svg invisible-btn">
                     <circle class="progress-circle__stroke" r="50%" cx="50%" cy="50%"></circle>
                     <circle class="progress-circle__stroke invisible-cooldown-percentage" r="50%" cx="50%"
                             cy="50%"></circle>
                 </svg>
-                <img src="assets/invisible-icon.svg" alt="invisible-icon" class="progress-circle__stroke invisible-icon invisible-btn">
+<!--                <img src="assets/invisible-icon.svg" alt="invisible-icon"-->
+<!--                     class="progress-circle__stroke invisible-icon invisible-btn">-->
             </div>
         </div>
         <div class="game-combo"></div>

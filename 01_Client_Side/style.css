@@ -4,6 +4,8 @@
     box-sizing: border-box;
     will-change: transform;
     transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/copy in UIWebView */
 }
 
 html, body {
@@ -111,7 +113,7 @@ canvas {
 .btn {
     background-color: #db3f3d;
     background-position: center;
-    padding: 5px 12px;
+    padding: 1px 12px;
     font-size: inherit;
     font-family: inherit;
     font-weight: bold;
@@ -303,6 +305,9 @@ p {
     width: 80px;
     height: 80px;
     background-color: rgba(255, 0, 0, .4);
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .game-invisible > .cooldown {
