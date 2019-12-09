@@ -101,7 +101,7 @@ class Player {
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
         this.touchable = 1;
-        this.invisible_duration = 420;
+        this.invisible_duration = 240;
     }
 
     render() {
@@ -115,7 +115,7 @@ class Player {
         let exhaust = this.exhaust;
 
         let exhaustType = '';
-        switch(this.equipment.exhaust){
+        switch (this.equipment.exhaust) {
             case 1:
                 exhaustType = 'exhaust_1.png';
                 break;
@@ -271,7 +271,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, this.shoot_delay)
+        }, this.shoot_delay);
     }
 
     triggerBullet() {

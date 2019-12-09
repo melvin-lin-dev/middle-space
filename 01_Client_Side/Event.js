@@ -50,7 +50,6 @@ class Event {
         $('#ranking').addClass('hide');
 
         $(id).removeClass('hide');
-
     }
 
     showCanvas(s) {
@@ -111,6 +110,9 @@ window.addEventListener('keydown', function (e) {
         case 32:
             ev.shoot(1);
             break;
+        case 73:
+            ev.invisible();
+            break;
     }
 });
 
@@ -131,20 +133,22 @@ window.addEventListener('keyup', function (e) {
 
 //  Touch Function
 
+if (/iP(hone|od|ad)/.test(navigator.platform)) {
+    $(".game-control, #zone_joystick").css({"cursor": "pointer"});
+}
+
 $(document).on('touchstart', function (e) {
+    e.preventDefault();
     if ($(e.target).hasClass('game-shoot')) {
         ev.shoot(1)
     } else if ($(e.target).hasClass('invisible-btn')) {
         ev.invisible()
     }
-}).on('touchmove', function (e) {
 });
 
 
 $(document).on('touchend', function (e) {
     if (game.player) {
-        game.player.speedX = 0
-        game.player.speedY = 0
         if ($(e.target).hasClass('game-shoot')) {
             ev.shoot(0)
         }
@@ -160,15 +164,15 @@ function moveJoystick(data) {
             top: $(zoneJoystick).offset().top,
             width: $(zoneJoystick).width(),
             height: $(zoneJoystick).height(),
-        }
+        };
 
         let touch = data.position
 
-        let x = touch.x - gameControl.left
-        let y = touch.y - gameControl.top
+        let x = touch.x - gameControl.left;
+        let y = touch.y - gameControl.top;
 
-        let moveX = x - gameControl.width / 2
-        let moveY = y - gameControl.height / 2
+        let moveX = x - gameControl.width / 2;
+        let moveY = y - gameControl.height / 2;
 
         if (canvas.offsetWidth > 1000) {
             moveX *= 5 / 3;
@@ -219,7 +223,7 @@ $('[name="name"]').keyup(function () {
 });
 
 $('#scoreForm').submit(function (e) {
-    e.prevDefault();
+    e.preventDefault();
 
     let data = JSON.parse(localStorage.getItem('star-battle')) || []
 

@@ -10,11 +10,11 @@ let gameBtnTimeout = null;
 
 // console.log = function() {};
 
-window.onload = () => { // temp
-    game.start($(this).data('god'));
-    game.volume = 0; // temp
-    game.GOD_MODE = true;
-};
+// window.onload = () => { // temp
+//     game.start($(this).data('god'));
+//     game.volume = 0; // temp
+//     game.GOD_MODE = true;
+// };
 
 $(function () {
     $('.start-game-btn').on('click', function () {
@@ -33,7 +33,7 @@ $(function () {
 
             setTimeout(() => {
                 game.start($(this).data('god'));
-            }, 1000)
+            }, 1000);
         }, 0);
     });
 });
@@ -44,13 +44,13 @@ document.onfullscreenchange = function (e) {
         canvas.height = document.body.clientHeight;
         screen.orientation.lock("landscape");
     } else {
-        game.sound.pause()
+        game.sound.pause();
         cancelAnimationFrame(game.rendering);
         $('#zone_joystick').html('');
         ev.hideExcept('#instructions');
         ev.showCanvas(0);
     }
-}
+};
 
 function resetHeight() {
     // reset the body height to that of the inner browser

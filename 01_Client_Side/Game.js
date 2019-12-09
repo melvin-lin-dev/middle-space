@@ -51,7 +51,7 @@ class Game {
 
         this.fuel = new Fuel();
 
-        // Equiment
+        // Equipment
 
         this.equipment = new Equipment();
 
@@ -233,7 +233,6 @@ class Game {
         }
 
         //  Looping Animation
-        //  Looping Animation
         this.rendering = requestAnimationFrame(this.render);
     }
 
@@ -380,7 +379,13 @@ class Game {
 
         this.enemies = [];
 
-        $('.level-info').html(`<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`).addClass('popup-animation');
+        let s = ``;
+
+        if (this.stats.level % 5 === 0) s += `<svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" class="alert-animation" fill="#fff" viewBox="0 0 512 512"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>
+                        <h2>Stage ${this.stats.level}! The Boss is waiting for you!</h2>`
+        else s = `<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`;
+
+        $('.level-info').html(s).addClass('popup-animation');
 
         setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
@@ -409,7 +414,7 @@ class Game {
 
             this.IS_CHANGING_LEVEL = false;
             this.level_timeout = null;
-        }, 2000);
+        }, 5000);
     }
 
     search(key, array){
