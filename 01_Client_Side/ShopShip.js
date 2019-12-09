@@ -1,7 +1,7 @@
 class ShopShip {
     constructor() {
-        this.width = 250;
-        this.height = 130;
+        this.width = 120;
+        this.height = 75;
 
         this.x = 0;
         this.y = 50;
@@ -13,12 +13,12 @@ class ShopShip {
 
         this.resetXLocation();
 
-        this.arrivedLocationX = 200;
+        this.arrivedLocationX = 120;
 
         this.arrived = false;
         this.mode = 'arriving';
 
-        this.shopTimeDefault = 20;
+        this.shopTimeDefault = 0;
 
         this.waitingTime = 5000;
 
@@ -44,7 +44,7 @@ class ShopShip {
             this.enterZoneChecking();
             if (!this.arrived) {
                 this.arrived = true;
-                event.toggleEnterZone();
+                ev.toggleEnterZone();
 
                 this.shopTimeout = setTimeout(() => {
                     this.leave();
@@ -55,7 +55,12 @@ class ShopShip {
 
     leave(){
         this.arrived = false;
-        event.toggleEnterZone();
+        let enterZone = $('.enter-zone');
+        enterZone.css('animation', 'none');
+        setTimeout(() => {
+            enterZone.removeClass('active')
+            game.player.touchable = 1;
+        }, 40);
         this.mode = 'leaving';
     }
 
@@ -81,9 +86,7 @@ class ShopShip {
 
     shopping() {
         if (this.arrived) {
-            clearInterval(this.shopTimeout);
-
-            event.toggleShop();
+            ev.toggleShop();
         }
     }
 
@@ -94,6 +97,7 @@ class ShopShip {
         let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
 
         if(x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping'){
+            clearTimeout(this.shopTimeout);
             game.player.setEnteringShop();
             this.mode = 'shopping';
         }

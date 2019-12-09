@@ -1,256 +1,275 @@
 class Event {
-  constructor() {
-  }
-
-  goLeft(s) {
-    game.TO_LEFT = s;
-  }
-
-  goTop(s) {
-    game.TO_TOP = s;
-  }
-
-  goRight(s) {
-    game.TO_RIGHT = s;
-  }
-
-  goBottom(s) {
-    game.TO_BOTTOM = s;
-  }
-
-  shoot(s) {
-    if (game.pause === -1) {
-      game.SHOOT = s;
-      if (game.SHOOT && !game.player.IS_SHOOTING) {
-        game.player.IS_SHOOTING = 1;
-        game.player.shoot();
-      }
-      game.player.IS_SHOOTING = s;
+    invisible() {
+        game.player.invisible();
     }
-  }
 
-  pause() {
-    game.pause = -game.pause;
-  }
+    shoot(s) {
+        if (game.pause === -1) {
+            game.SHOOT = s;
+            if (game.SHOOT && !game.player.shooting) {
+                game.player.shoot()
+            }
+            game.player.shooting = s
+        }
+    }
 
-  sound() {
-    if (game.volume)
-      game.volume = 0;
-    else
-      game.volume = 1;
-  }
+    pause() {
+        game.pause = -game.pause;
 
-  fontPlus() {
-    let size = parseInt($('body').css('font-size'));
-    size += 1;
-    $('body').css('font-size', size + 'px');
-  }
+        let enterZone = $(`.enter-zone`);
+        if (enterZone.css('animation-play-state') === 'paused') {
+            enterZone.css('animation-play-state', 'running');
+        } else {
+            enterZone.css('animation-play-state', 'paused');
+        }
+    }
 
-  fontMin() {
-    let size = parseInt($('body').css('font-size'));
-    size -= 1;
-    $('body').css('font-size', size + 'px');
-  }
+    sound() {
+        if (game.volume)
+            game.volume = 0;
+        else
+            game.volume = 1;
+    }
 
-  hideExcept(id) {
-    $('#instructions').addClass('hide');
-    $('#scoreForm').addClass('hide');
-    $('#gameBoard').addClass('hide');
-    $('#ranking').addClass('hide');
+    fontPlus() {
+        let size = parseInt($('body').css('font-size'));
+        size += 1;
+        $('body').css('font-size', size + 'px');
+    }
 
-    $(id).removeClass('hide');
-  }
+    fontMin() {
+        let size = parseInt($('body').css('font-size'));
+        size -= 1;
+        $('body').css('font-size', size + 'px');
+    }
 
-  showCanvas(s) {
-    if (s)
-      $('canvas').removeClass('opacity-5');
-    else
-      $('canvas').addClass('opacity-5');
-  }
+    hideExcept(id) {
+        $('#instructions').addClass('hide');
+        $('#scoreForm').addClass('hide');
+        $('#gameBoard').addClass('hide');
+        $('#ranking').addClass('hide');
 
-  toggleShop(){
-      game.pause = game.pause === -1 ? 1 : -1;
-      let shop = $('#shop');
+        $(id).removeClass('hide');
+    }
 
-      shop.toggleClass('active');
-      shop.css('transition-delay', shop.hasClass('active') ? 'initial' : '.4s');
-      $('#shop > div').css('transition-delay', shop.hasClass('active') ? '.4s' : 'initial');
+    showCanvas(s) {
+        if (s)
+            $('canvas').removeClass('opacity-5');
+        else
+            $('canvas').addClass('opacity-5');
+    }
 
-      if(!shop.hasClass('active')){
-        setTimeout(() => {
-          game.player.shopMode = 'leaving';
-        }, 700);
-      }
-  }
+    toggleShop() {
+        this.pause();
+
+        let shop = $('#shop');
+
+        shop.toggleClass('active');
+        shop.css({
+            'animation-delay': shop.hasClass('active') ? 'initial' : '.4s',
+            'transition-delay': shop.hasClass('active') ? 'initial' : '.4s'
+        });
+        $('#shop > div.menu.top').css('transition-delay', shop.hasClass('active') ? '.6s' : 'initial');
+
+        game.shop.toggleMusic();
+
+        if (!shop.hasClass('active')) {
+            $('#shop .menu.bottom').removeClass('active');
+            setTimeout(() => {
+                game.player.shopMode = 'leaving';
+                $('#zone_joystick').toggleClass('d-none');
+            }, 700);
+        } else {
+            $('#zone_joystick').toggleClass('d-none');
+        }
+    }
 
     toggleEnterZone() {
-        $('.enter-zone').toggleClass('active');
-    }
+        let enterZone = $('.enter-zone');
 
+        if (enterZone.hasClass('active')) {
+            enterZone.css('animation', 'none');
+            setTimeout(() => {
+                enterZone.removeClass('active')
+            }, 40);
+        } else {
+            enterZone.addClass('active');
+            enterZone.css('animation', '1s enterZoneAnimation infinite .4s');
+        }
+    }
 }
 
-let event = new Event();
+let ev = new Event();
 
 //  KeyDown Event
 
 window.addEventListener('keydown', function (e) {
-  let keycode = e.keyCode;
+    let keycode = e.keyCode;
 
-  switch (keycode) {
-    case 37:
-      event.goLeft(1);
-      break;
-    case 38:
-      event.goTop(1);
-      break;
-    case 39:
-      event.goRight(1);
-      break;
-    case 40:
-      event.goBottom(1);
-      break;
-    case 32:
-      event.shoot(1);
-      break;
-  }
+    switch (keycode) {
+        case 32:
+            ev.shoot(1);
+            break;
+        case 73:
+            ev.invisible();
+            break;
+    }
 });
 
 //  KeyUp Event
 
 window.addEventListener('keyup', function (e) {
-  let keycode = e.keyCode;
+    let keycode = e.keyCode;
 
-  switch (keycode) {
-    case 37:
-      event.goLeft(0);
-      break;
-    case 38:
-      event.goTop(0);
-      break;
-    case 39:
-      event.goRight(0);
-      break;
-    case 40:
-      event.goBottom(0);
-      break;
-    case 32:
-      event.shoot(0);
-      break;
-    case 80:
-      event.pause();
-      break;
-  }
+    switch (keycode) {
+        case 32:
+            ev.shoot(0);
+            break;
+        case 80:
+            ev.pause();
+            break;
+    }
 });
 
-//  Arrow Hover Function
+//  Touch Function
 
-$('.arrow-left').hover(function () {
-  event.goLeft(1);
-}, function () {
-  event.goLeft(0);
+if (/iP(hone|od|ad)/.test(navigator.platform)) {
+    $(".game-control, #zone_joystick").css({"cursor": "pointer"});
+}
+
+$(document).on('touchstart, mousedown', function (e) {
+    if ($(e.target).hasClass('game-shoot')) {
+        ev.shoot(1)
+    } else if ($(e.target).hasClass('invisible-btn')) {
+        ev.invisible()
+    }
 });
 
-$('.arrow-right').hover(function () {
-  event.goRight(1);
-}, function () {
-  event.goRight(0);
+
+$(document).on('touchend, mouseup', function (e) {
+    if (game.player) {
+        game.player.speedX = 0
+        game.player.speedY = 0
+        if ($(e.target).hasClass('game-shoot')) {
+            ev.shoot(0)
+        }
+    }
 });
 
-$('.arrow-top').hover(function () {
-  event.goTop(1);
-}, function () {
-  event.goTop(0);
-});
+function moveJoystick(data) {
+    let zoneJoystick = document.getElementById('zone_joystick')
 
-$('.arrow-bottom').hover(function () {
-  event.goBottom(1);
-}, function () {
-  event.goBottom(0);
-});
+    if (data && data.position) {
+        let gameControl = {
+            left: $(zoneJoystick).offset().left,
+            top: $(zoneJoystick).offset().top,
+            width: $(zoneJoystick).width(),
+            height: $(zoneJoystick).height(),
+        };
+
+        let touch = data.position
+
+        let x = touch.x - gameControl.left;
+        let y = touch.y - gameControl.top;
+
+        let moveX = x - gameControl.width / 2;
+        let moveY = y - gameControl.height / 2;
+
+        if (canvas.offsetWidth > 1000) {
+            moveX *= 5 / 3;
+            moveY *= 5 / 3;
+        }
+
+        game.player.speedX = moveX / 6;
+        game.player.speedY = moveY / 6;
+    }
+}
 
 //  Button Trigger
 
-$('.pause').on('click', function () {
-  event.pause();
+$('.pause,.btn-close-settings').on('click', function () {
+    $('.modal.setting').toggleClass('modal-hide');
+    ev.pause();
 });
+
+$('#inputSound').on('click', function () {
+
+    if ($(this).is(':checked'))
+        localStorage.setItem('star-battle-audio', 1);
+    else
+        localStorage.setItem('star-battle-audio', 0);
+
+    game.volume = parseInt(localStorage.getItem('star-battle-audio'));
+});
+
+if (parseInt(localStorage.getItem('star-battle-audio')) !== 0) {
+    $('#inputSound').prop('checked', 1);
+}
 
 $('.sound').on('click', function () {
-  event.sound();
+    ev.sound();
 });
 
-$('.fontplus').on('click', function () {
-  event.fontPlus();
-});
-
-$('.fontmin').on('click', function () {
-  event.fontMin();
-});
-
-$('.close-shop-btn').on('click', function(){
-  event.toggleShop();
+$('.exit-shop').on('click', function () {
+    ev.toggleShop();
 });
 
 //  Score Form Submit
 
 $('[name="name"]').keyup(function () {
-  if ($(this).val())
-    $('.continue-btn').prop('disabled', false);
-  else
-    $('.continue-btn').prop('disabled', true);
+    if ($(this).val())
+        $('.continue-btn').prop('disabled', false);
+    else
+        $('.continue-btn').prop('disabled', true);
 });
 
 $('#scoreForm').submit(function (e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  let data = JSON.parse(localStorage.getItem('star-battle')) || []
+    let data = JSON.parse(localStorage.getItem('star-battle')) || []
 
-  data.push({
-    name: $('[name="name"]').val(),
-    score: game.stats.score,
-    time: game.stats.time,
-  })
+    data.push({
+        name: $('[name="name"]').val(),
+        score: game.stats.score,
+        time: game.stats.time,
+    })
 
-  localStorage.setItem('star-battle', JSON.stringify(data))
+    localStorage.setItem('star-battle', JSON.stringify(data))
 
+    $('[name="name"]').val('');
+    $('.continue-btn').prop('disabled', true);
 
-  $('[name="name"]').val('');
-  $('.continue-btn').prop('disabled', true);
+    data.sort(function (a, b) {
+        return b.time - a.time;
+    });
+    data.sort(function (a, b) {
+        return b.score - a.score;
+    });
 
-  data.sort(function (a, b) {
-    return b.time - a.time;
-  });
-  data.sort(function (a, b) {
-    return b.score - a.score;
-  });
+    $('.table-rank tbody').html('');
 
-  $('.table-rank tbody').html('');
+    let samePos = 0;
 
-  let samePos = 0;
+    for (let key in data) {
+        let item = data[key];
 
-  for (let key in data) {
-    let item = data[key];
+        if (parseInt(key) > 0) {
+            let prevItem = data[parseInt(key) - 1];
+            if (prevItem.score === item.score && prevItem.time === item.time) {
+                samePos++;
+            } else {
+                samePos = 0;
+            }
+        }
 
-    if (parseInt(key) < data.length - 1) {
-      let nextItem = data[parseInt(key) + 1];
-      if (nextItem.score === item.score && nextItem.time === item.time) {
-        samePos++;
-      } else {
-        samePos = 0;
-      }
+        $('.table-rank tbody').append('\n' +
+            '        <tr>\n' +
+            '          <td>' + (parseInt(key) + 1 - samePos) + '</td>\n' +
+            '          <td>' + item.name + '</td>\n' +
+            '          <td>' + item.score + '</td>\n' +
+            '          <td>' + item.time + '</td>\n' +
+            '        </tr>');
     }
 
-    $('.table-rank tbody').append('\n' +
-      '        <tr>\n' +
-      '          <td>' + (parseInt(key) + 1 - samePos) + '</td>\n' +
-      '          <td>' + item.name + '</td>\n' +
-      '          <td>' + item.score + '</td>\n' +
-      '          <td>' + item.time + '</td>\n' +
-      '        </tr>');
-
-  }
-
-  event.hideExcept('#ranking');
-
-  console.log(123)
-
+    ev.hideExcept('#ranking');
 });
