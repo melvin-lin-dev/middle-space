@@ -96,6 +96,10 @@ loadAssets([
         type: 'image'
     },
     {
+        value: 'laser.png',
+        type: 'image'
+    },
+    {
         value: 'enemy1.svg',
         type: 'image'
     },

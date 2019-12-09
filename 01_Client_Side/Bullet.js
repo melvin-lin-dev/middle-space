@@ -17,7 +17,7 @@ class Bullet {
                 this.height = 16;
                 this.img = imageAssets['bullet.png'];
 
-                audioType = 'shoot.mp3';
+                audioType = 'laser.mp3';
 
                 switch (bullet_level) {
                     case 2:
@@ -55,6 +55,22 @@ class Bullet {
                     image: imageAssets['rocket-exhaust.png']
                 };
                 break;
+            case 3:
+                this.width = 40;
+                this.height = 5;
+                this.img = imageAssets['laser.png'];
+
+                audioType = 'laser.mp3';
+
+                switch (bullet_level) {
+                    case 2:
+                        this.power = 50;
+                        break;
+                    default:
+                        this.power = 20;
+                        break;
+                }
+                break;
         }
 
         if (canvas.offsetHeight > 600) {
@@ -71,7 +87,7 @@ class Bullet {
 
         this.sound = new Audio();
         this.sound.src = './sound/' + audioType;
-        this.sound.volume = game.volume;
+        // this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }

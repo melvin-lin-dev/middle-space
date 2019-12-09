@@ -52,7 +52,6 @@ class Player {
 
         this.bullets = [];
 
-        this.shoot_delay = 500;
         this.bullet_level = 1;
 
         // Declaring Equipment
@@ -90,7 +89,7 @@ class Player {
             bullet: {
                 maxUpgrade: 5,
                 upgradeLevel: 0,
-                value: 1
+                value: .4
             }
         };
 
@@ -271,7 +270,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, this.shoot_delay);
+        }, game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000);
     }
 
     triggerBullet() {
@@ -281,9 +280,11 @@ class Player {
             if (this.last_shoot) {
                 let next_shoot = new Date();
 
-                ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+                let shootDelay =  game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000;
 
-                ms = ms > this.shoot_delay ? this.shoot_delay : ms
+                ms = shootDelay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+
+                ms = ms > shootDelay ? shootDelay : ms
             }
 
             this.shoot_timer = setTimeout(() => {
@@ -323,10 +324,6 @@ class Player {
             this.shopMode = '';
             game.shopShip.leave();
         }
-    }
-
-    upgradeBulletDelay(delay) {
-        this.shoot_delay = delay;
     }
 
     upgradeBulletLevel(level) {
