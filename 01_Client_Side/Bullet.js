@@ -15,7 +15,7 @@ class Bullet {
             case 1:
                 this.width = 30;
                 this.height = 6;
-                this.img = imageAssets['bullet.png'];
+                this.img = imageAssets['bullet_.png'];
 
 
                 audioType = 'shoot.mp3';
