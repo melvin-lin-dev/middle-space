@@ -101,7 +101,7 @@ class Player {
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
         this.touchable = 1;
-        this.invisible_duration = 420;
+        this.invisible_duration = 240;
     }
 
     render() {

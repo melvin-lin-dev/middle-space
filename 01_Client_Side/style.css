@@ -733,7 +733,7 @@ p {
     background-color: rgba(219, 63, 61, .75);
 }
 
-.shop-container .menu::-webkit-scrollbar-thumb:hover {
+.shop-container .menu::-webkit-scrollbar-thumb:focus {
     background-color: rgba(219, 63, 61, .9);
 }
 
@@ -750,7 +750,7 @@ p {
     text-align: center;
 }
 
-.shop-container .menu .content-menu > div:hover {
+.shop-container .menu .content-menu > div:focus {
     background-color: rgba(219, 63, 61, .3);
 }
 
