@@ -15,7 +15,7 @@ class Equipment{
                 3: {
                     speed: 14,
                     power: 8,
-                    shootDelay: 0
+                    shootDelay: .3
                 },
                 inverseStat: ['shootDelay']
             },
