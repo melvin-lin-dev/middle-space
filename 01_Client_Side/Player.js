@@ -115,7 +115,7 @@ class Player {
         let exhaust = this.exhaust;
 
         let exhaustType = '';
-        switch(this.equipment.exhaust){
+        switch (this.equipment.exhaust) {
             case 1:
                 exhaustType = 'exhaust_1.png';
                 break;
@@ -271,7 +271,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, this.shoot_delay)
+        }, this.shoot_delay);
     }
 
     triggerBullet() {

@@ -137,7 +137,7 @@ if (/iP(hone|od|ad)/.test(navigator.platform)) {
     $(".game-control, #zone_joystick").css({"cursor": "pointer"});
 }
 
-$(document).on('touchstart, mousedown', function (e) {
+$(document).on('touchstart', function (e) {
     e.preventDefault();
     if ($(e.target).hasClass('game-shoot')) {
         ev.shoot(1)
@@ -147,7 +147,7 @@ $(document).on('touchstart, mousedown', function (e) {
 });
 
 
-$(document).on('touchend, mouseup', function (e) {
+$(document).on('touchend', function (e) {
     if (game.player) {
         if ($(e.target).hasClass('game-shoot')) {
             ev.shoot(0)
