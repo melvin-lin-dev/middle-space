@@ -15,17 +15,8 @@ class Bullet {
             case 1:
                 this.width = 30;
                 this.height = 6;
-
-                if (canvas.offsetHeight > 600) {
-                    this.width *= 5 / 3;
-                    this.height *= 5 / 3;
-                }
-
                 this.img = imageAssets['bullet.png'];
 
-                if (canvas.offsetWidth > 1000) {
-                    this.speed *= 5 / 3;
-                }
 
                 audioType = 'shoot.mp3';
 
@@ -41,17 +32,8 @@ class Bullet {
             case 2:
                 this.width = 50;
                 this.height = 20;
-
-                if (canvas.offsetHeight > 600) {
-                    this.width *= 5 / 3;
-                    this.height *= 5 / 3;
-                }
-
                 this.img = imageAssets['rocket.png'];
 
-                if (canvas.offsetWidth > 1000) {
-                    this.speed *= 5 / 3;
-                }
 
                 audioType = 'rocket.mp3';
 
@@ -77,9 +59,17 @@ class Bullet {
                 break;
         }
 
+        if (canvas.offsetHeight > 600) {
+            this.width *= 5 / 3;
+            this.height *= 5 / 3;
+        }
+
+        if (canvas.offsetWidth > 1000) {
+            this.speed *= 5 / 3;
+        }
+
         this.x = x;
         this.y = y - this.height / 2;
-
 
         this.sound = new Audio();
         this.sound.src = './sound/' + audioType;

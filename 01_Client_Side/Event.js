@@ -131,6 +131,10 @@ window.addEventListener('keyup', function (e) {
 
 //  Touch Function
 
+if (/iP(hone|od|ad)/.test(navigator.platform)) {
+    $(".game-control, #zone_joystick").css({"cursor": "pointer"});
+}
+
 $(document).on('touchstart', function (e) {
     if ($(e.target).hasClass('game-shoot')) {
         ev.shoot(1)

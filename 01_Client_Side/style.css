@@ -492,7 +492,7 @@ p {
 }
 
 .popup-animation {
-    animation: popupAnimation 2s;
+    animation: popupAnimation 5s;
 }
 
 @keyframes popupAnimation {
@@ -502,6 +502,20 @@ p {
 
     30%, 70% {
         transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.alert-animation {
+    animation: alertAnimation .2s infinite alternate;
+}
+
+@keyframes alertAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
     }
 }
 
