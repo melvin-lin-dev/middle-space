@@ -17,7 +17,7 @@ class Bullet {
                 this.height = 16;
                 this.img = imageAssets['bullet.png'];
 
-                audioType = 'laser.mp3';
+                audioType = 'fireball.mp3';
 
                 switch (bullet_level) {
                     case 2:
