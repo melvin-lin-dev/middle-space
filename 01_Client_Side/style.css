@@ -6,6 +6,7 @@
     transform: translateZ(0);
     -webkit-touch-callout: none;
     -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+    line-height: 1.5;
 }
 
 html, body {
@@ -164,8 +165,19 @@ canvas {
 
 /* Instructions */
 
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #instructions {
     padding: 0 20px;
+}
+
+#instructions .logo {
+    margin-bottom: 1rem;
 }
 
 #instructions, #ranking, #scoreForm {
@@ -176,6 +188,62 @@ canvas {
     align-items: center;
     flex-direction: column;
     background-color: rgba(0, 0, 0, .2);
+}
+
+.instructions-overlay {
+    width: 100%;
+    animation: instructionAnimation 1s;
+}
+
+.instruction-item img {
+    height: 70px;
+}
+
+.instruction-item > h4 {
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+
+.instruction-nav {
+    height: 45px;
+}
+
+.instruction-nav-overlay {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+    padding-top: .45rem;
+    padding-right: 2rem;
+}
+
+.instruction-nav-overlay .start-game-btn {
+    margin-top: 0!important;
+    margin-right: 1rem;
+}
+
+.instruction-slide {
+    opacity: 0;
+    display: none !important;
+}
+
+.instruction-slide.active {
+    display: flex !important;
+    opacity: 1;
+    animation: instructionAnimation 1s;
+}
+
+@keyframes instructionAnimation {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+
 }
 
 .title {
@@ -315,11 +383,13 @@ p {
     height: 80px;
     position: relative;
 }
+
 .game-invisible > .cooldown .invisible-btn, .game-invisible > .cooldown .invisible-icon {
     position: absolute;
     left: 0;
     top: 0;
 }
+
 .game-invisible > .cooldown .invisible-icon {
     left: 50%;
     top: 50%;
@@ -1016,4 +1086,16 @@ p {
 
 .custom-checkbox > input:checked + span {
     background-color: #db3f3d;
+}
+
+/* Layout */
+
+.col-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.33333%;
+}
+
+.px-2 {
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
 }
