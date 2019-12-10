@@ -87,7 +87,7 @@ class Bullet {
 
         this.sound = new Audio();
         this.sound.src = './sound/' + audioType;
-        // this.sound.volume = game.volume;
+        this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }

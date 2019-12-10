@@ -68,7 +68,7 @@ class Game {
             distance: 0,
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
-            coins: 9999999,
+            coins: 0,
             combo: 0,
             comboText: 0,
         };
