@@ -11,7 +11,7 @@
     <!-- Title -->
 
     <title>Star Battle</title>
-    
+
     <!-- Icon -->
 
     <link rel="icon" href="./assets/logo-01.png">
@@ -43,9 +43,59 @@
     <!-- Instructions -->
 
     <div id="instructions" class="absolute text-center">
-        <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-        <!--        <button class="btn start-game-btn" data-god="true">God Mode</button>-->
-        <button class="btn start-game-btn">Start Game</button>
+
+        <div class="instructions-overlay hide">
+            <h2 class="title" style="margin-bottom: 1rem;">How to play</h2>
+
+            <div class="flex instruction-slide active" data-slide="1">
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/plane_2.png" alt="">
+                    <h4>This is your plane</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/analog.png" alt="">
+                    <h4>Move your plane by using this analog</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/control.png" alt="">
+                    <h4>Hold red button to be invisible and yellow button to shoot</h4>
+                </div>
+            </div>
+            <div class="flex instruction-slide" data-slide="2">
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/enemy1.svg" alt="">
+                    <h4>This is your enemy. Shoot them!</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/aestroid_brown.png" alt="">
+                    <h4>This is asteroid. Shoot them!</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/friend.png" alt="">
+                    <h4>Hey hey! This is your friend. Don't shoot him!</h4>
+                </div>
+            </div>
+            <div class="instruction-nav-overlay">
+                <button class="btn start-game-btn">Start Game</button>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                     class="instruction-nav instruction-nav-left" data-to="-1">
+                    <path fill="rgba(255,255,255,.8)"
+                          d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                     class="instruction-nav instruction-nav-right" data-to="1">
+                    <path fill="rgba(255,255,255,.8)"
+                          d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="main-menu">
+            <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
+            <button class="btn instruction-btn">How to play</button>
+            <button class="btn start-game-btn">Start Game</button>
+        </div>
     </div>
 
     <!-- Ranking -->
@@ -162,8 +212,8 @@
                     <circle class="progress-circle__stroke invisible-cooldown-percentage" r="50%" cx="50%"
                             cy="50%"></circle>
                 </svg>
-<!--                <img src="assets/invisible-icon.svg" alt="invisible-icon"-->
-<!--                     class="progress-circle__stroke invisible-icon invisible-btn">-->
+                <!--                <img src="assets/invisible-icon.svg" alt="invisible-icon"-->
+                <!--                     class="progress-circle__stroke invisible-icon invisible-btn">-->
             </div>
         </div>
         <div class="game-combo"></div>

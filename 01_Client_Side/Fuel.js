@@ -55,8 +55,10 @@ class Fuel {
 
         this.angle += 1.5;
 
-        this.x -= 2.5;
-        this.y += 2;
+        if (game.shopShip.mode !== 'shopping') {
+            this.x -= 2.5;
+            this.y += 2;
+        }
     }
 
     generateLocation() {
