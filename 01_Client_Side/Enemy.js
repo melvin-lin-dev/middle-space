@@ -122,7 +122,7 @@ class Enemy {
 
             ctx.beginPath();
             ctx.rect(this.x, this.y - 10, this.width * this.life / this.maxLife, 5);
-            ctx.fillStyle = this.type === 3 ? "#0f0" :  "#f00";
+            ctx.fillStyle = this.type === 3 ? "#0f0" : "#f00";
             ctx.fill();
             ctx.closePath();
         }
@@ -130,7 +130,8 @@ class Enemy {
         if (this.x < -500 && !game.IS_CHANGING_LEVEL)
             this.generateLocation();
 
-        this.x -= this.speed;
+        if (game.shopShip.mode !== 'shopping')
+            this.x -= this.speed;
     }
 
     generateLocation() {

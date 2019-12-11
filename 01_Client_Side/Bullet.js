@@ -88,7 +88,7 @@ class Bullet {
 
         this.sound = new Audio();
         this.sound.src = './sound/' + audioType;
-        // this.sound.volume = game.volume;
+        this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }
@@ -131,10 +131,12 @@ class Bullet {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         }
 
-        if (this.IS_LEFT) {
-            this.x -= this.speed;
-        } else {
-            this.x += this.speed;
+        if (game.shopShip.mode !== 'shopping') {
+            if (this.IS_LEFT) {
+                this.x -= this.speed;
+            } else {
+                this.x += this.speed;
+            }
         }
 
     }

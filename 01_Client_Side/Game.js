@@ -68,7 +68,7 @@ class Game {
             distance: 0,
             level: 0,
             shopTime: this.shopShip.shopTimeDefault,
-            coins: 9999999,
+            coins: 0,
             combo: 0,
             comboText: 0,
         };
@@ -309,7 +309,7 @@ class Game {
 
         $('#fuel').html(this.stats.fuel).css('width', (this.stats.fuel / this.player.stats.fuel * 100) + '%');
 
-        if (!this.IS_CHANGING_LEVEL) this.stats.distance++;
+        if (!this.IS_CHANGING_LEVEL && game.shopShip.mode !== 'shopping') this.stats.distance++;
 
         if (this.stats.comboText < this.stats.combo) {
             this.stats.comboText++;
@@ -322,7 +322,7 @@ class Game {
 
         let stats = this.stats;
 
-        stats.countTime++;
+        if (game.shopShip.mode !== 'shopping') stats.countTime++;
 
         if (stats.countTime % 60 === 0) {
             stats.time++;
@@ -333,10 +333,7 @@ class Game {
 
     animateBackground() {
         //  Animating Background
-
-        $('.container').css('background-position', this.backgroundPosition + 'px');
-
-        this.backgroundPosition--;
+        $('.container').css('background-position', -this.stats.distance + 'px');
     }
 
     //  Game Over
