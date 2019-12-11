@@ -46,6 +46,15 @@ class Shop {
                         cost: 400,
                         equipmentType: 2,
                         owned: false
+                    },
+                    {
+                        name: 'Laser',
+                        type: 'laser',
+                        image: this.loadShopImage('laser.png'),
+                        description: 'Laser',
+                        cost: 900,
+                        equipmentType: 3,
+                        owned: false
                     }
                 ]
             },
@@ -248,6 +257,13 @@ class Shop {
                 let targetStat = game.equipment.stats[parentMenuType][menu.equipmentType][statType];
                 let maxStat = game.equipment.maxStats[parentMenuType][statType];
                 let currentStat =  game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
+
+                if(game.equipment.stats[parentMenuType].inverseStat.indexOf(statType) + 1){
+                    let tempTargetStat = targetStat;
+                    targetStat = currentStat;
+                    currentStat = tempTargetStat;
+                }
+
                 let isStatIncrease = targetStat > currentStat;
                 let statColor = isStatIncrease ? 'rgba(50,210,0,.7)' : 'rgba(220,50,0,.7)';
 
@@ -259,7 +275,7 @@ class Shop {
 
                 let point = document.createElement('span');
                 if(targetStat !== currentStat)
-                    point.innerHTML = (isStatIncrease ? '+' : '') + (targetStat - currentStat).toFixed(2).toString();
+                    point.innerHTML = (isStatIncrease ? '+' : '-') + Math.abs(targetStat - currentStat).toFixed(2).toString();
                 point.style.color = statColor.replace('.7','1');
 
                 let progressBar = document.createElement('div');

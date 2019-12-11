@@ -52,7 +52,6 @@ class Player {
 
         this.bullets = [];
 
-        this.shoot_delay = 500;
         this.bullet_level = 1;
 
         // Declaring Equipment
@@ -90,7 +89,7 @@ class Player {
             bullet: {
                 maxUpgrade: 5,
                 upgradeLevel: 0,
-                value: 1
+                value: .4
             }
         };
 
@@ -173,12 +172,12 @@ class Player {
 
     renderFireEffects() {
         if (game.stats.countTime % 30 === 0) {
+            console.log(this.equipment);
             let size = 30;
             let scale = .1;
             this.fireEffects.push({
                 x: this.x + (this.x * (this.defaultScale - this.scale)) - this.exhaust.width * this.exhaust.scale / 2,
                 y: this.y + this.height / 2,
-                s: size * this.scale,
                 opacity: .8,
                 scale,
                 image: imageAssets[`fire-effect_${this.equipment.exhaust}.png`]
@@ -186,7 +185,6 @@ class Player {
         }
 
         for (let i = 0; i < this.fireEffects.length; i++) {
-            let fireEffect = this.fireEffects[i];
             ctx.save();
             ctx.globalAlpha = fireEffect.opacity;
             ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1 - fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
@@ -271,7 +269,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, this.shoot_delay);
+        }, game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000);
     }
 
     triggerBullet() {
@@ -281,9 +279,11 @@ class Player {
             if (this.last_shoot) {
                 let next_shoot = new Date();
 
-                ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+                let shootDelay =  game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000;
 
-                ms = ms > this.shoot_delay ? this.shoot_delay : ms
+                ms = shootDelay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+
+                ms = ms > shootDelay ? shootDelay : ms
             }
 
             this.shoot_timer = setTimeout(() => {
@@ -323,10 +323,6 @@ class Player {
             this.shopMode = '';
             game.shopShip.leave();
         }
-    }
-
-    upgradeBulletDelay(delay) {
-        this.shoot_delay = delay;
     }
 
     upgradeBulletLevel(level) {

@@ -15,10 +15,9 @@ class Bullet {
             case 1:
                 this.width = 30;
                 this.height = 6;
-                this.img = imageAssets['bullet_.png'];
+                this.img = imageAssets['bullet.png'];
 
-
-                audioType = 'shoot.mp3';
+                audioType = 'fireball.mp3';
 
                 switch (bullet_level) {
                     case 2:
@@ -57,6 +56,22 @@ class Bullet {
                     image: imageAssets['rocket-exhaust.png']
                 };
                 break;
+            case 3:
+                this.width = 40;
+                this.height = 5;
+                this.img = imageAssets['laser.png'];
+
+                audioType = 'laser.mp3';
+
+                switch (bullet_level) {
+                    case 2:
+                        this.power = 50;
+                        break;
+                    default:
+                        this.power = 20;
+                        break;
+                }
+                break;
         }
 
         if (canvas.offsetHeight > 600) {
@@ -73,26 +88,26 @@ class Bullet {
 
         this.sound = new Audio();
         this.sound.src = './sound/' + audioType;
-        this.sound.volume = game.volume;
+        // this.sound.volume = game.volume;
         this.sound.autoplay = true;
         this.sound.play();
     }
 
     render() {
-        if(this.exhaust) {
+        if (this.exhaust) {
             // Rendering Exhaust
 
-            if(this.exhaust.isScaling){
+            if (this.exhaust.isScaling) {
                 this.exhaust.scale += this.exhaust.rangeScale;
 
-                if(this.exhaust.scale >= this.exhaust.maxScale){
+                if (this.exhaust.scale >= this.exhaust.maxScale) {
                     this.exhaust.isScaling = 0;
                     this.exhaust.scale = this.exhaust.maxScale;
                 }
-            }else{
+            } else {
                 this.exhaust.scale -= this.exhaust.rangeScale;
 
-                if(this.exhaust.scale <= this.exhaust.minScale){
+                if (this.exhaust.scale <= this.exhaust.minScale) {
                     this.exhaust.isScaling = 1;
                     this.exhaust.scale = this.exhaust.minScale;
                 }
@@ -106,7 +121,15 @@ class Bullet {
         }
 
         //  Rendering Bullet
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if (this.IS_LEFT) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.img, 0, 0, this.width, this.height);
+            ctx.restore();
+        } else {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
 
         if (this.IS_LEFT) {
             this.x -= this.speed;

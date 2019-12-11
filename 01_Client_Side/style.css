@@ -419,7 +419,7 @@ p {
 .boss-icon {
     z-index: 1;
     position: absolute;
-    left: 0;
+    left: -5px;
     top: 70%;
     transform: translateY(-70%);
     opacity: 1 !important;
@@ -815,7 +815,7 @@ p {
 }
 
 .shop-container .inspect.equipment {
-    bottom: 130px;
+    bottom: 120px;
     right: 0;
     padding: 5px 0;
     white-space: nowrap;
@@ -827,7 +827,7 @@ p {
 
 .shop-container .inspect.equipment.active {
     padding: 5px 10px;
-    max-width: 600px;
+    max-width: 700px;
 }
 
 .shop-container .inspect {
@@ -855,7 +855,7 @@ p {
 }
 
 .shop-container .inspect > div > *:first-child {
-    width: 100px;
+    width: 125px;
 }
 
 .shop-container .inspect span span {
@@ -864,7 +864,7 @@ p {
 }
 
 .shop-container .inspect > div > *:last-child {
-    flex: 3;
+    width: 130px;
     margin-left: 5px;
 }
 
@@ -903,7 +903,7 @@ p {
 }
 
 .shop-container .menu.bottom.active + .exit-shop {
-    bottom: 130px;
+    bottom: 135px;
 }
 
 .shop-container button.btn {
