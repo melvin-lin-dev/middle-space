@@ -155,6 +155,10 @@ loadAssets([
         value: 'rocket-exhaust.png',
         type: 'image',
     },
+    {
+        value: 'bullet-enemy.png',
+        type: 'image'
+    }
 ], complete);
 
 function complete() {
