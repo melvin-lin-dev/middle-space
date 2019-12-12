@@ -1,5 +1,5 @@
-class Equipment{
-    constructor(){
+class Equipment {
+    constructor() {
         this.stats = {
             bullet: {
                 1: {
@@ -25,7 +25,8 @@ class Equipment{
                 },
                 2: {
                     speed: 1.2
-                }
+                },
+                inverseStat: []
             }
         };
 
