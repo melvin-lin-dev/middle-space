@@ -48,9 +48,9 @@ class Boss {
 
         this.img = imageAssets[`enemy${this.frame}.svg`];
 
-        if (game.stats.countTime % (60 * 5) === 0 && !this.lose) {
+        if (!this.lose) {
             if (this.life / this.maxLife > .5) {
-                if (!this.lasers.length) {
+                if (!this.lasers.length && game.stats.countTime % (60 * 10) === 0) {
                     this.is_laser_out = false;
                     this.laser_go_out = false;
                     this.lasers.push({
@@ -63,19 +63,21 @@ class Boss {
                     });
                 }
             } else {
-                let angle = Math.floor(Math.random() * 15) + 30;
-                for (let i = 0; i < 7; i++) {
-                    angle -= Math.floor(Math.random() * 10) + 5;
+                if (game.stats.countTime % (60 * 5) === 0) {
+                    let angle = Math.floor(Math.random() * 15) + 30;
+                    for (let i = 0; i < 7; i++) {
+                        angle -= Math.floor(Math.random() * 10) + 5;
 
-                    let rad = angle * Math.PI / 180;
+                        let rad = angle * Math.PI / 180;
 
-                    let mx = Math.cos(rad) * 3;
-                    let my = Math.sin(rad) * 3;
+                        let mx = Math.cos(rad) * 3;
+                        let my = Math.sin(rad) * 3;
 
-                    this.bullets.push(new Bullet(this.x, this.y + this.height / 2, 1, 0, 4, {
-                        mx: mx,
-                        my: my,
-                    }));
+                        this.bullets.push(new Bullet(this.x, this.y + this.height / 2, 1, 0, 4, {
+                            mx: mx,
+                            my: my,
+                        }));
+                    }
                 }
             }
         }
