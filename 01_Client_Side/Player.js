@@ -99,6 +99,7 @@ class Player {
         //    Invisible
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
+        this.is_invisible = 0;
         this.touchable = 1;
         this.invisible_duration = 240;
     }
@@ -166,7 +167,7 @@ class Player {
         if (this.invisible_cooldown > 0) {
             this.invisible_cooldown--;
         } else if (this.invisible_timeout) {
-            this.touchable = 0;
+            this.is_invisible = 1;
             this.invisible_timeout--;
         }
 
@@ -310,7 +311,7 @@ class Player {
         this.shopMode = 'entering';
 
         ev.toggleEnterZone();
-        this.touchable = 0;
+        this.is_invisible = 1;
     }
 
     enteringShop() {
@@ -349,7 +350,7 @@ class Player {
     deactiveInvisible(cooldown = 0) {
         this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
-        this.touchable = 1;
+        this.is_invisible = 0;
         this.invisible_cooldown = cooldown;
     }
 }
