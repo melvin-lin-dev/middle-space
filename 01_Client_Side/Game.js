@@ -150,7 +150,7 @@ class Game {
                     if (bullet) {
                         bullet.render();
 
-                        if (this.checkCollision(bullet, this.player)) {
+                        if (this.checkCollision(bullet, this.player) && !this.player.is_invisible) {
                             delete enemy.bullets[j];
                             if (this.player.touchable) this.planeCollided();
                         }
@@ -159,7 +159,7 @@ class Game {
 
                 enemy.render();
 
-                if (this.player.touchable && this.checkCollision(enemy, this.player)) {
+                if (this.player.touchable && this.checkCollision(enemy, this.player) && !this.player.is_invisible) {
                     this.planeCollided(enemy);
                 }
 
