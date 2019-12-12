@@ -139,8 +139,6 @@ class Game {
                 this.planets[i].render()
             }
 
-            //  Rendering Friend
-
             this.field_is_empty = true;
 
             //  Rendering Enemy

@@ -64,7 +64,7 @@ window.addEventListener("resize", resetHeight);
 // called to initially set the height.
 resetHeight();
 
-$('.instruction-btn').on('click, touchend', function () {
+$('.instruction-btn').on('click touchend', function () {
     $('.instructions-overlay').removeClass('hide');
     $('.main-menu').addClass('hide');
 });
