@@ -81,8 +81,8 @@ class Bullet {
                 this.mx = opts.mx;
                 this.my = opts.my;
                 this.power = 10;
-                this.width = 30;
-                this.height = 15;
+                this.width = 20;
+                this.height = 20;
                 this.img = imageAssets['bullet-enemy.png'];
                 break
         }
