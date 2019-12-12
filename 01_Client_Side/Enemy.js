@@ -1,5 +1,5 @@
 class Enemy {
-    constructor(type, level) {
+    constructor(type, level, position = null) {
         this.img = new Image();
 
         this.type = type;
@@ -80,13 +80,17 @@ class Enemy {
 
         this.generateLocation();
 
+        if (position) {
+            this.x = position.x;
+            this.y = position.y;
+        }
+
         this.bullets = [];
     }
 
     render() {
         if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
-            this.y < canvas.offsetHeight && this.y + this.height > 0
-        ) {
+            this.y < canvas.offsetHeight && this.y + this.height > 0) {
             if (this.type === 1 || this.type === 3) {
                 if (game.stats.countTime % 5 === 0) {
                     this.frame++;
@@ -96,7 +100,25 @@ class Enemy {
                 }
 
                 if (this.type === 1 && this.x + this.width < canvas.width - 100 && this.IS_SHOOT) {
-                    this.bullets.push(new Bullet(this.x + 20, this.y + this.height / 2, 1));
+                    let x1 = game.player.x + game.player.width / 2;
+                    let y1 = game.player.y + game.player.height / 2;
+
+                    let x2 = this.x;
+                    let y2 = this.y + this.height / 2;
+
+                    let y = y2 - y1;
+                    let x = x2 - x1;
+
+                    let rad = Math.atan2(y, x);
+
+                    let mx = Math.cos(rad) * 5;
+                    let my = Math.sin(rad) * 5;
+
+                    this.bullets.push(new Bullet(x2, y2, 1, 0, 4, {
+                        mx: mx,
+                        my: my,
+                    }));
+
                     this.IS_SHOOT = 0;
                 }
 

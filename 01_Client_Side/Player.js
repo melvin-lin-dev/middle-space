@@ -147,6 +147,13 @@ class Player {
         ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
         ctx.restore();
 
+        this.collision = {
+            x: this.x + 10,
+            y: this.y + 10,
+            width: this.width - 20,
+            height: this.height - 20,
+        };
+
         if ((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)) {
             this[this.shopMode + 'Shop']();
         }

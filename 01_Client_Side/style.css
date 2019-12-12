@@ -564,20 +564,11 @@ p {
     top: 50%;
     transform: translate(-50%, -50%) scale(0);
     z-index: 99999;
+    transition:  all .5s;
 }
 
 .popup-animation {
-    animation: popupAnimation 5s;
-}
-
-@keyframes popupAnimation {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(0);
-    }
-
-    30%, 70% {
-        transform: translate(-50%, -50%) scale(1);
-    }
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .alert-animation {

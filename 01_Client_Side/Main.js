@@ -10,11 +10,15 @@ let gameBtnTimeout = null;
 
 // console.log = function() {};
 
-// window.onload = () => { // temp
-//     game.start($(this).data('god'));
-//     game.volume = 0; // temp
-//     game.GOD_MODE = true;
-// };
+window.onload = () => { // temp
+    game.start($(this).data('god'));
+    game.volume = 0; // temp
+    game.GOD_MODE = true;
+    game.stats.coins =9999999;
+    game.stats.shopTime = 0;
+    game.shopShip.shopTimeDefault = 0;
+
+};
 
 $(function () {
     $('.start-game-btn').on('click', function () {

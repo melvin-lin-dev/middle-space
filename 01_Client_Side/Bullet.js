@@ -1,5 +1,5 @@
 class Bullet {
-    constructor(x, y, IS_LEFT = 0, bullet_level = 0, bulletType = 1) {
+    constructor(x, y, IS_LEFT = 0, bullet_level = 0, bulletType = 1, opts = {}) {
         //  Declaring Bullet
 
         this.IS_LEFT = IS_LEFT;
@@ -8,13 +8,16 @@ class Bullet {
 
         this.bulletType = bulletType;
 
-        this.speed = game.equipment.stats.bullet[bulletType].speed;
-        this.power = game.equipment.stats.bullet[bulletType].power;
+        if (this.bulletType !== 4) {
+            this.mx = game.equipment.stats.bullet[bulletType].speed;
+            this.my = 0;
+            this.power = game.equipment.stats.bullet[bulletType].power;
+        }
 
         switch (bulletType) {
             case 1:
-                this.width = 30;
-                this.height = 6;
+                this.width = 23;
+                this.height = 12;
                 this.img = imageAssets['bullet.png'];
 
                 audioType = 'fireball.mp3';
@@ -72,6 +75,15 @@ class Bullet {
                         break;
                 }
                 break;
+            case 4:
+                this.x = x;
+                this.y = y;
+                this.mx = opts.mx;
+                this.my = opts.my;
+                this.power = 10;
+                this.width = 30;
+                this.height = 30;
+                break
         }
 
         if (canvas.offsetHeight > 600) {
@@ -79,18 +91,20 @@ class Bullet {
             this.height *= 5 / 3;
         }
 
-        if (canvas.offsetWidth > 1000) {
-            this.speed *= 5 / 3;
-        }
+        // if (canvas.offsetWidth > 1000) {
+        //     this.speed *= 5 / 3;
+        // }
 
         this.x = x;
         this.y = y - this.height / 2;
 
-        this.sound = new Audio();
-        this.sound.src = './sound/' + audioType;
-        this.sound.volume = game.volume;
-        this.sound.autoplay = true;
-        this.sound.play();
+        if (this.bulletType !== 4) {
+            this.sound = new Audio();
+            this.sound.src = './sound/' + audioType;
+            this.sound.volume = game.volume;
+            this.sound.autoplay = true;
+            this.sound.play();
+        }
     }
 
     render() {
@@ -121,21 +135,30 @@ class Bullet {
         }
 
         //  Rendering Bullet
-        if (this.IS_LEFT) {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.scale(-1, 1);
-            ctx.drawImage(this.img, 0, 0, this.width, this.height);
-            ctx.restore();
+        if (this.img) {
+            if (this.IS_LEFT) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(-1, 1);
+                ctx.drawImage(this.img, 0, 0, this.width, this.height);
+                ctx.restore();
+            } else {
+                ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
         } else {
-            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+            ctx.beginPath();
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.closePath();
         }
 
         if (game.shopShip.mode !== 'shopping') {
             if (this.IS_LEFT) {
-                this.x -= this.speed;
+                this.x -= this.mx;
+                this.y -= this.my;
             } else {
-                this.x += this.speed;
+                this.x += this.mx;
+                this.y += this.my;
             }
         }
 

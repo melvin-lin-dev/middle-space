@@ -147,11 +147,13 @@ class Game {
                 let enemy = this.enemies[i];
                 for (let j = 0; j < enemy.bullets.length; j++) {
                     let bullet = enemy.bullets[j];
-                    bullet.render();
+                    if (bullet) {
+                        bullet.render();
 
-                    if (this.player.touchable && this.checkCollision(bullet, this.player)) {
-                        enemy.bullets.splice(j, 1);
-                        this.planeCollided();
+                        if (this.checkCollision(bullet, this.player)) {
+                            delete enemy.bullets[j];
+                            if (this.player.touchable) this.planeCollided();
+                        }
                     }
                 }
 
@@ -179,16 +181,18 @@ class Game {
 
             for (let i = 0; i < this.player.bullets.length; i++) {
                 let bullet = this.player.bullets[i];
-                bullet.render();
+                if (bullet) {
+                    bullet.render();
 
-                if (bullet.x > canvas.width) {
-                    this.player.bullets.splice(i, 1);
-                } else if (bullet.x < canvas.width) {
-                    for (let j = 0; j < this.enemies.length; j++) {
-                        let enemy = this.enemies[j];
-                        if (this.checkCollision(bullet, enemy)) {
-                            this.player.bullets.splice(i, 1);
-                            this.collided(enemy, bullet);
+                    if (bullet.x > canvas.width) {
+                        delete this.player.bullets[i];
+                    } else if (bullet.x < canvas.width) {
+                        for (let j = 0; j < this.enemies.length; j++) {
+                            let enemy = this.enemies[j];
+                            if (this.checkCollision(bullet, enemy)) {
+                                delete this.player.bullets[i];
+                                this.collided(enemy, bullet);
+                            }
                         }
                     }
                 }
@@ -220,17 +224,39 @@ class Game {
             this.countTime();
             this.renderText();
 
-            if (this.stats.distance % 500 === 0) this.enemyGenerator();
+            if (this.stats.distance % 1500 === 0) this.enemyGenerator();
 
             if (this.stats.fuel <= 0) {
                 this.over();
             }
+
+            this.removeNullBullets();
         } else {
             this.sound.pause();
         }
 
         //  Looping Animation
         this.rendering = requestAnimationFrame(this.render);
+    }
+
+    removeNullBullets() {
+        for (let i = 0; i < this.player.bullets.length; i++) {
+            let bullet = this.player.bullets[i];
+            if (!bullet) {
+                this.player.bullets.splice(i, 1);
+                this.removeNullBullets();
+            }
+        }
+
+        for (let i = 0; i < this.enemies.length; i++) {
+            let enemy = this.enemies[i];
+            for (let j = 0; j < enemy.bullets.length; j++) {
+                let bullet = enemy.bullets[j];
+                if (!bullet) {
+                    this.enemies[i].bullets.splice(j, 1);
+                }
+            }
+        }
     }
 
     planeCollided(obj = null) {
@@ -331,7 +357,8 @@ class Game {
 
     animateBackground() {
         //  Animating Background
-        $('.container').css('background-position', -this.stats.distance + 'px');
+        this.backgroundPosition++;
+        $('.container').css('background-position', -this.backgroundPosition + 'px');
     }
 
     //  Game Over
@@ -368,15 +395,23 @@ class Game {
         }
     }
 
+    randomPosition() {
+        return {
+            x: Math.floor(Math.random() * (canvas.width * 2)) + canvas.width,
+            y: Math.floor(Math.random() * (canvas.height - 100)) + 50,
+        }
+    }
+
     changeLevel() {
         this.stats.level += 1;
+        // this.stats.level = 5;
 
         this.enemies = [];
 
         let s = ``;
 
         if (this.stats.level % 5 === 0) s += `<svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" class="alert-animation" fill="#fff" viewBox="0 0 512 512"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>
-                        <h2>Stage ${this.stats.level}! The Boss is waiting for you!</h2>`
+                        <h2>Stage ${this.stats.level}! The Boss is waiting for you!</h2>`;
         else s = `<h2>Get Ready! Stage ${this.stats.level} is about to start</h2>`;
 
         $('.level-info').html(s).addClass('popup-animation');
@@ -387,16 +422,28 @@ class Game {
             if (this.stats.level % 5 !== 0) {
                 let level = new Level(this.stats.level);
 
-                for (let i = 0; i < 2; i++) {
-                    this.enemies.push(new Enemy(3, 0));
-                }
+                let x = canvas.offsetWidth;
 
                 for (let i = 0; i < level.maxEnemy; i++) {
-                    this.enemies.push(new Enemy(1, this.stats.level));
+                    let position = this.randomPosition();
+                    x += 500;
+                    position.x = x;
+                    for (let i = 0; i < 5; i++) {
+                        this.enemies.push(new Enemy(1, this.stats.level, position));
+                        position.x += 60;
+                    }
                 }
 
+                // for (let i = 0; i < 2; i++) {
+                //     this.enemies.push(new Enemy(3, 0));
+                // }
+
+                // for (let i = 0; i < level.maxEnemy; i++) {
+                //     this.enemies.push(new Enemy(1, this.stats.level));
+                // }
+
                 for (let i = 0; i < level.maxAsteroid; i++) {
-                    this.enemies.push(new Enemy(2, this.stats.level));
+                    this.enemies.push(new Enemy(2, this.stats.level, this.randomPosition()));
                 }
 
                 this.stats.distance += 1;
