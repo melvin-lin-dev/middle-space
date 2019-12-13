@@ -1,7 +1,6 @@
 class Bullet {
     constructor(x, y, IS_LEFT = 0, bullet_level = 0, bulletType = 1, opts = {}) {
         //  Declaring Bullet
-
         this.IS_LEFT = IS_LEFT;
 
         let audioType = '';
@@ -22,31 +21,16 @@ class Bullet {
 
                 audioType = 'fireball.mp3';
 
-                switch (bullet_level) {
-                    case 2:
-                        this.power = 30;
-                        break;
-                    default:
-                        this.power = 10;
-                        break;
-                }
+                this.power = 10 * bullet_level;
                 break;
             case 2:
                 this.width = 50;
                 this.height = 20;
                 this.img = imageAssets['rocket.png'];
 
-
                 audioType = 'rocket.mp3';
 
-                switch (bullet_level) {
-                    case 2:
-                        this.power = 50;
-                        break;
-                    default:
-                        this.power = 20;
-                        break;
-                }
+                this.power = 30 * bullet_level;
 
                 this.exhaust = {
                     width: this.width / 3,
@@ -66,14 +50,7 @@ class Bullet {
 
                 audioType = 'laser.mp3';
 
-                switch (bullet_level) {
-                    case 2:
-                        this.power = 50;
-                        break;
-                    default:
-                        this.power = 20;
-                        break;
-                }
+                this.power = 20 * bullet_level;
                 break;
             case 4:
                 this.x = x;

@@ -20,7 +20,14 @@ class Shop {
                         image: this.loadShopImage('bullet.png'),
                         description: 'Ship HP',
                         cost: 200
-                    }
+                    },
+                    {
+                        name: '2nd Bullet',
+                        type: 'second_bullet',
+                        image: this.loadShopImage('2-bullets.png'),
+                        description: 'Ship Bullet',
+                        cost: 600
+                    },
                 ]
             },
             {
@@ -152,7 +159,7 @@ class Shop {
                     buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
                     buyButton.value *= currentUpgrade.upgradeLevel + 1;
                 } else if (parentMenu.menuType === 'equipment') {
-                    buyButton.innerHTML = menu.owned ? 'EQUIP' : 'BUY';
+                    buyButton.innerHTML = menu.owned ? 'EQUIP' : menu.cost;
                     if (game.player.bulletType === menu.equipmentType) {
                         buyButton.innerHTML = 'EQUIPPED';
                     }
@@ -313,10 +320,10 @@ class Shop {
                 let currentUpgrade = game.player.upgrade[type];
 
                 let stat = document.createElement('div');
-                // stat.id = `stat-${type}`;
+                stat.id = `stat-${type}`;
 
                 let name = document.createElement('span');
-                name.innerHTML = type.toUpperCase() + ` (${currentUpgrade.upgradeLevel})`;
+                name.innerHTML =(currentUpgrade.name ||  type.toUpperCase() )+ ` <span class="upgrade-level">(${currentUpgrade.upgradeLevel})</span>`;
 
                 let progressBar = document.createElement('div');
                 progressBar.className = 'progress-bar';
@@ -332,8 +339,8 @@ class Shop {
             }
         } else {
             let currentUpgrade = game.player.upgrade[type];
-            $(`#shop #stat-${type} span`).html(`${type.toUpperCase()} (${currentUpgrade.upgradeLevel})`);
-            $(`#shop #stat-${type} .progress-bar > div`).css('width', currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%');
+            $(`#shop #stat-${type} span.upgrade-level`).html(`(${currentUpgrade.upgradeLevel  == currentUpgrade.maxUpgrade  ? 'Maxed' :  currentUpgrade.upgradeLevel})`);
+            $(`#shop #stat-${type} .progress-bar > div`).css('width', ((currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade) * 100) + '%');
         }
     }
 

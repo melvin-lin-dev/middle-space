@@ -10,15 +10,14 @@ let gameBtnTimeout = null;
 
 // console.log = function() {};
 
-window.onload = () => { // temp
-    game.start($(this).data('god'));
-    game.volume = 0; // temp
-    game.GOD_MODE = true;
-    game.stats.coins =9999999;
-    game.stats.shopTime = 0;
-    game.shopShip.shopTimeDefault = 0;
-
-};
+// window.onload = () => { // temp
+//     game.start($(this).data('god'));
+//     game.volume = 0; // temp
+//     game.GOD_MODE = true;
+//     game.stats.coins =9999999;
+//     game.stats.shopTime = 0;
+//     game.shopShip.shopTimeDefault = 0;
+// };
 
 $(function () {
     $('.start-game-btn').on('click', function () {
@@ -73,21 +72,45 @@ $('.instruction-btn').on('click touchend', function () {
     $('.main-menu').addClass('hide');
 });
 
+let is_animating = false;
+
 $('.instruction-nav').on('click', function () {
-    let currentNav = parseInt($('.instruction-slide.active').data('slide'));
+    if (!is_animating) {
+        is_animating = true;
+        let activeInstruction = $('.instruction-slide.active');
+        let currentNav = parseInt(activeInstruction.data('slide'));
 
-    let to = parseInt($(this).data('to'));
+        let to = parseInt($(this).data('to'));
 
-    currentNav += to;
+        currentNav += to;
 
-    $('.instruction-slide.active').removeClass('active');
+        let nextInstruction;
 
-    if (currentNav < 1) {
-        $($('.instruction-slide')[$('.instruction-slide').length - 1]).addClass('active')
-        return 0;
+        if (currentNav < 1) {
+            nextInstruction = $($('.instruction-slide')[$('.instruction-slide').length - 1]).addClass('active')
+        } else {
+            nextInstruction = $($(`.instruction-slide[data-slide="${currentNav}"]`)).length ? $($(`.instruction-slide[data-slide="${currentNav}"]`)) : $($(`.instruction-slide[data-slide="1"]`));
+        }
+
+        nextInstruction.addClass('active');
+
+        if (to == 1) {
+            activeInstruction.addClass('fade-out-right');
+            nextInstruction.addClass('fade-in-right');
+        } else {
+            activeInstruction.addClass('fade-out-left');
+            nextInstruction.addClass('fade-in-left');
+        }
+
+        setTimeout(() => {
+            activeInstruction.removeClass('active').removeClass(function (index, className) {
+                return (className.match(/fade-(.*)/))[0]
+            });
+
+            nextInstruction.removeClass(function (index, className) {
+                return (className.match(/fade-(.*)/))[0]
+            });
+            is_animating = false;
+        }, 1000);
     }
-
-    let nextInstruction = $($(`.instruction-slide[data-slide="${currentNav}"]`)).length ? $($(`.instruction-slide[data-slide="${currentNav}"]`)) : $($(`.instruction-slide[data-slide="1"]`));
-
-    nextInstruction.addClass('active');
 });

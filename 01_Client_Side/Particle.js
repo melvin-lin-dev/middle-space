@@ -1,6 +1,6 @@
 class Particle {
     constructor(x, y, type = 0, score) {
-        let total = 8;
+        let total = 4;
 
         this.particleTypes = ['particles', 'coinParticles'];
 
@@ -17,7 +17,7 @@ class Particle {
             score: (score > 0 ? '+' : '') + score,
         };
 
-        if (type > 10) type = 10;
+        if (type > 5) type = 5;
 
         this.particleTypes.forEach(particleType => {
             for (let i = 0; i < (particleType === 'particles' ? total : type); i++) {

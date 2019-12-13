@@ -82,15 +82,23 @@ class Player {
 
         this.upgrade = {
             fuel: {
+                name: 'Fuel',
                 maxUpgrade: 10,
                 upgradeLevel: 0,
                 value: 20
             },
             bullet: {
+                name: 'Bullet',
                 maxUpgrade: 5,
                 upgradeLevel: 0,
                 value: .4
-            }
+            },
+            second_bullet: {
+                name: '2nd Bullet',
+                maxUpgrade: 1,
+                upgradeLevel: 0,
+                value: 1,
+            },
         };
 
         // Fire Effects
@@ -296,7 +304,12 @@ class Player {
 
             this.shoot_timer = setTimeout(() => {
                 if (game.pause === -1) {
-                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.equipment.bullet));
+                    if (this.upgrade.second_bullet.upgradeLevel == 1) {
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 - 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 + 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                    }else {
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                    }
                     this.last_shoot = new Date();
                 }
             }, ms)
@@ -333,13 +346,10 @@ class Player {
         }
     }
 
-    upgradeBulletLevel(level) {
-        this.bullet_level = level;
-    }
-
     invisible() {
         if (this.invisible_cooldown === 0) {
             this.invisible_cooldown = -1;
+            this.touchable = 0;
 
             $('.game-invisible').addClass('opacity-5');
 
@@ -351,6 +361,7 @@ class Player {
         this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
         this.is_invisible = 0;
+        this.touchable = 1;
         this.invisible_cooldown = cooldown;
     }
 }

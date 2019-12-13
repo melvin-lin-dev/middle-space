@@ -193,6 +193,9 @@ canvas {
 .instructions-overlay {
     width: 100%;
     animation: instructionAnimation 1s;
+    position: relative;
+    height: 100vh;
+    padding-top: 30px;
 }
 
 .instruction-item img {
@@ -215,6 +218,9 @@ canvas {
     text-align: right;
     padding-top: .45rem;
     padding-right: 2rem;
+    position: absolute;
+    bottom: 30px;
+    right: 0;
 }
 
 .instruction-nav-overlay .start-game-btn {
@@ -222,28 +228,84 @@ canvas {
     margin-right: 1rem;
 }
 
+.instruction-nav-right {
+    margin-left: .4rem;
+}
+
 .instruction-slide {
     opacity: 0;
-    display: none !important;
+    min-height: 170px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    justify-content: center;
+}
+
+.fade-in-left {
+    animation: fadeInLeft 1s forwards;
+}
+
+.fade-out-left {
+    animation: fadeOutLeft 1s forwards;
+}
+
+@keyframes fadeInLeft {
+    from {
+        transform: translateY(-50%) translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutLeft {
+    from {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-50%) translateX(100%);
+        opacity: 0;
+    }
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s forwards;
+}
+
+.fade-out-right {
+    animation: fadeOutRight 1s forwards;
+}
+
+@keyframes fadeInRight {
+    from {
+        transform: translateY(-50%) translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutRight {
+    from {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-50%) translateX(-100%);
+        opacity: 0;
+    }
 }
 
 .instruction-slide.active {
     display: flex !important;
     opacity: 1;
-    animation: instructionAnimation 1s;
-}
-
-@keyframes instructionAnimation {
-    from {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-
 }
 
 .title {

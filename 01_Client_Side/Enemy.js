@@ -12,7 +12,7 @@ class Enemy {
                 this.height = 50;
                 this.speed = 3.2;
                 this.score = 5;
-                this.coins = 2;
+                this.coins = 20;
                 switch (this.level) {
                     case 1:
                         this.maxLife = 10;
@@ -46,7 +46,7 @@ class Enemy {
                 this.height = 60;
                 this.speed = 3.6;
                 this.score = 10;
-                this.coins = 4;
+                this.coins = 50;
                 switch (this.level) {
                     case 1:
                         this.maxLife = 20;
@@ -84,8 +84,6 @@ class Enemy {
             this.x = position.x;
             this.y = position.y;
         }
-
-        this.bullets = [];
     }
 
     render() {
@@ -114,7 +112,7 @@ class Enemy {
                     let mx = Math.cos(rad) * 5;
                     let my = Math.sin(rad) * 5;
 
-                    this.bullets.push(new Bullet(x2, y2, 1, 0, 4, {
+                    game.enemy_bullets.push(new Bullet(x2, y2, 1, 0, 4, {
                         mx: mx,
                         my: my,
                     }));

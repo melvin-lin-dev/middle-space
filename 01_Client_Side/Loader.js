@@ -158,7 +158,11 @@ loadAssets([
     {
         value: 'bullet-enemy.png',
         type: 'image'
-    }
+    },
+    {
+        value: '2-bullets.png',
+        type: 'image'
+    },
 ], complete);
 
 function complete() {

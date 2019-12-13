@@ -33,6 +33,7 @@ class Game {
 
         //  Enemies
 
+        this.enemy_bullets = [];
         this.enemies = [];
 
         //  Player
@@ -145,17 +146,6 @@ class Game {
 
             for (let i = 0; i < this.enemies.length; i++) {
                 let enemy = this.enemies[i];
-                for (let j = 0; j < enemy.bullets.length; j++) {
-                    let bullet = enemy.bullets[j];
-                    if (bullet) {
-                        bullet.render();
-
-                        if (this.checkCollision(bullet, this.player) && !this.player.is_invisible) {
-                            delete enemy.bullets[j];
-                            if (this.player.touchable) this.planeCollided();
-                        }
-                    }
-                }
 
                 enemy.render();
 
@@ -164,6 +154,18 @@ class Game {
                 }
 
                 if (enemy.x + enemy.width > 0) this.field_is_empty = false;
+            }
+
+            for (let i = 0; i < this.enemy_bullets.length; i++) {
+                let bullet = this.enemy_bullets[i];
+                if (bullet) {
+                    bullet.render();
+
+                    if (this.checkCollision(bullet, this.player) && !this.player.is_invisible && this.player.touchable) {
+                        delete this.enemy_bullets[i];
+                        this.planeCollided();
+                    }
+                }
             }
 
             //  Rendering Fuel
@@ -244,17 +246,15 @@ class Game {
             let bullet = this.player.bullets[i];
             if (!bullet) {
                 this.player.bullets.splice(i, 1);
-                this.removeNullBullets();
+                return this.removeNullBullets();
             }
         }
 
-        for (let i = 0; i < this.enemies.length; i++) {
-            let enemy = this.enemies[i];
-            for (let j = 0; j < enemy.bullets.length; j++) {
-                let bullet = enemy.bullets[j];
-                if (!bullet) {
-                    this.enemies[i].bullets.splice(j, 1);
-                }
+        for (let i = 0; i < this.enemy_bullets.length; i++) {
+            let bullet = this.enemy_bullets[i];
+            if (!bullet) {
+                this.enemy_bullets.splice(i, 1);
+                return this.removeNullBullets();
             }
         }
     }
@@ -280,7 +280,7 @@ class Game {
         this.animateCanvas = setTimeout(() => {
             this.player.touchable = 1;
             $('.collide-animation').removeClass('animate-canvas');
-        }, 1500);
+        }, 1000);
 
         this.stats.fuel -= 15;
     }
@@ -343,7 +343,6 @@ class Game {
 
     countTime() {
         //  Counting Time
-
         let stats = this.stats;
 
         if (game.shopShip.mode !== 'shopping') stats.countTime++;
