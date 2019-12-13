@@ -364,6 +364,8 @@ class Game {
 
     over() {
         if (!this.GOD_MODE) {
+            $('.enter-zone').removeClass('active');
+
             this.sound.pause();
             this.pause = 1;
             $('#zone_joystick').html('');
