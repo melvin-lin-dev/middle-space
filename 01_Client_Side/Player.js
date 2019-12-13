@@ -255,6 +255,11 @@ class Player {
         this.x += this.speedX * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
         this.y += this.speedY * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
 
+        if (this.TO_LEFT) this.x -= 8;
+        if (this.TO_RIGHT) this.x += 8;
+        if (this.TO_TOP) this.y -= 8;
+        if (this.TO_BOTTOM) this.y += 8;
+
         if (this.speedY < -2) {
             if (exhaust.angle > exhaust.minAngle) {
                 exhaust.angle -= exhaust.rangeAngle;
@@ -295,7 +300,7 @@ class Player {
             if (this.last_shoot) {
                 let next_shoot = new Date();
 
-                let shootDelay =  game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000;
+                let shootDelay = game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000;
 
                 ms = shootDelay - ((next_shoot.getTime() - this.last_shoot.getTime()));
 
@@ -307,7 +312,7 @@ class Player {
                     if (this.upgrade.second_bullet.upgradeLevel == 1) {
                         this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 - 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
                         this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 + 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
-                    }else {
+                    } else {
                         this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
                     }
                     this.last_shoot = new Date();

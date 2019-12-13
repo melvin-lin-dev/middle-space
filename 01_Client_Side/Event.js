@@ -97,6 +97,22 @@ class Event {
             enterZone.css('animation', '1s enterZoneAnimation infinite .4s');
         }
     }
+
+    moveLeft(is_move = true) {
+        if (game.player) game.player.TO_LEFT = is_move;
+    }
+
+    moveRight(is_move = true) {
+        if (game.player) game.player.TO_RIGHT = is_move;
+    }
+
+    moveUp(is_move = true) {
+        if (game.player) game.player.TO_TOP = is_move;
+    }
+
+    moveDown(is_move = true) {
+        if (game.player) game.player.TO_BOTTOM = is_move;
+    }
 }
 
 let ev = new Event();
@@ -110,7 +126,19 @@ window.addEventListener('keydown', function (e) {
         case 32:
             ev.shoot(1);
             break;
-        case 73:
+        case 37:
+            ev.moveLeft(true);
+            break;
+        case 38:
+            ev.moveUp(true);
+            break;
+        case 39:
+            ev.moveRight(true);
+            break;
+        case 40:
+            ev.moveDown(true);
+            break;
+        case 90:
             ev.invisible();
             break;
     }
@@ -124,6 +152,18 @@ window.addEventListener('keyup', function (e) {
     switch (keycode) {
         case 32:
             ev.shoot(0);
+            break;
+        case 37:
+            ev.moveLeft(false);
+            break;
+        case 38:
+            ev.moveUp(false);
+            break;
+        case 39:
+            ev.moveRight(false);
+            break;
+        case 40:
+            ev.moveDown(false);
             break;
         case 80:
             ev.pause();
