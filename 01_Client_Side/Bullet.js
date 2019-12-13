@@ -113,22 +113,7 @@ class Bullet {
         }
 
         //  Rendering Bullet
-        if (this.img) {
-            if (this.IS_LEFT) {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.scale(-1, 1);
-                ctx.drawImage(this.img, 0, 0, this.width, this.height);
-                ctx.restore();
-            } else {
-                ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-            }
-        } else {
-            ctx.beginPath();
-            ctx.fillStyle = "#fff";
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-            ctx.closePath();
-        }
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
         if (game.shopShip.mode !== 'shopping') {
             if (this.IS_LEFT) {

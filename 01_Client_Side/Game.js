@@ -163,7 +163,9 @@ class Game {
                 if (bullet) {
                     bullet.render();
 
-                    if (this.checkCollision(bullet, this.player) && !this.player.is_invisible && this.player.touchable) {
+                    if (bullet.x + bullet.width < 0) {
+                        delete this.enemy_bullets[i];
+                    } else if (this.checkCollision(bullet, this.player) && !this.player.is_invisible && this.player.touchable) {
                         delete this.enemy_bullets[i];
                         this.planeCollided();
                     }
@@ -426,16 +428,20 @@ class Game {
         this.enemy_generator_timeout = setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
 
+            if (this.stats.level === 0) {
+                this.stats.level = 1;
+            }
+
             if (this.stats.level % 5 !== 0) {
                 let level = new Level(this.stats.level);
 
                 let x = canvas.offsetWidth;
 
-                for (let i = 0; i < level.maxEnemy; i++) {
+                for (let i = 0; i < level.maxEnemy.row; i++) {
                     let position = this.randomPosition();
                     x += 500;
                     position.x = x;
-                    for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < level.maxEnemy.total; j++) {
                         this.enemies.push(new Enemy(1, this.stats.level, position));
                         position.x += 60;
                     }
