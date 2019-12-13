@@ -175,7 +175,7 @@ class Player {
         if (this.invisible_cooldown > 0) {
             this.invisible_cooldown--;
         } else if (this.invisible_timeout) {
-            this.is_invisible = 1;
+            this.is_invisible = 0;
             this.invisible_timeout--;
         }
 
@@ -350,6 +350,7 @@ class Player {
         if (this.invisible_cooldown === 0) {
             this.invisible_cooldown = -1;
             this.touchable = 0;
+            this.is_invisible = 1;
 
             $('.game-invisible').addClass('opacity-5');
 
