@@ -1,11 +1,36 @@
 class Game {
     constructor() {
         this.volume = localStorage.getItem('star-battle-audio') == null ? 1 : localStorage.getItem('star-battle-audio') || 1;
+
+        let zoneJoystick = document.getElementById('zone_joystick');
+
+        let joystick = nipplejs.create({
+            zone: zoneJoystick,
+            mode: 'static',
+            position: {left: '50%', top: '50%'},
+            color: 'white',
+            size: 100,
+        });
+
+        joystick.on('start end', function (evt, data) {
+            moveJoystick(data)
+        }).on('move', function (evt, data) {
+            moveJoystick(data)
+        }).on('dir:up plain:up dir:left plain:left dir:down ' +
+            'plain:down dir:right plain:right',
+            function (evt, data) {
+                moveJoystick(data)
+            }
+        ).on('pressure', function (evt, data) {
+            moveJoystick(data)
+        });
     }
 
     //  Starting Game
 
     start(GOD_MODE = false) {
+        $('#zone_joystick').removeClass('opacity-0');
+
         this.GOD_MODE = GOD_MODE;
 
         this.sound = new Audio();
@@ -87,29 +112,6 @@ class Game {
         ev.hideExcept('#gameBoard');
         $('#zone_joystick').removeClass('hide');
         ev.showCanvas(1);
-
-        let zoneJoystick = document.getElementById('zone_joystick');
-
-        let joystick = nipplejs.create({
-            zone: zoneJoystick,
-            mode: 'static',
-            position: {left: '50%', top: '50%'},
-            color: 'white',
-            size: 100,
-        });
-
-        joystick.on('start end', function (evt, data) {
-            moveJoystick(data)
-        }).on('move', function (evt, data) {
-            moveJoystick(data)
-        }).on('dir:up plain:up dir:left plain:left dir:down ' +
-            'plain:down dir:right plain:right',
-            function (evt, data) {
-                moveJoystick(data)
-            }
-        ).on('pressure', function (evt, data) {
-            moveJoystick(data)
-        });
 
         $('#shop').css('opacity', '0');
 
@@ -364,9 +366,12 @@ class Game {
 
     over() {
         if (!this.GOD_MODE) {
+            $('.enter-zone').removeClass('active');
+
             this.sound.pause();
             this.pause = 1;
-            $('#zone_joystick').html('');
+            // $('#zone_joystick').html('');
+            $('#zone_joystick').addClass('opacity-0');
             cancelAnimationFrame(this.rendering);
 
             ev.hideExcept('#scoreForm');

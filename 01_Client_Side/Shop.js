@@ -135,7 +135,7 @@ class Shop {
                 if (side === 'top') {
                     $('.shop-container .inspect.equipment').removeClass('active');
                     _self.displayData('bottom', menu, this);
-                } else if(parentMenu.menuType === 'equipment') {
+                } else if (parentMenu.menuType === 'equipment') {
                     _self.inspectEquipment(menu, parentMenu.type);
                 }
             };
@@ -173,11 +173,11 @@ class Shop {
         })
     }
 
-    checkMenuType(button, parentMenu, menu){
-        if(game.stats.coins >= button.value){
+    checkMenuType(button, parentMenu, menu) {
+        if (game.stats.coins >= button.value) {
             let currentUpgrade = game.player.upgrade[menu.type];
 
-            if((parentMenu.menuType === 'equipment' && !menu.owned) || (parentMenu.menuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
+            if ((parentMenu.menuType === 'equipment' && !menu.owned) || (parentMenu.menuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)) {
                 game.stats.coins -= button.value;
 
                 game.renderText();
@@ -194,7 +194,7 @@ class Shop {
                 }, 1400);
             }
 
-            switch(parentMenu.menuType) {
+            switch (parentMenu.menuType) {
                 case 'upgrade':
                     this.upgradeShip(button, menu, currentUpgrade);
                     break;
@@ -202,7 +202,7 @@ class Shop {
                     this.buyEquipment(button, menu, currentUpgrade, parentMenu.type);
                     break;
             }
-        }else{
+        } else {
             $('#shop .notification').addClass('active');
 
             setTimeout(() => {
@@ -237,8 +237,8 @@ class Shop {
         }
     }
 
-    buyEquipment(button, menu, currentUpgrade, parentMenuType){
-        if(!menu.owned){
+    buyEquipment(button, menu, currentUpgrade, parentMenuType) {
+        if (!menu.owned) {
             button.value = 0;
             menu.cost = 0;
             menu.owned = true;
@@ -249,7 +249,7 @@ class Shop {
         game.player.equipment[parentMenuType] = menu.equipmentType;
     }
 
-    inspectEquipment (menu, parentMenuType) {
+    inspectEquipment(menu, parentMenuType) {
         let equipmentStats = $('.shop-container .inspect.equipment');
         let timeout = equipmentStats.hasClass('active') ? 400 : 0;
 
@@ -260,12 +260,12 @@ class Shop {
 
             equipmentStats.html('');
 
-            for(let statType in game.equipment.maxStats[parentMenuType]){
+            for (let statType in game.equipment.maxStats[parentMenuType]) {
                 let targetStat = game.equipment.stats[parentMenuType][menu.equipmentType][statType];
                 let maxStat = game.equipment.maxStats[parentMenuType][statType];
-                let currentStat =  game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
+                let currentStat = game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
 
-                if(game.equipment.stats[parentMenuType].inverseStat.indexOf(statType) + 1){
+                if (game.equipment.stats[parentMenuType].inverseStat.indexOf(statType) + 1) {
                     let tempTargetStat = targetStat;
                     targetStat = currentStat;
                     currentStat = tempTargetStat;
@@ -281,9 +281,9 @@ class Shop {
                 name.innerHTML = statType.toUpperCase();
 
                 let point = document.createElement('span');
-                if(targetStat !== currentStat)
+                if (targetStat !== currentStat)
                     point.innerHTML = (isStatIncrease ? '+' : '-') + Math.abs(targetStat - currentStat).toFixed(2).toString();
-                point.style.color = statColor.replace('.7','1');
+                point.style.color = statColor.replace('.7', '1');
 
                 let progressBar = document.createElement('div');
                 progressBar.className = 'progress-bar';
@@ -323,7 +323,7 @@ class Shop {
                 stat.id = `stat-${type}`;
 
                 let name = document.createElement('span');
-                name.innerHTML =(currentUpgrade.name ||  type.toUpperCase() )+ ` <span class="upgrade-level">(${currentUpgrade.upgradeLevel})</span>`;
+                name.innerHTML = (currentUpgrade.name || type.toUpperCase()) + ` <span class="upgrade-level">(${currentUpgrade.upgradeLevel})</span>`;
 
                 let progressBar = document.createElement('div');
                 progressBar.className = 'progress-bar';
@@ -339,17 +339,17 @@ class Shop {
             }
         } else {
             let currentUpgrade = game.player.upgrade[type];
-            $(`#shop #stat-${type} span.upgrade-level`).html(`(${currentUpgrade.upgradeLevel  == currentUpgrade.maxUpgrade  ? 'Maxed' :  currentUpgrade.upgradeLevel})`);
+            $(`#shop #stat-${type} span.upgrade-level`).html(`(${currentUpgrade.upgradeLevel == currentUpgrade.maxUpgrade ? 'Maxed' : currentUpgrade.upgradeLevel})`);
             $(`#shop #stat-${type} .progress-bar > div`).css('width', ((currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade) * 100) + '%');
         }
     }
 
-    toggleMusic(){
-        if(this.music.currentTime === 0){
+    toggleMusic() {
+        if (this.music.currentTime === 0) {
             this.music.play();
             this.music.volume = game.volume;
             this.music.loop = true;
-        }else{
+        } else {
             this.music.pause();
             this.music.currentTime = 0;
         }
