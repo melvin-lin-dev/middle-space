@@ -372,7 +372,6 @@ class Game {
 
             this.sound.pause();
             this.pause = 1;
-            // $('#zone_joystick').html('');
             $('#zone_joystick').addClass('opacity-0');
             cancelAnimationFrame(this.rendering);
 
@@ -383,8 +382,6 @@ class Game {
 
     // random number generators
     enemyGenerator(change_now = false) {
-        if (this.level_timeout) clearTimeout(this.level_timeout);
-
         if (!change_now) {
             this.IS_CHANGING_LEVEL = true;
             if (this.field_is_empty) {
@@ -412,7 +409,6 @@ class Game {
 
     changeLevel() {
         this.stats.level += 1;
-        // this.stats.level = 5;
 
         this.enemies = [];
 
@@ -424,8 +420,7 @@ class Game {
 
         $('.level-info').html(s).addClass('popup-animation');
 
-        if (this.enemy_generator_timeout) clearTimeout(this.enemy_generator_timeout);
-        this.enemy_generator_timeout = setTimeout(() => {
+        setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
 
             if (this.stats.level === 0) {
