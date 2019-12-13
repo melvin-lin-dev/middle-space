@@ -21,9 +21,6 @@ class ShopShip {
         this.mode = 'arriving';
 
         this.shopTimeDefault = 20;
-        setTimeout(() => {
-            // game.stats.shopTime = 0;
-        }, 1000);
 
         this.waitingTime = 5;
 
