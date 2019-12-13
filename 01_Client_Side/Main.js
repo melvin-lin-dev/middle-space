@@ -34,9 +34,7 @@ $(function () {
                 await body.msRequestFullscreen()
             }
 
-            setTimeout(() => {
-                game.start($(this).data('god'));
-            }, 1000);
+            game.start();
         }, 0);
     });
 });

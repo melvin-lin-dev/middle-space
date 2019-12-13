@@ -381,6 +381,8 @@ class Game {
 
     // random number generators
     enemyGenerator(change_now = false) {
+        if (this.level_timeout) clearTimeout(this.level_timeout);
+
         if (!change_now) {
             this.IS_CHANGING_LEVEL = true;
             if (this.field_is_empty) {
@@ -420,7 +422,8 @@ class Game {
 
         $('.level-info').html(s).addClass('popup-animation');
 
-        setTimeout(() => {
+        if (this.enemy_generator_timeout) clearTimeout(this.enemy_generator_timeout);
+        this.enemy_generator_timeout = setTimeout(() => {
             $('.level-info').removeClass('popup-animation');
 
             if (this.stats.level % 5 !== 0) {
