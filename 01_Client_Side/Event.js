@@ -4,13 +4,12 @@ class Event {
     }
 
     shoot(s) {
-        if (game.pause === -1) {
-            game.SHOOT = s;
-            if (game.SHOOT && !game.player.shooting) {
-                game.player.shoot()
-            }
-            game.player.shooting = s
+        game.SHOOT = s;
+        if (game.pause === -1 && game.SHOOT && !game.player.shooting) {
+            console.log(1)
+            game.player.shoot()
         }
+        game.player.shooting = s
     }
 
     pause() {

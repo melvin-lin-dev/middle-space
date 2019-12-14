@@ -370,6 +370,10 @@ class Game {
     //  Game Over
 
     over() {
+        ev.shoot(0);
+        clearInterval(this.player.do_shoot);
+        clearTimeout(this.player.shoot_timer);
+
         if (!this.GOD_MODE) {
             $('.enter-zone').removeClass('active');
 
