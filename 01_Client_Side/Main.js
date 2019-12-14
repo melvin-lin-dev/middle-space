@@ -22,20 +22,24 @@ let gameBtnTimeout = null;
 $(function () {
     $('.start-game-btn').on('click', function () {
         if (gameBtnTimeout) clearTimeout(gameBtnTimeout);
+
+        console.log(canvas.height)
+
         gameBtnTimeout = setTimeout(async () => {
             const body = document.querySelector('body');
-            if (body.requestFullscreen) {
-                await body.requestFullscreen()
-            } else if (body.webkitRequestFullscreen) {
-                await body.webkitRequestFullscreen()
-            } else if (body.mozRequestFullscreen) {
-                await body.mozRequestFullscreen()
-            } else if (body.msRequestFullscreen) {
-                await body.msRequestFullscreen()
-            }
+            // if (body.requestFullscreen) {
+            //     await body.requestFullscreen()
+            // } else if (body.webkitRequestFullscreen) {
+            //     await body.webkitRequestFullscreen()
+            // } else if (body.mozRequestFullscreen) {
+            //     await body.mozRequestFullscreen()
+            // } else if (body.msRequestFullscreen) {
+            //     await body.msRequestFullscreen()
+            // }
+            canvas.width = document.body.clientWidth;
 
             game.start();
-        }, 0);
+        }, 500);
     });
 });
 

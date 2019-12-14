@@ -37,7 +37,7 @@ class Player {
             rangeAngle: 3
         };
 
-        if (canvas.offsetHeight > 600) {
+        if (canvas.height > 600) {
             this.width *= 5 / 3;
             this.height *= 5 / 3;
             this.exhaust.width *= 5 / 3;

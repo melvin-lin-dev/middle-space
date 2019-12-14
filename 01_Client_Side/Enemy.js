@@ -12,7 +12,7 @@ class Enemy {
                 this.height = 50;
                 this.speed = 3.2;
                 this.score = 5;
-                this.coins = 20;
+                this.coins = 10;
                 switch (this.level) {
                     case 1:
                         this.maxLife = 10;
@@ -46,7 +46,7 @@ class Enemy {
                 this.height = 60;
                 this.speed = 3.6;
                 this.score = 10;
-                this.coins = 50;
+                this.coins = 35;
                 switch (this.level) {
                     case 1:
                         this.maxLife = 20;
@@ -89,7 +89,7 @@ class Enemy {
     render() {
         if (this.x < canvas.offsetWidth && this.x + this.width > 0 &&
             this.y < canvas.offsetHeight && this.y + this.height > 0) {
-            if (this.type === 1 || this.type === 3) {
+            if (this.type === 1) {
                 if (game.stats.countTime % 5 === 0) {
                     this.frame++;
 
@@ -109,8 +109,8 @@ class Enemy {
 
                     let rad = Math.atan2(y, x);
 
-                    let mx = Math.cos(rad) * 5;
-                    let my = Math.sin(rad) * 5;
+                    let mx = Math.cos(rad) * 7;
+                    let my = Math.sin(rad) * 7;
 
                     game.enemy_bullets.push(new Bullet(x2, y2, 1, 0, 4, {
                         mx: mx,
@@ -121,7 +121,7 @@ class Enemy {
                 }
 
                 ctx.drawImage(this.img, 80 * this.frame, 0, 80, 80, this.x, this.y, this.width, this.height);
-            } else if (this.type === 2) {
+            } else if (this.type == 2) {
                 ctx.save();
                 ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
                 ctx.rotate(this.angle * Math.PI / 180);
@@ -156,21 +156,16 @@ class Enemy {
 
     generateLocation() {
         // Generate Enemy Location
-        if (game.IS_CHANGING_LEVEL) {
-            this.x = -this.width - 50;
-        } else {
-            this.x = Math.floor(Math.random() * (canvas.width * 2)) + canvas.width;
-            this.y = Math.floor(Math.random() * (canvas.height - this.height));
+        this.x = Math.floor(Math.random() * (canvas.width * 2)) + canvas.width;
+        this.y = Math.floor(Math.random() * (canvas.height - this.height));
 
-            this.frame = 0;
+        this.frame = 0;
 
-            if (this.type === 1) {
-                this.IS_SHOOT = 1;
-            } else if (this.type === 2) {
-                this.angle = 0;
-            }
-
-            this.life = this.maxLife;
+        if (this.type == 1) {
+            this.IS_SHOOT = 1;
+        } else if (this.type == 2) {
+            this.angle = 0;
         }
+        this.life = this.maxLife;
     }
 }
