@@ -374,6 +374,8 @@ class Game {
         clearInterval(this.player.do_shoot);
         clearTimeout(this.player.shoot_timer);
 
+        this.player.deactiveInvisible();
+
         if (!this.GOD_MODE) {
             $('.enter-zone').removeClass('active');
 
