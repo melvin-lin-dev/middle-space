@@ -195,12 +195,13 @@ class Player {
                 y: this.y + this.height / 2,
                 opacity: .8,
                 scale,
+                s: size,
                 image: imageAssets[`fire-effect_${this.equipment.exhaust}.png`]
             });
         }
 
         for (let i = 0; i < this.fireEffects.length; i++) {
-            let fireEffect = this.fireEffects[i]
+            let fireEffect = this.fireEffects[i];
             ctx.save();
             ctx.globalAlpha = fireEffect.opacity;
             ctx.drawImage(fireEffect.image, fireEffect.x + fireEffect.s * (1 - fireEffect.scale) / 2, fireEffect.y - fireEffect.s * fireEffect.scale / 2, fireEffect.s * fireEffect.scale, fireEffect.s * fireEffect.scale);
