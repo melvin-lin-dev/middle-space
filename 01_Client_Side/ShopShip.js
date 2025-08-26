@@ -1,5 +1,7 @@
 class ShopShip {
     constructor() {
+        this.closeEnterZone();
+
         this.width = 120;
         this.height = 75;
 
@@ -18,9 +20,9 @@ class ShopShip {
         this.arrived = false;
         this.mode = 'arriving';
 
-        this.shopTimeDefault = 0;
+        this.shopTimeDefault = 20;
 
-        this.waitingTime = 5000;
+        this.waitingTime = 5;
 
         this.shopTimeout = null;
     }
@@ -45,23 +47,23 @@ class ShopShip {
             if (!this.arrived) {
                 this.arrived = true;
                 ev.toggleEnterZone();
+                if (game.stats.countTime % 60 === 0) {
+                    this.waitingTime--;
+                }
 
-                this.shopTimeout = setTimeout(() => {
+                if (this.waitingTime === 0) {
                     this.leave();
-                }, this.waitingTime);
+
+                    this.waitingTime = 5;
+                }
             }
         }
     }
 
-    leave(){
+    leave() {
         this.arrived = false;
-        let enterZone = $('.enter-zone');
-        enterZone.css('animation', 'none');
-        setTimeout(() => {
-            enterZone.removeClass('active')
-            game.player.touchable = 1;
-        }, 40);
         this.mode = 'leaving';
+        this.closeEnterZone();
     }
 
     leaving() {
@@ -72,6 +74,8 @@ class ShopShip {
         if (this.x < canvas.width) {
             this.x += this.speed;
         } else {
+            game.player.is_invisible = 0;
+
             this.arrived = false;
             this.resetXLocation();
             this.resetShopTime();
@@ -90,13 +94,22 @@ class ShopShip {
         }
     }
 
-    enterZoneChecking(){
+    closeEnterZone(){
+        let enterZone = $('.enter-zone');
+        enterZone.css('animation', 'none');
+        setTimeout(() => {
+            enterZone.removeClass('active');
+            game.player.touchable = 1;
+        }, 40);
+    }
+
+    enterZoneChecking() {
         let x = game.player.x + game.player.width / 2;
         let y = game.player.y + game.player.height / 2;
 
         let enterZoneRect = document.querySelector('.enter-zone').getBoundingClientRect();
 
-        if(x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping'){
+        if (x >= enterZoneRect.left && x <= enterZoneRect.right && y >= enterZoneRect.top && y <= enterZoneRect.bottom && this.mode !== 'shopping') {
             clearTimeout(this.shopTimeout);
             game.player.setEnteringShop();
             this.mode = 'shopping';

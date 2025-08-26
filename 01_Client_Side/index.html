@@ -10,7 +10,7 @@
 
     <!-- Title -->
 
-    <title>Star Battle</title>
+    <title>Middle Space</title>
 
     <!-- Icon -->
 
@@ -23,6 +23,14 @@
 </head>
 <body>
 
+<audio preload="auto" src="./sound/background.mp3"></audio>
+<audio preload="auto" src="./sound/destroyed.mp3"></audio>
+<audio preload="auto" src="./sound/fireball.mp3"></audio>
+<audio preload="auto" src="./sound/kaching.mp3"></audio>
+<audio preload="auto" src="./sound/laser.mp3"></audio>
+<audio preload="auto" src="./sound/rocket.mp3"></audio>
+<audio preload="auto" src="./sound/shop.mp3"></audio>
+
 <div class="loader">
     <div class="loader-overlay">
         <div class="loader-item"></div>
@@ -32,7 +40,7 @@
     </div>
 </div>
 
-<div id="zone_joystick"></div>
+<div id="zone_joystick" class="opacity-0"></div>
 
 
 <!-- Container -->
@@ -43,9 +51,76 @@
     <!-- Instructions -->
 
     <div id="instructions" class="absolute text-center">
-        <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">
-        <!--        <button class="btn start-game-btn" data-god="true">God Mode</button>-->
-        <button class="btn start-game-btn">Start Game</button>
+
+        <div class="instructions-overlay hide">
+            <h2 class="title" style="margin-bottom: 1rem;">How to play</h2>
+
+            <div class="flex instruction-slide active" data-slide="1">
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/plane_2.png" alt="">
+                    <h4>This is your plane</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/analog.png" alt="">
+                    <h4>Move your plane by using this analog</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/control.png" alt="">
+                    <h4>Hold red button to be invisible and yellow button to shoot</h4>
+                </div>
+            </div>
+            <div class="flex instruction-slide" data-slide="2">
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/enemy1.svg" alt="">
+                    <h4>This is your enemy. Shoot them!</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/aestroid_brown.png" alt="">
+                    <h4>This is asteroid. Shoot them!</h4>
+                </div>
+                <!--                <div class="instruction-item px-2 col-4">-->
+                <!--                    <img src="./assets/friend.png" alt="">-->
+                <!--                    <h4>Hey hey! This is your friend. Don't shoot him!</h4>-->
+                <!--                </div>-->
+            </div>
+            <div class="flex instruction-slide" data-slide="3">
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/shop.png" alt="">
+                    <h4>Enter red zone for shopping!</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/shop_2.png" alt="">
+                    <h4>Select what you want to upgrade!</h4>
+                </div>
+                <div class="instruction-item px-2 col-4">
+                    <img src="./assets/shop_3.png" alt="">
+                    <h4>Select the powerful item!</h4>
+                </div>
+            </div>
+            <div class="instruction-nav-overlay">
+                <button class="btn start-game-btn">Start Game</button>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                     class="instruction-nav instruction-nav-left" data-to="-1">
+                    <path fill="rgba(255,255,255,.8)"
+                          d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                     class="instruction-nav instruction-nav-right" data-to="1">
+                    <path fill="rgba(255,255,255,.8)"
+                          d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="main-menu flex">
+<!--            <img src="./assets/logo-01.png" alt="Star Battle Logo" class="logo">-->
+            <img src="./assets/logo-01.png" alt="" style="height: 180px; margin-bottom: 1.6rem;">
+            <div class="flex main-menu-overlay">
+                <button class="btn instruction-btn" style="margin-right: 1rem;">How to play</button>
+                <button class="btn start-game-btn">Start Game</button>
+            </div>
+        </div>
     </div>
 
     <!-- Ranking -->
@@ -91,6 +166,8 @@
 
     <div id="gameBoard" class="absolute full-width full-height hide">
 
+        <div class="fixed-center level-info text-center"></div>
+
         <div id="shop" class="absolute shop-container">
             <div class="menu top">
                 <div class="content-menu">
@@ -101,7 +178,7 @@
                 <div class="inspect stats"></div>
                 <div class="inspect equipment"></div>
 
-                <img class="plane" src="assets/plane_.png" alt="Plane">
+                <img class="plane" src="assets/plane.png" alt="Plane">
 
                 <div class="coins">
                     <img src="assets/coin.png" alt="Coin Icon">
@@ -129,12 +206,10 @@
 
         <div id="gameMenu" class="absolute">
             <div class="absolute absolute-left">
-                <!--                <img src="./assets/pause.png" alt="pause" class="pause">-->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="btn-menu pause">
                     <path
                         d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"/>
                 </svg>
-                <!--                <img src="./assets/sound.png" alt="sound" class="sound">-->
             </div>
             <div class="absolute absolute-right text-center stat-overlay">
                 <img src="./assets/shopTime.png" alt="shop-time" class="shop-time">
@@ -160,8 +235,8 @@
                     <circle class="progress-circle__stroke invisible-cooldown-percentage" r="50%" cx="50%"
                             cy="50%"></circle>
                 </svg>
-<!--                <img src="assets/invisible-icon.svg" alt="invisible-icon"-->
-<!--                     class="progress-circle__stroke invisible-icon invisible-btn">-->
+                <!--                <img src="assets/invisible-icon.svg" alt="invisible-icon"-->
+                <!--                     class="progress-circle__stroke invisible-icon invisible-btn">-->
             </div>
         </div>
         <div class="game-combo"></div>
@@ -183,11 +258,9 @@
         <!-- Canvas -->
 
         <div class="collide-animation"></div>
-        <canvas id="canvas" class="opacity-5"></canvas>
+        <canvas id="canvas" class="opacity-5" height="1024"></canvas>
     </div>
 </div>
-
-<div class="fixed-center level-info text-center"></div>
 
 <div class="modal modal-hide setting">
     <div class="modal-dialog">
@@ -232,6 +305,7 @@
 <script src="./Main.js"></script>
 <script src="./Event.js"></script>
 <script src="./Equipment.js"></script>
+<script> </script>
 
 </body>
 </html>

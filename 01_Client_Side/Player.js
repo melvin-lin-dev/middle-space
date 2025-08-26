@@ -37,7 +37,7 @@ class Player {
             rangeAngle: 3
         };
 
-        if (canvas.offsetHeight > 600) {
+        if (canvas.height > 600) {
             this.width *= 5 / 3;
             this.height *= 5 / 3;
             this.exhaust.width *= 5 / 3;
@@ -52,7 +52,6 @@ class Player {
 
         this.bullets = [];
 
-        this.shoot_delay = 500;
         this.bullet_level = 1;
 
         // Declaring Equipment
@@ -83,15 +82,23 @@ class Player {
 
         this.upgrade = {
             fuel: {
+                name: 'Fuel',
                 maxUpgrade: 10,
                 upgradeLevel: 0,
                 value: 20
             },
             bullet: {
+                name: 'Bullet',
                 maxUpgrade: 5,
                 upgradeLevel: 0,
-                value: 1
-            }
+                value: .4
+            },
+            second_bullet: {
+                name: '2nd Bullet',
+                maxUpgrade: 1,
+                upgradeLevel: 0,
+                value: 1,
+            },
         };
 
         // Fire Effects
@@ -100,6 +107,7 @@ class Player {
         //    Invisible
         this.invisible_cooldown = 0;
         this.invisible_max_cooldown = 360;
+        this.is_invisible = 0;
         this.touchable = 1;
         this.invisible_duration = 240;
     }
@@ -115,7 +123,7 @@ class Player {
         let exhaust = this.exhaust;
 
         let exhaustType = '';
-        switch(this.equipment.exhaust){
+        switch (this.equipment.exhaust) {
             case 1:
                 exhaustType = 'exhaust_1.png';
                 break;
@@ -148,6 +156,13 @@ class Player {
         ctx.drawImage(this.img, playerX, playerY, playerWidth, playerHeight);
         ctx.restore();
 
+        this.collision = {
+            x: this.x + 10,
+            y: this.y + 10,
+            width: this.width - 20,
+            height: this.height - 20,
+        };
+
         if ((this.shopMode === 'entering' && this.scale > 0) || (this.shopMode === 'leaving' && this.scale < this.defaultScale)) {
             this[this.shopMode + 'Shop']();
         }
@@ -160,7 +175,7 @@ class Player {
         if (this.invisible_cooldown > 0) {
             this.invisible_cooldown--;
         } else if (this.invisible_timeout) {
-            this.touchable = 0;
+            this.is_invisible = 0;
             this.invisible_timeout--;
         }
 
@@ -178,9 +193,9 @@ class Player {
             this.fireEffects.push({
                 x: this.x + (this.x * (this.defaultScale - this.scale)) - this.exhaust.width * this.exhaust.scale / 2,
                 y: this.y + this.height / 2,
-                s: size * this.scale,
                 opacity: .8,
                 scale,
+                s: size,
                 image: imageAssets[`fire-effect_${this.equipment.exhaust}.png`]
             });
         }
@@ -241,6 +256,11 @@ class Player {
         this.x += this.speedX * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
         this.y += this.speedY * game.equipment.stats.exhaust[game.player.equipment.exhaust].speed;
 
+        if (this.TO_LEFT) this.x -= 8;
+        if (this.TO_RIGHT) this.x += 8;
+        if (this.TO_TOP) this.y -= 8;
+        if (this.TO_BOTTOM) this.y += 8;
+
         if (this.speedY < -2) {
             if (exhaust.angle > exhaust.minAngle) {
                 exhaust.angle -= exhaust.rangeAngle;
@@ -271,7 +291,7 @@ class Player {
 
         this.do_shoot = setInterval(() => {
             this.triggerBullet()
-        }, this.shoot_delay)
+        }, game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000);
     }
 
     triggerBullet() {
@@ -281,14 +301,21 @@ class Player {
             if (this.last_shoot) {
                 let next_shoot = new Date();
 
-                ms = this.shoot_delay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+                let shootDelay = game.equipment.stats.bullet[this.equipment.bullet].shootDelay * 1000;
 
-                ms = ms > this.shoot_delay ? this.shoot_delay : ms
+                ms = shootDelay - ((next_shoot.getTime() - this.last_shoot.getTime()));
+
+                ms = ms > shootDelay ? shootDelay : ms
             }
 
             this.shoot_timer = setTimeout(() => {
                 if (game.pause === -1) {
-                    this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.bullet_level, this.equipment.bullet));
+                    if (this.upgrade.second_bullet.upgradeLevel == 1) {
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 - 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2 + 15, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                    } else {
+                        this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, 0, this.upgrade.bullet.upgradeLevel + 1, this.equipment.bullet));
+                    }
                     this.last_shoot = new Date();
                 }
             }, ms)
@@ -303,7 +330,7 @@ class Player {
         this.shopMode = 'entering';
 
         ev.toggleEnterZone();
-        this.touchable = 0;
+        this.is_invisible = 1;
     }
 
     enteringShop() {
@@ -325,17 +352,11 @@ class Player {
         }
     }
 
-    upgradeBulletDelay(delay) {
-        this.shoot_delay = delay;
-    }
-
-    upgradeBulletLevel(level) {
-        this.bullet_level = level;
-    }
-
     invisible() {
         if (this.invisible_cooldown === 0) {
             this.invisible_cooldown = -1;
+            this.touchable = 0;
+            this.is_invisible = 1;
 
             $('.game-invisible').addClass('opacity-5');
 
@@ -346,6 +367,7 @@ class Player {
     deactiveInvisible(cooldown = 0) {
         this.invisible_timeout = null;
         $('.game-invisible').removeClass('opacity-5');
+        this.is_invisible = 0;
         this.touchable = 1;
         this.invisible_cooldown = cooldown;
     }

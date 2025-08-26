@@ -1,50 +1,36 @@
 class Bullet {
-    constructor(x, y, IS_LEFT = 0, bullet_level = 0, bulletType = 1) {
+    constructor(x, y, IS_LEFT = 0, bullet_level = 0, bulletType = 1, opts = {}) {
         //  Declaring Bullet
-
         this.IS_LEFT = IS_LEFT;
 
         let audioType = '';
 
         this.bulletType = bulletType;
 
-        this.speed = game.equipment.stats.bullet[bulletType].speed;
-        this.power = game.equipment.stats.bullet[bulletType].power;
+        if (this.bulletType !== 4) {
+            this.mx = game.equipment.stats.bullet[bulletType].speed;
+            this.my = 0;
+            this.power = game.equipment.stats.bullet[bulletType].power;
+        }
 
         switch (bulletType) {
             case 1:
-                this.width = 30;
-                this.height = 6;
+                this.width = 23;
+                this.height = 12;
                 this.img = imageAssets['bullet.png'];
 
+                audioType = 'fireball.mp3';
 
-                audioType = 'shoot.mp3';
-
-                switch (bullet_level) {
-                    case 2:
-                        this.power = 30;
-                        break;
-                    default:
-                        this.power = 10;
-                        break;
-                }
+                this.power = 10 * bullet_level;
                 break;
             case 2:
                 this.width = 50;
                 this.height = 20;
                 this.img = imageAssets['rocket.png'];
 
-
                 audioType = 'rocket.mp3';
 
-                switch (bullet_level) {
-                    case 2:
-                        this.power = 50;
-                        break;
-                    default:
-                        this.power = 20;
-                        break;
-                }
+                this.power = 30 * bullet_level;
 
                 this.exhaust = {
                     width: this.width / 3,
@@ -57,6 +43,25 @@ class Bullet {
                     image: imageAssets['rocket-exhaust.png']
                 };
                 break;
+            case 3:
+                this.width = 40;
+                this.height = 5;
+                this.img = imageAssets['laser.png'];
+
+                audioType = 'laser.mp3';
+
+                this.power = 20 * bullet_level;
+                break;
+            case 4:
+                this.x = x;
+                this.y = y;
+                this.mx = opts.mx;
+                this.my = opts.my;
+                this.power = 10;
+                this.width = 20;
+                this.height = 20;
+                this.img = imageAssets['bullet-enemy.png'];
+                break
         }
 
         if (canvas.offsetHeight > 600) {
@@ -64,35 +69,37 @@ class Bullet {
             this.height *= 5 / 3;
         }
 
-        if (canvas.offsetWidth > 1000) {
-            this.speed *= 5 / 3;
-        }
+        // if (canvas.offsetWidth > 1000) {
+        //     this.speed *= 5 / 3;
+        // }
 
         this.x = x;
         this.y = y - this.height / 2;
 
-        this.sound = new Audio();
-        this.sound.src = './sound/' + audioType;
-        this.sound.volume = game.volume;
-        this.sound.autoplay = true;
-        this.sound.play();
+        if (this.bulletType !== 4) {
+            this.sound = new Audio();
+            this.sound.src = './sound/' + audioType;
+            this.sound.volume = game.volume;
+            this.sound.autoplay = true;
+            this.sound.play();
+        }
     }
 
     render() {
-        if(this.exhaust) {
+        if (this.exhaust) {
             // Rendering Exhaust
 
-            if(this.exhaust.isScaling){
+            if (this.exhaust.isScaling) {
                 this.exhaust.scale += this.exhaust.rangeScale;
 
-                if(this.exhaust.scale >= this.exhaust.maxScale){
+                if (this.exhaust.scale >= this.exhaust.maxScale) {
                     this.exhaust.isScaling = 0;
                     this.exhaust.scale = this.exhaust.maxScale;
                 }
-            }else{
+            } else {
                 this.exhaust.scale -= this.exhaust.rangeScale;
 
-                if(this.exhaust.scale <= this.exhaust.minScale){
+                if (this.exhaust.scale <= this.exhaust.minScale) {
                     this.exhaust.isScaling = 1;
                     this.exhaust.scale = this.exhaust.minScale;
                 }
@@ -108,10 +115,14 @@ class Bullet {
         //  Rendering Bullet
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
-        if (this.IS_LEFT) {
-            this.x -= this.speed;
-        } else {
-            this.x += this.speed;
+        if (game.shopShip.mode !== 'shopping') {
+            if (this.IS_LEFT) {
+                this.x -= this.mx;
+                this.y -= this.my;
+            } else {
+                this.x += this.mx;
+                this.y += this.my;
+            }
         }
 
     }

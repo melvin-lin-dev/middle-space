@@ -4,13 +4,11 @@ class Event {
     }
 
     shoot(s) {
-        if (game.pause === -1) {
-            game.SHOOT = s;
-            if (game.SHOOT && !game.player.shooting) {
-                game.player.shoot()
-            }
-            game.player.shooting = s
+        game.SHOOT = s;
+        if (game.pause === -1 && game.SHOOT && !game.player.shooting) {
+            game.player.shoot()
         }
+        game.player.shooting = s
     }
 
     pause() {
@@ -97,6 +95,22 @@ class Event {
             enterZone.css('animation', '1s enterZoneAnimation infinite .4s');
         }
     }
+
+    moveLeft(is_move = true) {
+        if (game.player) game.player.TO_LEFT = is_move;
+    }
+
+    moveRight(is_move = true) {
+        if (game.player) game.player.TO_RIGHT = is_move;
+    }
+
+    moveUp(is_move = true) {
+        if (game.player) game.player.TO_TOP = is_move;
+    }
+
+    moveDown(is_move = true) {
+        if (game.player) game.player.TO_BOTTOM = is_move;
+    }
 }
 
 let ev = new Event();
@@ -110,7 +124,19 @@ window.addEventListener('keydown', function (e) {
         case 32:
             ev.shoot(1);
             break;
-        case 73:
+        case 37:
+            ev.moveLeft(true);
+            break;
+        case 38:
+            ev.moveUp(true);
+            break;
+        case 39:
+            ev.moveRight(true);
+            break;
+        case 40:
+            ev.moveDown(true);
+            break;
+        case 90:
             ev.invisible();
             break;
     }
@@ -125,6 +151,18 @@ window.addEventListener('keyup', function (e) {
         case 32:
             ev.shoot(0);
             break;
+        case 37:
+            ev.moveLeft(false);
+            break;
+        case 38:
+            ev.moveUp(false);
+            break;
+        case 39:
+            ev.moveRight(false);
+            break;
+        case 40:
+            ev.moveDown(false);
+            break;
         case 80:
             ev.pause();
             break;
@@ -138,7 +176,6 @@ if (/iP(hone|od|ad)/.test(navigator.platform)) {
 }
 
 $(document).on('touchstart', function (e) {
-    e.preventDefault();
     if ($(e.target).hasClass('game-shoot')) {
         ev.shoot(1)
     } else if ($(e.target).hasClass('invisible-btn')) {
@@ -149,8 +186,6 @@ $(document).on('touchstart', function (e) {
 
 $(document).on('touchend', function (e) {
     if (game.player) {
-        game.player.speedX = 0
-        game.player.speedY = 0
         if ($(e.target).hasClass('game-shoot')) {
             ev.shoot(0)
         }

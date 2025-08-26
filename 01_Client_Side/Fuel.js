@@ -13,6 +13,12 @@ class Fuel {
         this.rangeScale = .0075;
         this.isScaling = 0;
 
+
+        if (canvas.height > 600) {
+            this.width *= 5 / 3;
+            this.height *= 5 / 3;
+        }
+
         this.generateLocation();
     }
 
@@ -55,8 +61,10 @@ class Fuel {
 
         this.angle += 1.5;
 
-        this.x -= 2.5;
-        this.y += 2;
+        if (game.shopShip.mode !== 'shopping') {
+            this.x -= 2.5;
+            this.y += 2;
+        }
     }
 
     generateLocation() {

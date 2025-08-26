@@ -19,8 +19,6 @@ class Boss {
         this.speed = 1;
         this.move_up = false;
 
-        this.bullets = [];
-
         this.frame = 1;
 
         this.coming = true;
@@ -48,9 +46,9 @@ class Boss {
 
         this.img = imageAssets[`enemy${this.frame}.svg`];
 
-        if (game.stats.countTime % (60 * 10) === 0 && !this.lose) {
-            // if (this.life / this.maxLife > .5) {
-                if (!this.lasers.length) {
+        if (!this.lose) {
+            if (this.life / this.maxLife > .5) {
+                if (!this.lasers.length && game.stats.countTime % (600) === 0) {
                     this.is_laser_out = false;
                     this.laser_go_out = false;
                     this.lasers.push({
@@ -62,7 +60,24 @@ class Boss {
                         is_background: true,
                     });
                 }
-            // }
+            } else {
+                if (game.stats.countTime % (300) === 0) {
+                    let angle = Math.floor(Math.random() * 15) + 30;
+                    for (let i = 0; i < 7; i++) {
+                        angle -= Math.floor(Math.random() * 10) + 5;
+
+                        let rad = angle * Math.PI / 180;
+
+                        let mx = Math.cos(rad) * 3;
+                        let my = Math.sin(rad) * 3;
+
+                        game.enemy_bullets.push(new Bullet(this.x, this.y + this.height / 2, 1, 0, 4, {
+                            mx: mx,
+                            my: my,
+                        }));
+                    }
+                }
+            }
         }
 
         this.collision = {
@@ -110,7 +125,7 @@ class Boss {
                 let laser = this.lasers[i];
 
                 if (this.laser_go_out) {
-                    laser.x -= 100;
+                    if (game.shopShip.mode !== 'shopping') laser.x -= 100;
 
                     if (laser.x + laser.width < 0) {
                         all_out = true;
@@ -129,12 +144,12 @@ class Boss {
                 ctx.closePath();
                 ctx.restore();
 
-                if (!laser.is_background && game.checkCollision(game.player, laser) && game.player.touchable) {
+                if (!laser.is_background && game.checkCollision(game.player, laser) && game.player.touchable && !game.player.is_invisible) {
                     game.planeCollided();
                 }
 
                 if (laser.x > 0) {
-                    laser.x -= 50;
+                    if (game.shopShip.mode !== 'shopping') laser.x -= 50;
                 } else if (this.is_laser_out === false) {
                     this.is_laser_out = true;
                     setTimeout(() => {

@@ -20,7 +20,14 @@ class Shop {
                         image: this.loadShopImage('bullet.png'),
                         description: 'Ship HP',
                         cost: 200
-                    }
+                    },
+                    {
+                        name: '2nd Bullet',
+                        type: 'second_bullet',
+                        image: this.loadShopImage('2-bullets.png'),
+                        description: 'Ship Bullet',
+                        cost: 600
+                    },
                 ]
             },
             {
@@ -45,6 +52,15 @@ class Shop {
                         description: 'Rocket',
                         cost: 400,
                         equipmentType: 2,
+                        owned: false
+                    },
+                    {
+                        name: 'Laser',
+                        type: 'laser',
+                        image: this.loadShopImage('laser.png'),
+                        description: 'Laser',
+                        cost: 900,
+                        equipmentType: 3,
                         owned: false
                     }
                 ]
@@ -119,7 +135,7 @@ class Shop {
                 if (side === 'top') {
                     $('.shop-container .inspect.equipment').removeClass('active');
                     _self.displayData('bottom', menu, this);
-                } else if(parentMenu.menuType === 'equipment') {
+                } else if (parentMenu.menuType === 'equipment') {
                     _self.inspectEquipment(menu, parentMenu.type);
                 }
             };
@@ -143,7 +159,7 @@ class Shop {
                     buyButton.innerHTML = currentUpgrade.upgradeLevel === currentUpgrade.maxUpgrade ? 'MAXED' : menu.cost * (currentUpgrade.upgradeLevel + 1);
                     buyButton.value *= currentUpgrade.upgradeLevel + 1;
                 } else if (parentMenu.menuType === 'equipment') {
-                    buyButton.innerHTML = menu.owned ? 'EQUIP' : 'BUY';
+                    buyButton.innerHTML = menu.owned ? 'EQUIP' : menu.cost;
                     if (game.player.bulletType === menu.equipmentType) {
                         buyButton.innerHTML = 'EQUIPPED';
                     }
@@ -157,11 +173,11 @@ class Shop {
         })
     }
 
-    checkMenuType(button, parentMenu, menu){
-        if(game.stats.coins >= button.value){
+    checkMenuType(button, parentMenu, menu) {
+        if (game.stats.coins >= button.value) {
             let currentUpgrade = game.player.upgrade[menu.type];
 
-            if((parentMenu.menuType === 'equipment' && !menu.owned) || (parentMenu.menuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)){
+            if ((parentMenu.menuType === 'equipment' && !menu.owned) || (parentMenu.menuType === 'upgrade' && currentUpgrade.upgradeLevel < currentUpgrade.maxUpgrade)) {
                 game.stats.coins -= button.value;
 
                 game.renderText();
@@ -178,7 +194,7 @@ class Shop {
                 }, 1400);
             }
 
-            switch(parentMenu.menuType) {
+            switch (parentMenu.menuType) {
                 case 'upgrade':
                     this.upgradeShip(button, menu, currentUpgrade);
                     break;
@@ -186,7 +202,7 @@ class Shop {
                     this.buyEquipment(button, menu, currentUpgrade, parentMenu.type);
                     break;
             }
-        }else{
+        } else {
             $('#shop .notification').addClass('active');
 
             setTimeout(() => {
@@ -221,8 +237,8 @@ class Shop {
         }
     }
 
-    buyEquipment(button, menu, currentUpgrade, parentMenuType){
-        if(!menu.owned){
+    buyEquipment(button, menu, currentUpgrade, parentMenuType) {
+        if (!menu.owned) {
             button.value = 0;
             menu.cost = 0;
             menu.owned = true;
@@ -233,7 +249,7 @@ class Shop {
         game.player.equipment[parentMenuType] = menu.equipmentType;
     }
 
-    inspectEquipment (menu, parentMenuType) {
+    inspectEquipment(menu, parentMenuType) {
         let equipmentStats = $('.shop-container .inspect.equipment');
         let timeout = equipmentStats.hasClass('active') ? 400 : 0;
 
@@ -244,10 +260,17 @@ class Shop {
 
             equipmentStats.html('');
 
-            for(let statType in game.equipment.maxStats[parentMenuType]){
+            for (let statType in game.equipment.maxStats[parentMenuType]) {
                 let targetStat = game.equipment.stats[parentMenuType][menu.equipmentType][statType];
                 let maxStat = game.equipment.maxStats[parentMenuType][statType];
-                let currentStat =  game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
+                let currentStat = game.equipment.stats[parentMenuType][game.player.equipment[parentMenuType]][statType];
+
+                if (game.equipment.stats[parentMenuType].inverseStat.indexOf(statType) + 1) {
+                    let tempTargetStat = targetStat;
+                    targetStat = currentStat;
+                    currentStat = tempTargetStat;
+                }
+
                 let isStatIncrease = targetStat > currentStat;
                 let statColor = isStatIncrease ? 'rgba(50,210,0,.7)' : 'rgba(220,50,0,.7)';
 
@@ -258,9 +281,9 @@ class Shop {
                 name.innerHTML = statType.toUpperCase();
 
                 let point = document.createElement('span');
-                if(targetStat !== currentStat)
-                    point.innerHTML = (isStatIncrease ? '+' : '') + (targetStat - currentStat).toFixed(2).toString();
-                point.style.color = statColor.replace('.7','1');
+                if (targetStat !== currentStat)
+                    point.innerHTML = (isStatIncrease ? '+' : '-') + Math.abs(targetStat - currentStat).toFixed(2).toString();
+                point.style.color = statColor.replace('.7', '1');
 
                 let progressBar = document.createElement('div');
                 progressBar.className = 'progress-bar';
@@ -297,10 +320,10 @@ class Shop {
                 let currentUpgrade = game.player.upgrade[type];
 
                 let stat = document.createElement('div');
-                // stat.id = `stat-${type}`;
+                stat.id = `stat-${type}`;
 
                 let name = document.createElement('span');
-                name.innerHTML = type.toUpperCase() + ` (${currentUpgrade.upgradeLevel})`;
+                name.innerHTML = (currentUpgrade.name || type.toUpperCase()) + ` <span class="upgrade-level">(${currentUpgrade.upgradeLevel})</span>`;
 
                 let progressBar = document.createElement('div');
                 progressBar.className = 'progress-bar';
@@ -316,17 +339,17 @@ class Shop {
             }
         } else {
             let currentUpgrade = game.player.upgrade[type];
-            $(`#shop #stat-${type} span`).html(`${type.toUpperCase()} (${currentUpgrade.upgradeLevel})`);
-            $(`#shop #stat-${type} .progress-bar > div`).css('width', currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade * 100 + '%');
+            $(`#shop #stat-${type} span.upgrade-level`).html(`(${currentUpgrade.upgradeLevel == currentUpgrade.maxUpgrade ? 'Maxed' : currentUpgrade.upgradeLevel})`);
+            $(`#shop #stat-${type} .progress-bar > div`).css('width', ((currentUpgrade.upgradeLevel / currentUpgrade.maxUpgrade) * 100) + '%');
         }
     }
 
-    toggleMusic(){
-        if(this.music.currentTime === 0){
+    toggleMusic() {
+        if (this.music.currentTime === 0) {
             this.music.play();
             this.music.volume = game.volume;
             this.music.loop = true;
-        }else{
+        } else {
             this.music.pause();
             this.music.currentTime = 0;
         }

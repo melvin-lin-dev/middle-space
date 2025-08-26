@@ -63,7 +63,8 @@ class Planet {
         if (this.x < -500)
             this.generateLocation();
 
-        this.x -= this.speed;
+        if (game.shopShip.mode !== 'shopping')
+            this.x -= this.speed;
     }
 
     generateLocation() {
